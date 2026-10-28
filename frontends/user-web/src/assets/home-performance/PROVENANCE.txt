@@ -1,0 +1,1 @@
+2026-10-08: WebP images derive from public/homepage-v2 PNGs with the same artwork. WOFF2 fonts are subsets of the existing licensed Noto Sans SC and Nunito files. Background video is a 1280x720 H.264 derivative of the complete original video, with no trimming/cropping, muted audio omitted, and faststart metadata. Original sources remain under public/homepage-v2.

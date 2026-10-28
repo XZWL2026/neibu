@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xzwlab.local/contracts/assertion-result-set.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceCommit",
+    "runnerCommit",
+    "protocolManifestCommit",
+    "results"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sourceCommit": { "const": "d1f9c5afec8aa13d30b153d055c96a24e4c69cf2" },
+    "runnerCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "protocolManifestCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "https://xzwlab.local/contracts/assertion-result.schema.json" }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+/* Keep the original card footprint covered: lift from the bottom without exposing a cutout. */
+.reference-card > svg { display: block; width: 100%; height: 100%; border-radius: var(--reference-card-radius, .96cqw); transform-origin: center bottom; transition: transform .22s ease; pointer-events: none; }
+.reference-card:is(a, button):is(:hover, :focus-visible):not(:disabled) { z-index: 1; }
+.reference-card:is(a, button):is(:hover, :focus-visible):not(:disabled) > svg { transform: scale(1.04); }
+/* Put the keyboard indicator on the moving artwork, never on a stationary dark frame. */
+[class$="-feature"] .reference-card:is(a, button):focus-visible { outline: none; box-shadow: none; }
+.reference-card:focus-visible > svg { outline: 2px solid #4385ff; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .reference-card > svg { transition: none; }
+  .reference-card:is(a, button):is(:hover, :focus-visible):not(:disabled) > svg { transform: none; }
+}
+
+.reference-start { --reference-card-radius: 999px; }
+.reference-start > svg { height: auto; }
+.home-page .reference-card:is(a, button):is(:hover, :focus-visible):not(:disabled) > svg { transform: scale(1.02); }
+.home-page .reference-card:is(:hover, :focus-visible) :is(.reference-label, .reference-note) { transform: scale(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .home-page .reference-card:is(a, button):is(:hover, :focus-visible):not(:disabled) > svg,
+  .home-page .reference-card:is(:hover, :focus-visible) :is(.reference-label, .reference-note) { transform: none; }
+}

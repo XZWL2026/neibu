@@ -1,0 +1,62 @@
+import '@testing-library/jest-dom/vitest';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { DetailPageExport } from './DetailPageExport';
+import { buildDetailPageImage } from './detail-page-export';
+vi.mock('./detail-page-export', () => ({ buildDetailPageImage: vi.fn() }));
+const build = vi.mocked(buildDetailPageImage);
+beforeEach(() => {
+  build.mockReset();
+  Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: vi.fn().mockReturnValue('blob:detail') });
+  Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn() });
+});
+afterEach(cleanup);
+it('allows retry after CORS failure and releases the preview on input changes and unmount', async () => {
+  build.mockRejectedValueOnce(new TypeError('Failed to fetch')).mockResolvedValue(new Blob(['png']));
+  const view = render(<DetailPageExport productName="商品" fileIds={['first']} />);
+  fireEvent.click(screen.getByRole('button', { name: '拼接详情长图' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('拼接失败');
+  fireEvent.click(screen.getByRole('button', { name: '拼接详情长图' }));
+  expect(await screen.findByRole('img', { name: '商品详情长图' })).toHaveAttribute('src', 'blob:detail');
+  expect(screen.getByRole('link', { name: '下载详情长图' })).toHaveAttribute('download', '商品-详情长图.png');
+  view.rerender(<DetailPageExport productName="商品" fileIds={['second']} />);
+  expect(screen.queryByRole('img')).not.toBeInTheDocument();
+  expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:detail');
+  fireEvent.click(screen.getByRole('button', { name: '拼接详情长图' }));
+  await screen.findByRole('img'); view.unmount();
+  expect(URL.revokeObjectURL).toHaveBeenCalledTimes(2);
+});
+it('discards a pending result when inputs change and aborts its work', async () => {
+  let finish!: (blob: Blob) => void;
+  build.mockImplementationOnce(() => new Promise(resolve => { finish = resolve; }));
+  const view = render(<DetailPageExport productName="商品" fileIds={['first']} />);
+  fireEvent.click(screen.getByRole('button', { name: '拼接详情长图' }));
+  const signal = build.mock.calls[0][1];
+  view.rerender(<DetailPageExport productName="商品" fileIds={['second']} />);
+  expect(signal.aborted).toBe(true);
+  await act(async () => { finish(new Blob(['old'])); });
+  expect(URL.createObjectURL).not.toHaveBeenCalled();
+  expect(screen.queryByRole('img')).not.toBeInTheDocument();
+});
+it('disables export for incomplete, empty, or excessive input', () => {
+  const view = render(<DetailPageExport productName="商品" fileIds={[]} />);
+  expect(screen.getByRole('button')).toBeDisabled();
+  view.rerender(<DetailPageExport productName="商品" fileIds={['first']} disabled />);
+  expect(screen.getByRole('button')).toBeDisabled();
+  view.rerender(<DetailPageExport productName="商品" fileIds={Array(15).fill('first')} />);
+  expect(screen.getByRole('button')).toBeDisabled();
+  view.rerender(<DetailPageExport productName="商品" fileIds={Array.from({ length: 14 }, (_, index) => `module-${index}`)} />);
+  expect(screen.getByRole('button')).toBeEnabled();
+  expect(build).not.toHaveBeenCalled();
+});
+it('aborts pending work on unmount without allocating a late object URL', async () => {
+  let finish!: (blob: Blob) => void;
+  build.mockImplementationOnce(() => new Promise(resolve => { finish = resolve; }));
+  const view = render(<DetailPageExport productName="商品" fileIds={['first']} />);
+  fireEvent.click(screen.getByRole('button', { name: '拼接详情长图' }));
+  const signal = build.mock.calls[0][1];
+  view.unmount();
+  expect(signal.aborted).toBe(true);
+  await act(async () => { finish(new Blob(['old'])); });
+  expect(URL.createObjectURL).not.toHaveBeenCalled();
+});

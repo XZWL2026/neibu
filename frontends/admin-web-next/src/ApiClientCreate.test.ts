@@ -1,0 +1,37 @@
+import {mount,flushPromises,enableAutoUnmount} from '@vue/test-utils';
+import {it,expect,vi,beforeEach,afterEach} from 'vitest';
+import {ref} from 'vue';
+import {adminSessionKey} from './adminSession';
+const api=vi.hoisted(()=>({session:vi.fn(),create:vi.fn(),account:vi.fn(),manual:vi.fn(),defaults:vi.fn(),runtime:vi.fn(),options:vi.fn(),pricing:vi.fn(),creationOptions:vi.fn(),clientPrices:vi.fn()}));
+vi.mock('./api',async original=>({...await original<object>(),refreshSession:api.session,userCreatePostApiV1AdminUsers:api.create,paymentAdminAccountPatchApiV1AdminPaymentsAccountsId:api.account,paymentManualPostApiV1AdminPaymentsRecharges:api.manual,billingGetGetApiV1AdminBillingMediaPrices:api.defaults,billingGetGetApiV1SettingsRuntime:api.runtime,paymentAdminOptionsGetApiV1AdminPaymentsRechargeOptions:api.options,billingSavePutApiV1AdminBillingApiUsersOwnerIdMediaPrices:api.pricing,paymentApiCreationOptionsGetApiV1AdminPaymentsApiCreationOptions:api.creationOptions,billingGetGetApiV1AdminBillingApiUsersOwnerIdMediaPrices:api.clientPrices}));
+import ApiClientCreate from './ApiClientCreate.vue';
+beforeEach(()=>{vi.clearAllMocks();sessionStorage.clear();api.session.mockResolvedValue({authenticated:true,user:{id:'admin'}});api.create.mockResolvedValue({data:{id:'new-api'}});api.account.mockResolvedValue({data:{}});api.manual.mockResolvedValue({data:{orderId:'pending-review'}});api.defaults.mockResolvedValue({data:{prices:[]}});api.runtime.mockResolvedValue({data:{rechargePointsPerYuan4:'10.0000'}});api.creationOptions.mockResolvedValue({data:{accountType:'API',pointsPerYuan4:'10.0000',rules:[{accountType:'API',minimumAmount4:'5000.0000'}]}});api.options.mockResolvedValue({data:{userId:'new-api',accountType:'API',pointsPerYuan4:'10.0000',rules:[{accountType:'API',minimumAmount4:'5000.0000'}]}});});
+enableAutoUnmount(afterEach);
+async function show(primary=true){const wrapper=mount(ApiClientCreate,{attachTo:document.body,global:{provide:{[adminSessionKey as symbol]:{currentAdmin:ref({role:primary?'ADMIN':'NORMAL_ADMIN',primary,userId:'admin'})}}}});await flushPromises();return wrapper;}
+async function fill(wrapper:Awaited<ReturnType<typeof show>>,amount='0'){await wrapper.get('[aria-label="企业名称"]').setValue('星辰工作室');await wrapper.get('[aria-label="手机号"]').setValue('13800000001');await wrapper.get('[aria-label="初始可用金额（元）"]').setValue(amount);}
+it('labels enterprise name while creating nickname and a real API key; zero initial amount creates no recharge',async()=>{const wrapper=await show();await fill(wrapper);await wrapper.get('form').trigger('submit');await flushPromises();expect(api.create).toHaveBeenCalledWith(expect.objectContaining({nickname:'星辰工作室',phone:'+8613800000001',source:'ADMIN'}));expect(api.create.mock.calls[0]![0]).not.toHaveProperty('enterpriseName');expect(api.account).toHaveBeenCalledWith('new-api',expect.objectContaining({accountType:'API',createKey:true}));expect(api.manual).not.toHaveBeenCalled();expect(wrapper.emitted('created')?.[0]).toEqual(['new-api']);});
+it('uses MANUAL pending review for initial funds and preserves the completed user/account across a lost response retry',async()=>{api.manual.mockRejectedValueOnce(new Error('lost')).mockResolvedValueOnce({data:{orderId:'pending'}});const wrapper=await show();await fill(wrapper,'5000');await wrapper.get('form').trigger('submit');await flushPromises();const original=api.manual.mock.calls[0]![0];expect(original).toMatchObject({userId:'new-api',accountType:'API',amount4:'5000',requestId:expect.any(String)});expect(wrapper.get('fieldset').attributes('disabled')).toBeDefined();wrapper.unmount();const restored=await show();await restored.get('form').trigger('submit');await flushPromises();expect(api.create).toHaveBeenCalledTimes(1);expect(api.account).toHaveBeenCalledTimes(1);expect(api.manual.mock.calls[1]![0]).toEqual(original);expect(restored.emitted('created')?.[0]).toEqual(['new-api']);});
+it('does not expose creation to normal admins',async()=>{const wrapper=await show(false);expect(wrapper.find('form').exists()).toBe(false);expect(api.create).not.toHaveBeenCalled();});
+
+it('accepts initial whole cents below the platform API minimum',async()=>{const w=await show();await fill(w,'0.01');expect(w.get('button[type="submit"]').attributes('disabled')).toBeUndefined();await w.get('form').trigger('submit');await flushPromises();expect(api.manual).toHaveBeenCalledWith(expect.objectContaining({amount4:'0.01'}));});
+
+it('recovers a definitively rejected custom-price stage without recreating the customer',async()=>{const {ApiError}=await import('./api');const price={accountType:'API',type:'VIDEO',unit:'SECOND',model:'configured',resolution:'720p',enabled:true,yuanPerUnit:'1.0000',pointsPerUnit:null};api.defaults.mockResolvedValue({data:{prices:[price]}});api.clientPrices.mockResolvedValue({data:{version:2,defaults:[price],overrides:[],prices:[price]}});api.pricing.mockRejectedValueOnce(new ApiError(new Response(null,{status:409}),{})).mockResolvedValueOnce({data:{}});const w=await show();await fill(w);await w.get('input[value="custom"]').setValue(true);await w.get('[aria-label="configured 720p 客户价格"]').setValue('0.8');await w.findAll('button').find(b=>b.text()==='保存价格')!.trigger('click');await w.get('form').trigger('submit');await flushPromises();expect(w.get('[aria-label="企业名称"]').attributes('disabled')).toBeDefined();await w.get('input[value="custom"]').trigger('click');expect(w.get('[aria-label="configured 720p 客户价格"]').attributes('disabled')).toBeUndefined();await w.get('[aria-label="configured 720p 客户价格"]').setValue('0.9');await w.findAll('button').find(b=>b.text()==='保存价格')!.trigger('click');await w.get('form').trigger('submit');await flushPromises();expect(api.create).toHaveBeenCalledTimes(1);expect(api.account).toHaveBeenCalledTimes(1);expect(api.pricing.mock.calls[1]![1]).toMatchObject({expectedVersion:2,prices:[expect.objectContaining({yuanPerUnit:'0.9'})]});expect(api.pricing.mock.calls[1]![1].requestId).not.toBe(api.pricing.mock.calls[0]![1].requestId);});
+
+it('returns from price editing without losing customer fields or applying an unsaved draft',async()=>{
+ const price={accountType:'API',type:'VIDEO',unit:'SECOND',model:'configured',resolution:'720p',enabled:true,yuanPerUnit:'1.0000',pointsPerUnit:null};
+ api.defaults.mockResolvedValue({data:{prices:[price]}});
+ const w=await show();await fill(w);await w.get('[aria-label="API 客户备注"]').setValue('合同备注');
+ expect(w.find('input[type="password"]').exists()).toBe(false);
+ await w.get('input[value="custom"]').trigger('click');
+ await w.get('[aria-label="configured 720p 客户价格"]').setValue('0.8');
+ await w.get('[aria-label="返回客户信息"]').trigger('click');await flushPromises();
+ expect(w.get<HTMLInputElement>('[aria-label="企业名称"]').element.value).toBe('星辰工作室');
+ expect(w.get<HTMLInputElement>('input[value="default"]').element.checked).toBe(true);
+ expect(document.activeElement).toBe(w.get('input[value="custom"]').element);
+ await w.get('input[value="custom"]').trigger('click');
+ expect(w.get<HTMLInputElement>('[aria-label="configured 720p 客户价格"]').element.value).toBe('');
+ await w.get('.api-price-settings').trigger('keydown',{key:'Escape'});await flushPromises();
+ await w.get('form').trigger('submit');await flushPromises();
+ expect(api.pricing).not.toHaveBeenCalled();
+ expect(api.create).toHaveBeenCalledWith(expect.objectContaining({remark:'合同备注'}));
+});

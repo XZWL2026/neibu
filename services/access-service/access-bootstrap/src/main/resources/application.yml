@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: access-service
+  datasource:
+    url: ${ACCESS_DB_URL}
+    username: ${ACCESS_DB_USERNAME}
+    password: ${ACCESS_DB_PASSWORD}
+  flyway:
+    enabled: true
+server:
+  port: 8212
+abp:
+  internal-token: ${ABP_INTERNAL_TOKEN}
+access:
+  key-encryption-key: ${ACCESS_KEY_ENCRYPTION_KEY}
+  user-internal-token: ${IAM_USER_INTERNAL_TOKEN}
+  iam-service-url: ${IAM_SERVICE_URL:http://127.0.0.1:8210}
+  user-service-url: ${USER_SERVICE_URL:http://127.0.0.1:8211}

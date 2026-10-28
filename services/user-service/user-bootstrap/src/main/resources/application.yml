@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: user-service
+  datasource:
+    url: ${USER_DB_URL}
+    username: ${USER_DB_USERNAME}
+    password: ${USER_DB_PASSWORD}
+    hikari:
+      data-source-properties:
+        connectionTimeZone: UTC
+        forceConnectionTimeZoneToSession: true
+  flyway:
+    locations: classpath:db/user-migration
+mybatis-plus:
+  configuration:
+    local-cache-scope: statement
+user:
+  storage-service-url: ${USER_STORAGE_URL:${MEDIA_STORAGE_URL:http://127.0.0.1:8219}}
+  iam-service-url: ${IAM_SERVICE_URL:http://127.0.0.1:8210}
+server:
+  port: 8211

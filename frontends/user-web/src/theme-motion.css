@@ -1,0 +1,53 @@
+/* Snapshot complete themes so gradients, artwork and text share one timeline.
+   Override element transitions only during switching; preserve hover/drag motion. */
+html[data-theme-transition],
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+  transition: none !important;
+}
+
+html[data-theme-transition]::view-transition { pointer-events: none; }
+html[data-theme-transition]::view-transition-group(root) { animation: none; }
+html[data-theme-transition]::view-transition-image-pair(root) { isolation: isolate; }
+html[data-theme-transition]::view-transition-old(root),
+html[data-theme-transition]::view-transition-new(root) {
+  mix-blend-mode: normal;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+/* Reveal the new theme from the control. The old page stays opaque underneath,
+   so the moving edge never exposes a blank background or blends text twice. */
+html[data-theme-transition]::view-transition-old(root) { animation: none; z-index: 1; }
+html[data-theme-transition]::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-reveal 520ms cubic-bezier(.3, .3, .25, 1) both;
+}
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--theme-origin-x) var(--theme-origin-y)); }
+  to { clip-path: circle(var(--theme-reveal-radius) at var(--theme-origin-x) var(--theme-origin-y)); }
+}
+@keyframes theme-dissolve-in { from { opacity: 0; } to { opacity: 1; } }
+
+.theme-artwork, .theme-artwork-layer { display: flow-root; }
+.theme-artwork-layer[hidden] { display: none; }
+
+.theme-toggle-symbols { display: grid; width: 26px; height: 26px; }
+.theme-toggle-symbols svg {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  transition: opacity 160ms ease, transform 240ms cubic-bezier(.2, .8, .2, 1);
+}
+.theme-toggle-symbols[data-theme="light"] .theme-toggle-sun,
+.theme-toggle-symbols[data-theme="dark"] .theme-toggle-moon { opacity: 0; transform: scale(.85); }
+.theme-toggle:active .theme-toggle-symbols { opacity: .65; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-transition]::view-transition-new(root) {
+    clip-path: none;
+    animation: theme-dissolve-in 100ms linear both;
+  }
+  .theme-toggle-symbols svg { transform: none !important; transition: opacity 100ms linear; }
+}

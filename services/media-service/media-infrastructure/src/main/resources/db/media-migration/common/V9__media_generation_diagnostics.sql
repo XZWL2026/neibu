@@ -1,0 +1,9 @@
+ALTER TABLE media_provider_operation ADD COLUMN generation_task_id VARCHAR(256);
+ALTER TABLE media_provider_operation ADD COLUMN enhancement_task_id VARCHAR(256);
+ALTER TABLE media_provider_operation ADD COLUMN generation_started_at BIGINT;
+ALTER TABLE media_provider_operation ADD COLUMN generation_finished_at BIGINT;
+ALTER TABLE media_provider_operation ADD COLUMN enhancement_started_at BIGINT;
+ALTER TABLE media_provider_operation ADD COLUMN enhancement_finished_at BIGINT;
+ALTER TABLE media_provider_operation ADD COLUMN video_tokens BIGINT;
+ALTER TABLE media_provider_operation ADD COLUMN native_resolution VARCHAR(64);
+ALTER TABLE media_provider_operation ADD COLUMN native_outputs_json LONGTEXT;

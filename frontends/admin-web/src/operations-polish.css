@@ -1,0 +1,91 @@
+/* Shared refinements for the administrator workspace. */
+.overview-theme { --ops-ink: #21395f; --ops-muted: #526789; --ops-focus: #0068dc; }
+.management-mobile-nav { display: none; }
+.overview-theme .workspace-header { position: relative; inset: auto; height: 64px; padding: 10px 24px; justify-content: flex-end; }
+.overview-theme .overview-admin-name { min-width: 0; max-width: 220px; }
+.overview-theme .overview-admin-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.overview-theme .main-content { min-height: calc(100dvh - 64px); padding: 0 24px 28px; }
+.overview-theme .page-panel { gap: 20px; }
+.overview-theme .page-heading { padding-right: 0; min-height: 70px; align-items: center; }
+.overview-theme .page-heading:has(.overview-period) { min-height: 76px; }
+.overview-theme :is(.page-heading,.directory-heading,.finance-heading,.consumption-heading,.pricing-heading) h1 { font-size: 30px; line-height: 1.3; letter-spacing: -.025em; }
+.overview-theme .page-description { font-size: 14px; line-height: 1.6; color: var(--ops-muted); }
+.overview-theme .finance-heading { padding-right: 0; }
+.overview-theme .overview-period { position: static; align-self: center; flex-shrink: 0; }
+.overview-theme .primary-nav a { min-height: 44px; }
+.overview-theme :is(button,a,input,select,textarea,summary,[tabindex="0"]):focus-visible { outline: 2px solid var(--ops-focus); outline-offset: 3px; }
+.overview-theme :is(input,select,textarea) { caret-color: var(--ops-focus); }
+.overview-theme input::placeholder, .overview-theme textarea::placeholder { color: #637795; }
+.overview-theme ::selection { color: #163865; background: #cce4ff; }
+.overview-theme :is(.directory-table,.finance-table,.table-wrap) { overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #aabbd5 #f4f8fd; }
+.overview-theme :is(.directory-table,.finance-table) th { font-size: 12px; letter-spacing: 0; line-height: 1.5; color: var(--ops-muted); }
+.overview-theme :is(.directory-table,.finance-table) td { font-size: 13px; line-height: 1.6; color: var(--ops-ink); }
+.overview-theme :is(.directory-table,.finance-table) :is(th,td) { padding-block: 10px; }
+.overview-theme :is(.directory-table,.finance-table) .numeric { font-variant-numeric: tabular-nums; }
+.overview-theme .directory-list h2 { font-size: 20px; }
+.overview-theme .user-directory :is(.view-user,.user-name), .overview-theme .finance-page .finance-view { min-height: 36px; font-size: 13px; }
+.overview-theme .user-directory .icon-button { min-width: 32px; min-height: 32px; }
+.overview-theme .row-actions summary { min-height: 36px; display: flex; align-items: center; }
+.overview-theme :is(.directory-filters,.finance-filters) :is(button,select,input:not([type="checkbox"])) { min-height: 40px; font-size: 13px; }
+.overview-theme .directory-dates input { font-size: 12px !important; }
+.overview-theme :is(.directory-pagination,.finance-pagination) { row-gap: 12px; }
+.overview-theme :is(.directory-pagination,.finance-pagination) button { min-width: 40px; min-height: 40px; }
+.overview-theme .finance-table .finance-order-id { font-size: 11px; color: var(--ops-muted); }
+.overview-theme .finance-pill.green { color: #087653; }
+.overview-theme .finance-pill.orange { color: #98580b; }
+.overview-theme .finance-pill.red { color: #bf2547; }
+.overview-theme .finance-detail-fields dt { color: var(--ops-muted); }
+.overview-theme .finance-drawer > header button { min-width: 44px; min-height: 44px; }
+.overview-theme .finance-list h2::before, .overview-theme .finance-drawer h3::before { display: none; }
+.overview-theme .portal-accounts { display: grid; gap: 20px; }
+.overview-theme .portal-accounts > p { margin: 0; color: var(--ops-muted); line-height: 1.6; font-size: 14px; }
+.overview-theme .portal-accounts :is(.admin-card,.table-wrap) { background: #fff; color: var(--ops-ink); }
+.overview-theme .portal-accounts .admin-card { display: grid; gap: 16px; }
+.overview-theme .portal-accounts label { display: grid; gap: 8px; font-size: 14px; color: var(--ops-ink); }
+.overview-theme .portal-accounts :is(input,select) { background: #fff; border-color: #cedbed; color: var(--ops-ink); }
+.overview-theme .portal-accounts small { color: var(--ops-muted); }
+.overview-theme .portal-accounts caption { padding: 16px; text-align: left; font-weight: 650; }
+.overview-theme .portal-accounts :is(th,td) { border-color: #e5edfa; font-size: 13px; color: var(--ops-ink); }
+.overview-theme .portal-accounts th { background: #f4f8fe; color: var(--ops-muted); }
+.overview-theme .portal-accounts td button + button { margin-left: 8px; }
+@media (max-width: 1100px) {
+ .overview-theme .directory-list > header { flex-wrap: wrap; }
+ .overview-theme .directory-pagination { flex-wrap: wrap; }
+ .overview-theme .page-controls { flex-wrap: wrap; }
+}
+@media (max-width: 760px) {
+ .admin-frame.overview-theme { padding-top: 0; }
+ .overview-theme .admin-sidebar { display: flex; flex-direction: row; align-items: center; gap: 16px; padding: 12px 14px; border-right: 0; border-bottom: 1px solid var(--line); }
+ .overview-theme .brand-block { padding: 0; flex-shrink: 0; }
+ .overview-theme .brand-logo { width: 100px; }
+ .overview-theme .brand-block small { display: none; }
+ .overview-theme .primary-nav { display: none; }
+ .overview-theme .management-mobile-nav { display: block; flex: 1; min-width: 0; }
+ .overview-theme .management-mobile-nav select { width: 100%; min-height: 44px; background: #fff; color: var(--ops-ink); border-color: #cedbed; font-size: 14px; }
+ .overview-theme .workspace-header { height: 56px; padding: 6px 14px; }
+ .overview-theme .overview-admin-name { display: grid; max-width: 200px; }
+ .overview-theme .overview-admin-name strong { font-size: 13px; }
+ .overview-theme .overview-admin-name small { font-size: 11px; }
+ .overview-theme .main-content { padding: 0 14px 24px; min-height: calc(100dvh - 124px); }
+ .overview-theme :is(.page-heading,.directory-heading,.finance-heading,.consumption-heading,.pricing-heading) h1 { font-size: 26px; }
+ .overview-theme .page-heading { min-height: 0; gap: 12px; flex-wrap: wrap; align-items: stretch; }
+ .overview-theme .page-heading:has(.overview-period) { min-height: 0; padding-right: 0; }
+ .overview-theme .overview-period { margin-left: auto; }
+ .overview-theme .page-panel { gap: 16px; }
+ .overview-theme .directory-list { padding: 14px; }
+ .overview-theme .directory-list h2 { flex-wrap: wrap; gap: 8px; font-size: 18px; }
+ .overview-theme .directory-list h2 small { margin-left: 0; }
+ .overview-theme .list-tools { width: 100%; justify-content: flex-end; }
+ .overview-theme .filter-bottom { flex-wrap: wrap; gap: 12px; }
+ .overview-theme .filter-bottom > div:last-child { margin-left: auto; }
+ .overview-theme .period-buttons { flex-wrap: wrap; }
+ .overview-theme .user-directory .period-buttons button { padding-inline: 12px; }
+ .overview-theme :is(.directory-filters,.finance-filters,.directory-pagination,.finance-pagination,.list-tools) :is(button,select,input:not([type="checkbox"]),summary) { min-height: 44px; }
+ .overview-theme .page-controls { gap: 6px; width: 100%; }
+ .overview-theme .page-controls > span { width: 100%; }
+ .overview-theme .finance-presets { flex-wrap: wrap; overflow: visible; }
+ .overview-theme .finance-filter-actions { margin-left: auto; }
+ .overview-theme .finance-list-actions { flex-wrap: wrap; }
+ .overview-theme .portal-accounts .admin-card { padding: 16px; }
+ .overview-theme .portal-account-form > button { width: 100%; }
+}

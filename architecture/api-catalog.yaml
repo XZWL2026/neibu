@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "apis": [
+    {
+      "id": "platform-smoke",
+      "owner": "compatibility-smoke-service",
+      "exposure": "public",
+      "method": "GET",
+      "path": "/api/platform/smoke",
+      "openapi": "contracts/openapi/public/platform-smoke.json",
+      "contractVersion": "0.1.0"
+    }
+  ]
+}

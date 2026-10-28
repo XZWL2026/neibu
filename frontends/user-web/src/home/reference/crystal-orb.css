@@ -1,0 +1,13 @@
+.yomio-home .orb-wrap{position:fixed;top:clamp(108px,9.1vw,180px);left:4px;width:80px;height:80px;z-index:40}
+.yomio-home .ym-orb-button{position:relative;width:80px;height:80px;padding:0;border-radius:50%;background:transparent;cursor:grab;touch-action:none;user-select:none;outline-offset:-8px}
+.yomio-home .ym-orb-button[data-dragging]{cursor:grabbing}
+.yomio-home .ym-orb-button:focus-visible{outline:1.5px solid #c8baff;outline-offset:-11px}
+.yomio-home .ym-orb-button .ym-orb.crystalized-ball{position:relative;display:block;width:100%;height:100%;overflow:hidden;border:0;border-radius:50%;box-shadow:none;transform:none;transition:filter .25s}
+.yomio-home .crystalized-ball::before{content:"";position:absolute;inset:15%;border-radius:50%;background:radial-gradient(ellipse at 45% 35%,#0b1524ed,#02080dd9);pointer-events:none}
+.yomio-home .ym-orb-button:hover .crystalized-ball,.yomio-home .ym-orb-button[aria-expanded=true] .crystalized-ball{filter:brightness(1.14)}
+.yomio-home .crystalized-ball canvas{position:relative;z-index:1;display:block;width:100%;height:100%;pointer-events:none}
+.yomio-home .orb-glass-skin{display:none;position:absolute;z-index:3;inset:0;width:100%;height:100%;fill:none;stroke:none;pointer-events:none;overflow:visible;opacity:var(--orb-presence,1)}
+.yomio-home .orb-metal-star{opacity:var(--orb-reveal,1);filter:brightness(var(--orb-glint,1))}
+.yomio-home .orb-menu{top:calc(100% + 3px);left:12px;overflow:auto;touch-action:pan-y}
+@media(max-width:760px){.yomio-home .orb-wrap{top:104px;left:1px;width:64px;height:64px}.yomio-home .ym-orb-button{width:64px;height:64px}.yomio-home .ym-orb-button:focus-visible{outline-offset:-9px}.yomio-home .orb-menu{left:14px;top:calc(100% + 2px)}}
+@media(prefers-reduced-motion:reduce){.yomio-home .ym-orb-button .ym-orb.crystalized-ball{transition:none}}

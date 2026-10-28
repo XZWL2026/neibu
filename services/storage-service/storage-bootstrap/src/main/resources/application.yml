@@ -1,0 +1,43 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: storage-service
+  datasource:
+    url: ${STORAGE_DB_URL}
+    username: ${STORAGE_DB_USERNAME}
+    password: ${STORAGE_DB_PASSWORD}
+  servlet:
+    multipart:
+      file-size-threshold: 0
+storage:
+  media-token: ${STORAGE_MEDIA_TOKEN:}
+  result-max-bytes: ${STORAGE_RESULT_MAX_BYTES}
+  tos:
+    region: ${TOS_REGION:}
+    endpoint: ${TOS_ENDPOINT:}
+    bucket: ${TOS_BUCKET:}
+    access-key-id: ${TOS_ACCESS_KEY_ID:}
+    secret-access-key: ${TOS_SECRET_ACCESS_KEY:}
+  archive:
+    allowed-hosts: ${STORAGE_ARCHIVE_ALLOWED_HOSTS:}
+    connect-timeout-millis: ${STORAGE_ARCHIVE_CONNECT_TIMEOUT_MILLIS:5000}
+    read-timeout-millis: ${STORAGE_ARCHIVE_READ_TIMEOUT_MILLIS:30000}
+    max-redirects: ${STORAGE_ARCHIVE_MAX_REDIRECTS:2}
+server:
+  port: 8219
+
+xzwl:
+  api-key:
+    enabled: true
+    access-url: ${ACCESS_SERVICE_URL:http://127.0.0.1:8212}
+    service-token: ${ABP_INTERNAL_TOKEN:}
+  iam-session:
+    enabled: true
+    base-url: ${STORAGE_IAM_SERVICE_URL:http://127.0.0.1:8210}

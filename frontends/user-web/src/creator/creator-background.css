@@ -1,0 +1,7 @@
+html .app-frame.creator-frame { isolation: isolate; background: #020d13; }
+html[data-theme=light] .app-frame.creator-frame.circle-navigation-frame { background: #f4f6f8; }
+html[data-theme] .app-frame.creator-frame .creator-stage { background: transparent; }
+.creator-frame .stage-glow { display: none; }
+.creator-pixel-background { position: fixed; inset: 0; z-index: -1; overflow: hidden; contain: strict; pointer-events: none; }
+.creator-pixel-background > div { position: absolute; inset: 0; }
+.creator-pixel-background canvas { display: block; width: 100%; height: 100%; }

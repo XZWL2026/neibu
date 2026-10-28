@@ -1,0 +1,11 @@
+/* Skeleton rows reserve loading space; paginated results determine the final height. */
+.data-table-region { position: relative; height: auto; min-height: 0; overflow: auto; }
+.data-update-region { position: relative; }
+.data-table-region[aria-busy="true"] { cursor: progress; }
+.data-table-region[aria-busy="false"] tbody > tr:not(.table-loading-row) {
+  animation: data-row-ready 160ms ease-out;
+}
+@keyframes data-row-ready { from { opacity: .6; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .data-table-region[aria-busy="false"] tbody > tr:not(.table-loading-row) { animation: none; }
+}

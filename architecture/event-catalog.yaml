@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "eventType": "SmokeOccurred",
+      "version": 1,
+      "owner": "compatibility-smoke-service",
+      "topic": "xzwl.platform.events",
+      "orderingKey": "aggregateId",
+      "consumers": ["compatibility-smoke-service"],
+      "payloadSchema": "none",
+      "verificationScope": "in-memory-semantics-only"
+    }
+  ]
+}

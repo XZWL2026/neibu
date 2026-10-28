@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: routing-service
+  datasource:
+    url: ${ROUTING_DB_URL}
+    username: ${ROUTING_DB_USERNAME}
+    password: ${ROUTING_DB_PASSWORD}
+server:
+  port: 8216
+
+routing:
+  media-token: ${ROUTING_MEDIA_TOKEN:}
+
+xzwl:
+  iam-session:
+    enabled: true
+    base-url: ${ROUTING_IAM_SERVICE_URL:http://127.0.0.1:8210}

@@ -1,0 +1,9 @@
+CREATE TABLE user_identity (
+    user_id VARCHAR(36) NOT NULL PRIMARY KEY,
+    phone VARCHAR(16) NOT NULL,
+    nickname VARCHAR(64) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    auth_version BIGINT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    CONSTRAINT uk_user_identity_phone UNIQUE (phone)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin;

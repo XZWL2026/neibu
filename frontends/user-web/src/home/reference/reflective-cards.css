@@ -1,0 +1,7 @@
+/* The supplied ReflectiveCard studio shader is composited over custom photo content. */
+.yomio-home .circular-carousel__frame.reflective-feature{transform:perspective(900px) rotateX(var(--rf-rotate-x,0deg)) rotateY(var(--rf-rotate-y,0deg));transform-origin:center;will-change:transform}
+.yomio-home .reflective-feature__canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;opacity:calc(.38 + var(--rf-light,0)*.22);mix-blend-mode:screen}
+.yomio-home .reflective-feature__rim{position:absolute;inset:0;z-index:3;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px #eef7ff30,inset 0 1px 0 #fff5}
+.yomio-home .reflective-feature__rim::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px #eaf5ffb3;opacity:calc(var(--rf-light,0)*.8)}
+.yomio-home .reflective-feature[data-reflective-renderer=fallback]::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at var(--rf-mx,50%) var(--rf-my,45%),#fff8,transparent 62%),linear-gradient(115deg,transparent 20%,#c8e5ff1a 45%,#fff4 49%,transparent 57%);mix-blend-mode:screen;opacity:calc(.1 + var(--rf-light,0)*.4)}
+@media(prefers-reduced-motion:reduce){.yomio-home .circular-carousel__frame.reflective-feature{transform:none;will-change:auto}}

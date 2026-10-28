@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionSqlMapper">
+  <update id="updateEligibility">
+    UPDATE promotion_applicant_eligibility
+    SET account_type = #{accountType}, account_status = #{accountStatus}, registered_at = #{registeredAt}, source_version = #{sourceVersion},
+    last_source_event_id = #{lastSourceEventId}, updated_at = #{updatedAt}
+    WHERE user_id = #{userId}
+  </update>
+
+  <update id="updatePayoutAccount">
+    UPDATE promotion_payout_account
+    SET owner_user_id = #{ownerUserId}, payout_type = #{payoutType}, payout_account_name = #{payoutAccountName},
+    payout_account_reference = #{payoutAccountReference}, status = #{status}, source_version = #{sourceVersion},
+    last_source_event_id = #{lastSourceEventId}, updated_at = #{updatedAt}
+    WHERE payout_account_id = #{payoutAccountId}
+  </update>
+
+  <insert id="submitApplication">
+    INSERT INTO promotion_application
+    (application_id, submit_command_id, user_id, account_type, account_status, registered_at,
+    eligibility_source_version, eligibility_snapshot_at, reason, planned_channel,
+    agreements_accepted, submitted_at, status)
+    VALUES (#{applicationId}, #{submitCommandId}, #{userId}, #{accountType}, #{accountStatus}, #{registeredAt}, #{eligibilitySourceVersion}, #{eligibilitySnapshotAt}, #{reason}, #{plannedChannel}, #{agreementsAccepted}, #{submittedAt}, 'PENDING')
+  </insert>
+
+  <update id="reviewApplication">
+    UPDATE promotion_application SET status = #{status}, decided_by = #{decidedBy}, decided_at = #{decidedAt}, rejection_reason = #{rejectionReason}
+    WHERE application_id = #{applicationId} AND status = 'PENDING'
+  </update>
+
+  <insert id="createPromoter">
+    INSERT INTO promoter_account
+    (promoter_user_id, invitation_code, status, created_at, updated_at)
+    VALUES (#{promoterUserId}, #{invitationCode}, 'ENABLED', #{createdAt}, #{updatedAt})
+  </insert>
+
+  <insert id="createCommissionAccount">
+    INSERT INTO promotion_commission_account
+    (promoter_user_id, frozen4, available4, withdrawing4, withdrawn4, cash_debt4, version)
+    VALUES (#{promoterUserId}, 0, 0, 0, 0, 0, 0)
+  </insert>
+
+  <update id="changePromoterStatus">
+    UPDATE promoter_account SET status = #{status}, updated_at = #{updatedAt} WHERE promoter_user_id = #{promoterUserId}
+  </update>
+
+  <insert id="insertReferralBinding">
+    INSERT INTO referral_binding
+    (referred_user_id, version, command_id, direct_inviter_user_id,
+    level1_promoter_user_id, level2_promoter_user_id, point_beneficiary_user_id,
+    cash_promoter_user_id, cash_tier, effective_at)
+    VALUES (#{referredUserId}, #{version}, #{commandId}, #{directInviterUserId}, #{level1PromoterUserId}, #{level2PromoterUserId}, #{pointBeneficiaryUserId}, #{cashPromoterUserId}, #{cashTier}, #{effectiveAt})
+  </insert>
+
+  <update id="freezeAccount">
+    UPDATE promotion_commission_account SET frozen4 = #{frozen4}, version = #{version}
+    WHERE promoter_user_id = #{promoterUserId} AND version = #{expectedVersion}
+  </update>
+
+  <insert id="createFundingBenefit">
+    INSERT INTO promotion_funding_benefit
+    (funding_lot_id, source_event_id, order_id, wallet_owner_user_id,
+    referral_binding_version, benefit_policy_version, promoter_user_id, cash_tier,
+    cash_rate6, paid_amount4,
+    frozen_commission4, released_commission4, clawed_unreleased_commission4,
+    reversed_released_commission4, settled_paid_amount4,
+    refunded_paid_amount4, occurred_at)
+    VALUES (#{fundingLotId}, #{sourceEventId}, #{orderId}, #{walletOwnerUserId}, #{referralBindingVersion}, #{benefitPolicyVersion}, #{promoterUserId}, #{cashTier}, #{cashRate6}, #{paidAmount4}, #{frozenCommission4}, 0, 0, 0, 0, 0, #{occurredAt})
+  </insert>
+
+  <update id="releaseAccount">
+    UPDATE promotion_commission_account
+    SET frozen4 = #{frozen4}, available4 = #{available4}, cash_debt4 = #{cashDebt4}, version = #{version}
+    WHERE promoter_user_id = #{promoterUserId} AND version = #{expectedVersion}
+  </update>
+
+  <update id="settleFundingBenefit">
+    UPDATE promotion_funding_benefit
+    SET released_commission4 = #{releasedCommission4}, settled_paid_amount4 = #{settledPaidAmount4}
+    WHERE funding_lot_id = #{fundingLotId}
+  </update>
+
+  <update id="refundFundingBenefit">
+    UPDATE promotion_funding_benefit
+    SET refunded_paid_amount4 = #{refundedPaidAmount4}, clawed_unreleased_commission4 = #{clawedUnreleasedCommission4},
+    reversed_released_commission4 = #{reversedReleasedCommission4}
+    WHERE funding_lot_id = #{fundingLotId}
+  </update>
+
+  <update id="reserveWithdrawal">
+    UPDATE promotion_commission_account
+    SET available4 = #{available4}, withdrawing4 = #{withdrawing4}, version = #{version}
+    WHERE promoter_user_id = #{promoterUserId} AND version = #{expectedVersion}
+  </update>
+
+  <insert id="requestWithdrawal">
+    INSERT INTO promotion_withdrawal
+    (withdrawal_id, request_command_id, promoter_user_id, amount4, status,
+    payout_account_id, payout_account_source_version, payout_account_snapshot_at,
+    payout_type, payout_account_name, payout_account_reference, payout_bank_name, payout_qr_code_reference, requested_at, updated_at)
+    VALUES (#{withdrawalId}, #{requestCommandId}, #{promoterUserId}, #{amount4}, 'WITHDRAWING', #{payoutAccountId}, #{payoutAccountSourceVersion}, #{payoutAccountSnapshotAt}, #{payoutType}, #{payoutAccountName}, #{payoutAccountReference}, #{payoutBankName}, #{payoutQrCodeReference}, #{requestedAt}, #{updatedAt})
+  </insert>
+
+  <update id="returnWithdrawal">
+    UPDATE promotion_commission_account
+    SET available4 = #{available4}, withdrawing4 = #{withdrawing4}, cash_debt4 = #{cashDebt4}, version = #{version}
+    WHERE promoter_user_id = #{promoterUserId} AND version = #{expectedVersion}
+  </update>
+
+  <update id="decideWithdrawal">
+    UPDATE promotion_withdrawal SET status = #{status}, rejection_reason = #{rejectionReason}, updated_at = #{updatedAt}
+    WHERE withdrawal_id = #{withdrawalId} AND status = #{expectedStatus}
+  </update>
+
+  <update id="payWithdrawal">
+    UPDATE promotion_commission_account SET withdrawing4 = #{withdrawing4}, withdrawn4 = #{withdrawn4}, version = #{version}
+    WHERE promoter_user_id = #{promoterUserId} AND version = #{expectedVersion}
+  </update>
+
+  <update id="completeWithdrawal">
+    UPDATE promotion_withdrawal SET status = 'PAID', updated_at = #{updatedAt} WHERE withdrawal_id = #{withdrawalId} AND status = 'PENDING_PAYOUT'
+  </update>
+
+  <insert id="recordCommand">
+    INSERT INTO promotion_command_receipt
+    (command_id, command_type, aggregate_id, semantics, recorded_at)
+    VALUES (#{commandId}, #{commandType}, #{aggregateId}, #{semantics}, #{recordedAt})
+  </insert>
+
+  <insert id="insertLedger">
+    INSERT INTO promotion_commission_ledger
+    (promoter_user_id, sequence_no, action_type, amount4, source_event_id, order_id,
+    funding_lot_id, allocation_id, withdrawal_id, created_at)
+    VALUES (#{promoterUserId}, #{sequenceNo}, #{actionType}, #{amount4}, #{sourceEventId}, #{orderId}, #{fundingLotId}, #{allocationId}, #{withdrawalId}, #{createdAt})
+  </insert>
+
+  <insert id="insertTransition">
+    INSERT INTO promotion_withdrawal_transition
+    (command_id, withdrawal_id, action_type, operator_id, reason, changed_at, result_status)
+    VALUES (#{commandId}, #{withdrawalId}, #{actionType}, #{operatorId}, #{reason}, #{changedAt}, #{resultStatus})
+  </insert>
+
+  <select id="lockApplication" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$ApplicationRow">
+    SELECT * FROM promotion_application WHERE application_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockEligibility" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$ApplicantEligibilityRow">
+    SELECT * FROM promotion_applicant_eligibility WHERE user_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockPayoutAccount" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$PayoutAccountRow">
+    SELECT * FROM promotion_payout_account WHERE payout_account_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockPromoter" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$PromoterRow">
+    SELECT * FROM promoter_account WHERE promoter_user_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockWithdrawal" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$WithdrawalRow">
+    SELECT * FROM promotion_withdrawal WHERE withdrawal_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockAccount" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$CommissionAccountRow">
+    SELECT * FROM promotion_commission_account WHERE promoter_user_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockFunding" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$FundingBenefitRow">
+    SELECT * FROM promotion_funding_benefit WHERE funding_lot_id = #{id} FOR UPDATE
+  </select>
+
+  <select id="lockCurrentReferral" resultType="com.xzwl.cloud.promotion.infrastructure.persistence.PromotionRows$ReferralBindingRow">
+    SELECT * FROM referral_binding WHERE referred_user_id = #{id} ORDER BY version DESC LIMIT 1 FOR UPDATE
+  </select>
+</mapper>

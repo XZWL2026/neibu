@@ -1,0 +1,7 @@
+# Use the appropriate PyTorch CPU/CUDA wheel for the host. Model weights stay outside Git.
+torch>=2.6,<3
+transformers>=4.51,<6
+opencv-python-headless>=4.10,<6
+numpy>=2,<3
+Pillow>=11,<13
+av==18.0.0

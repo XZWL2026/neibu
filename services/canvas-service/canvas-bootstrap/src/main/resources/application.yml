@@ -1,0 +1,21 @@
+server:
+  port: ${CANVAS_PORT:8218}
+spring:
+  application:
+    name: canvas-service
+  datasource:
+    url: ${CANVAS_DB_URL}
+    username: ${CANVAS_DB_USERNAME}
+    password: ${CANVAS_DB_PASSWORD}
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-null-for-primitives: true
+      fail-on-numbers-for-enums: true
+      accept-float-as-int: false
+  flyway:
+    enabled: true
+xzwl:
+  iam-session:
+    enabled: true
+    base-url: ${CANVAS_IAM_SERVICE_URL:http://127.0.0.1:8210}

@@ -1,0 +1,271 @@
+@font-face{font-family:YomioNunito;src:url('../assets/home-performance/nunito-home.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}.yomio-home{color-scheme:dark;--ink:#f6f8ff;--muted:#c7d6e6;--accent:#855bff;--navy:#0b2037;--line:rgba(209,228,251,.3);--glass:rgba(80,99,119,.35);--easing:cubic-bezier(.16,1,.3,1);font-family:Arial,"Microsoft YaHei","PingFang SC",sans-serif;color:var(--ink);background:#06121e}.yomio-home *{box-sizing:border-box}.yomio-home{margin:0}.yomio-home button,.yomio-home input,.yomio-home a{-webkit-tap-highlight-color:transparent}.yomio-home button,.yomio-home input{font:inherit}.yomio-home button{color:inherit;cursor:pointer;border:0;background:none}.yomio-home button:focus-visible,.yomio-home a:focus-visible,.yomio-home input:focus-visible{outline:2px solid #c2afff;outline-offset:5px}.yomio-home button{touch-action:manipulation}.yomio-home button:disabled{cursor:default;opacity:.55}.yomio-home a{color:inherit;text-decoration:none}.yomio-home svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.yomio-home ::selection{background:#855bff;color:#fff}.yomio-home [hidden]{display:none!important}.yomio-home .ym-icon-library{position:absolute;width:0;height:0;overflow:hidden}.yomio-home .ym-sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.yomio-home .ym-skip-link{position:fixed;top:-80px;left:20px;z-index:20;background:var(--navy);padding:14px}.yomio-home .ym-skip-link:focus{top:12px}.yomio-home .ym-stage{position:relative;isolation:isolate;min-height:780px;height:100svh;max-height:1400px;overflow:hidden}.yomio-home .ym-backdrop,.yomio-home .ym-shade{position:absolute;inset:0;z-index:-2}.yomio-home .ym-backdrop{background:#06121e url('../assets/home-performance/poster.webp') center/cover}.yomio-home .ym-backdrop video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}.yomio-home .ym-shade{z-index:-1;background:linear-gradient(180deg,rgba(1,12,26,.6) 0%,rgba(1,12,26,.4) 16%,rgba(1,12,26,.08) 37%,rgba(2,13,27,.08) 80%,rgba(1,9,19,.87) 100%);transition:background .3s}.yomio-home .ym-stage.ym-dim .ym-shade{background:linear-gradient(180deg,rgba(1,12,26,.6),rgba(1,12,26,.35) 50%,rgba(1,9,19,.95))}.yomio-home .ym-header{position:absolute;top:12px;left:4.36%;right:4.36%;height:61px;display:flex;align-items:center;gap:clamp(28px,2.8vw,48px);text-shadow:0 2px 12px #00102566;z-index:4}.yomio-home .ym-brand{display:flex;align-items:center;flex-shrink:0;width:140px;line-height:1}.yomio-home .ym-brand img{display:block;width:100%;height:auto}.yomio-home .ym-primary-nav{display:flex;align-items:center;gap:clamp(26px,3.35vw,56px);height:100%;white-space:nowrap}.yomio-home .ym-nav-link{position:relative;height:100%;padding:0;font-size:clamp(16px,1.26vw,21px)}.yomio-home .ym-nav-link::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1.5px;background:#fff;transform:scaleX(0);transition:transform .25s var(--easing)}.yomio-home .ym-nav-link.ym-active::after,.yomio-home .ym-nav-link:hover::after{transform:scaleX(1)}.yomio-home .ym-account-nav{display:flex;align-items:center;gap:clamp(10px,1.1vw,20px);margin-left:auto;white-space:nowrap}.yomio-home .ym-icon-button{width:32px;height:40px;padding:4px;display:grid;place-items:center;border-radius:8px}.yomio-home .ym-icon-button:hover{background:#ffffff16}.yomio-home .ym-divider{height:21px;width:1px;background:#dce7f580}.yomio-home .ym-balance{display:flex;align-items:center;gap:10px;font-size:clamp(16px,1.36vw,23px);font-variant-numeric:tabular-nums}.yomio-home .ym-recharge{font-size:clamp(16px,1.26vw,21px);padding:8px 0}.yomio-home .ym-profile-wrap{position:relative}.yomio-home .ym-profile{padding:0;display:flex;align-items:center;gap:14px}.yomio-home .ym-profile img{width:clamp(38px,3vw,51px);height:clamp(38px,3vw,51px);border-radius:50%;object-fit:cover}.yomio-home .ym-profile svg{width:17px;height:17px}.yomio-home .ym-profile-menu{position:absolute;right:0;top:calc(100% + 16px);width:210px;padding:22px;border:1px solid var(--line);border-radius:14px;background:#10263bed;backdrop-filter:blur(20px);text-shadow:none}.yomio-home .ym-profile-menu p{font-size:13px;color:var(--muted)}.yomio-home .ym-profile-menu button{padding:10px 0;text-decoration:underline;text-underline-offset:5px}.yomio-home .ym-creation{position:absolute;top:49.2%;left:50%;transform:translateX(-50%);width:44.85%;max-width:900px}.yomio-home .ym-prompt-bar{width:100%;height:68px;display:flex;align-items:center;gap:20px;padding:10px 24px;border:1px solid rgba(240,244,255,.37);border-radius:40px;background:linear-gradient(110deg,rgba(64,77,93,.72),rgba(100,87,86,.72));backdrop-filter:blur(22px);box-shadow:0 8px 28px #02111a24}.yomio-home .ym-prompt-bar:focus-within{border-color:#d9cdff}.yomio-home .ym-prompt-spark{width:30px;height:30px;filter:drop-shadow(0 0 4px #fff9)}.yomio-home .ym-prompt-bar input{width:0;flex:1;min-width:0;border:0;outline:none;background:transparent;color:#fff;caret-color:#d6c7ff;font-size:16px;line-height:1.5}.yomio-home .ym-prompt-bar input:focus-visible{outline:none}.yomio-home .ym-prompt-bar input::placeholder{color:#ebedf2;opacity:.85}.yomio-home .ym-submit-prompt{display:grid;place-items:center;flex-shrink:0;width:42px;height:42px;padding:9px;background:#fff;color:var(--accent);border-radius:50%;transition:transform .25s var(--easing)}.yomio-home .ym-submit-prompt:hover{transform:translateX(2px)}.yomio-home .ym-submit-prompt svg{stroke-width:2.5}.yomio-home .ym-categories{display:flex;justify-content:space-between;gap:16px;margin:20px auto 0;width:85%}.yomio-home .ym-categories button{display:flex;align-items:center;justify-content:center;gap:10px;min-width:0;width:124px;height:53px;padding:0 16px;border-radius:30px;border:1px solid #7d9fbd55;background:#14334de0;backdrop-filter:blur(12px);font-size:18px;white-space:nowrap;transition:background .2s,transform .25s var(--easing)}.yomio-home .ym-categories button:hover{background:#2e5270;transform:translateY(-2px)}.yomio-home .ym-categories button[aria-pressed=true]{border-color:#d3beff;background:#473867}.yomio-home .ym-categories svg{width:23px;height:23px}.yomio-home .ym-models{position:absolute;left:5.8%;right:6.2%;bottom:7.7%}.yomio-home .ym-models-heading{display:flex;align-items:center;justify-content:flex-end;margin-bottom:12px;min-height:24px}.yomio-home .ym-models-heading h2:not(.ym-sr-only){margin:0 auto 0 0;font-size:22px;font-weight:500}.yomio-home .ym-models-heading button{display:flex;align-items:center;gap:9px;font-size:17px;padding:0}.yomio-home .ym-models-heading svg{width:17px;height:17px}.yomio-home .ym-model-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.yomio-home .ym-model-card>img{display:block;width:100%;height:auto;aspect-ratio:2.49;object-fit:cover;opacity:.52;filter:none}.yomio-home .ym-model-details{position:absolute;top:100%;left:0;margin:12px 0;font-size:13px;color:var(--muted)}.yomio-home .ym-toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:15;margin:0;padding:14px 22px;max-width:calc(100% - 32px);width:max-content;border:1px solid #627a91;border-radius:12px;background:#112a40f2;backdrop-filter:blur(16px);font-size:14px;line-height:1.6;box-shadow:0 12px 30px #0005}.yomio-home .ym-works-panel{position:absolute;top:24%;left:20%;right:12%;bottom:15%;padding:32px;border-radius:24px;background:#0b2139ef;border:1px solid var(--line);backdrop-filter:blur(24px);overflow:auto;scrollbar-color:#8194b2 #112c45;scrollbar-width:thin}.yomio-home .ym-panel-heading{display:flex;justify-content:space-between;align-items:center}.yomio-home .ym-panel-heading h1{font-size:27px;font-weight:500;margin:0}.yomio-home .ym-works-description{color:var(--muted);font-size:14px;margin:12px 0 26px}.yomio-home .ym-empty-drafts{padding:36px 0;color:var(--muted);line-height:1.8}.yomio-home .ym-draft{padding:18px 0;border-top:1px solid var(--line)}.yomio-home .ym-draft p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;margin:0 0 10px;max-width:70ch}.yomio-home .ym-draft-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:12px}.yomio-home .ym-draft-meta button{font-size:13px;text-decoration:underline;text-underline-offset:4px}
+@media(min-width:1900px){.yomio-home .ym-header{left:6%;right:6%}.yomio-home .ym-models{left:9%;right:9%}.yomio-home .ym-creation{width:46%}}
+@media(max-width:1200px){.yomio-home .ym-account-nav{gap:10px}.yomio-home .ym-account-nav .ym-optional{display:none}.yomio-home .ym-header{gap:30px}.yomio-home .ym-primary-nav{gap:28px}.yomio-home .ym-creation{width:57%}.yomio-home .ym-models{left:5%;right:5%;bottom:8%}}
+@media(max-width:760px){.yomio-home .ym-stage{height:auto;min-height:100svh;max-height:none;padding:25px 20px 83px;overflow:clip}.yomio-home .ym-header{position:relative;inset:auto;top:-12px;height:auto;display:grid;grid-template-columns:1fr auto;gap:24px 12px}.yomio-home .ym-brand{width:125px}.yomio-home .ym-account-nav{grid-column:2;grid-row:1;gap:11px}.yomio-home .ym-balance{font-size:15px;gap:5px}.yomio-home .ym-balance svg{width:19px;height:19px}.yomio-home .ym-account-nav>.ym-divider,.yomio-home .ym-recharge{display:none}.yomio-home .ym-profile img{width:35px;height:35px}.yomio-home .ym-profile{gap:7px}.yomio-home .ym-profile svg{width:13px;height:13px}.yomio-home .ym-primary-nav{grid-column:1/-1;gap:31px;height:38px}.yomio-home .ym-nav-link{font-size:16px}.yomio-home .ym-creation{position:relative;inset:auto;transform:none;width:100%;max-width:none;margin:clamp(140px,28svh,230px) 0 43px}.yomio-home .ym-prompt-bar{height:60px;padding:9px 12px;gap:12px}.yomio-home .ym-prompt-spark{width:24px;height:24px}.yomio-home .ym-prompt-bar input{font-size:13px}.yomio-home .ym-submit-prompt{width:36px;height:36px;padding:7px}.yomio-home .ym-categories{width:100%;gap:8px;margin-top:15px}.yomio-home .ym-categories button{width:auto;flex:1;height:42px;gap:6px;padding:0 7px;font-size:13px}.yomio-home .ym-categories svg{width:18px;height:18px}.yomio-home .ym-models{position:relative;inset:auto}.yomio-home .ym-models-heading{margin-bottom:12px}.yomio-home .ym-models-heading button{font-size:13px}.yomio-home .ym-model-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.yomio-home .ym-model-card>img{aspect-ratio:1.75}.yomio-home .ym-model-details{position:static;line-height:1.6;margin-top:18px}.yomio-home .ym-backdrop video{object-position:52% center}.yomio-home .ym-shade{background:linear-gradient(180deg,#03122555,#03122508 36%,#03122514 80%,#031225ef)}.yomio-home .ym-works-panel{position:relative;inset:auto;padding:24px 18px;margin-top:70px;min-height:340px;max-height:65svh}.yomio-home .ym-panel-heading h1{font-size:23px}.yomio-home .ym-models-heading h2:not(.ym-sr-only){font-size:18px}.yomio-home .ym-toast{bottom:65px;font-size:13px}.yomio-home .ym-draft-meta{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.yomio-home *,.yomio-home *::before,.yomio-home *::after{transition:none!important;scroll-behavior:auto!important}}
+
+@font-face{font-family:'YomioNoto';src:url('../assets/home-performance/noto-home.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}.yomio-home .ym-below-fold,.yomio-home #ym-artwork-dialog{font-family:'YomioNoto',Arial,sans-serif}.yomio-home .ym-below-fold{background:#080d0f}.yomio-home .ym-commerce-section{min-height:0;aspect-ratio:1672/620;display:flex;align-items:center;padding:40px 3.1% 40px 1.4%;background:linear-gradient(#000811,#080d0f 16%)}.yomio-home .ym-commerce-grid{width:100%;display:grid;grid-template-columns:233fr 279fr 438fr 279fr 234fr;gap:2%;align-items:center}.yomio-home .ym-commerce-card{position:relative;display:block;padding:0;min-width:0;transition:transform .3s var(--easing);text-align:left}.yomio-home .ym-commerce-card:hover{transform:translateY(-6px)}.yomio-home .ym-commerce-card:focus-visible{outline-offset:8px;border-radius:22px}.yomio-home .ym-commerce-card>img{display:block;width:100%;height:auto}.yomio-home .ym-commerce-title{position:absolute;left:10%;bottom:10%;font-size:clamp(16px,1.675vw,28px);line-height:1.4;font-weight:500;white-space:nowrap;text-shadow:0 2px 12px #0009}.yomio-home .ym-commerce-watch .ym-commerce-title,.yomio-home .ym-commerce-skincare .ym-commerce-title{transform:rotate(-4deg);transform-origin:left center}.yomio-home .ym-commerce-model .ym-commerce-title,.yomio-home .ym-commerce-portrait .ym-commerce-title{transform:rotate(3deg);transform-origin:left center;bottom:12%}.yomio-home .ym-commerce-perfume .ym-commerce-title{left:6%;bottom:6.8%}.yomio-home .ym-commerce-arrow{position:absolute;right:6%;bottom:6%;width:12%;aspect-ratio:1;border:1px solid #ffffffe0;border-radius:50%;display:grid;place-items:center}.yomio-home .ym-commerce-arrow svg{transform:rotate(-45deg);width:45%;height:45%;stroke-width:2}.yomio-home .ym-gallery-section{background:#020c12;padding:28px 1.953125% 42px;scroll-margin-top:20px;min-height:100svh;overflow-anchor:none}.yomio-home .ym-gallery-header{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 26px;padding-left:.6%;min-height:52px}.yomio-home .ym-gallery-header h2{margin:0;font-size:clamp(27px,2.2135vw,37px);line-height:1.4;font-weight:400;white-space:nowrap}.yomio-home .ym-gallery-filters{display:flex;align-items:center;justify-content:space-between;gap:12px;width:45.1%;max-width:750px}.yomio-home .ym-gallery-filters button{min-width:0;padding:13px 20px;border:1px solid transparent;border-radius:28px;font-size:clamp(14px,1.042vw,18px);white-space:nowrap;transition:background .2s,border-color .2s}.yomio-home .ym-gallery-filters button[aria-pressed=true]{background:#263747d1;border-color:#dce7f0d1}.yomio-home .ym-gallery-filters button:hover{background:#26374780}.yomio-home .ym-artwork-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:1.171875vw;row-gap:.78125vw;align-content:start;overflow:clip;overflow-clip-margin:8px}.yomio-home .ym-artwork-card{display:block;position:relative;overflow:hidden;aspect-ratio:480/213;min-width:0;border-radius:clamp(14px,1.302vw,22px);padding:0;text-align:left;background:#102030}.yomio-home .ym-artwork-cover{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--easing)}.yomio-home .ym-artwork-card:hover .ym-artwork-cover{transform:scale(1.035)}.yomio-home .ym-artwork-card:focus-visible{outline-offset:4px}.yomio-home .ym-artwork-shade{position:absolute;inset:58.7% 0 0;background:linear-gradient(transparent,#000a)}.yomio-home .ym-artwork-credit{position:absolute;left:3.75%;bottom:4.2%;display:flex;align-items:flex-end;gap:clamp(9px,.65vw,12px);color:#f4f7fc;text-shadow:0 2px 8px #0009}.yomio-home .ym-author-avatar{width:clamp(26px,2.15vw,36px);height:auto;aspect-ratio:1;border-radius:50%;object-fit:cover;flex-shrink:0}.yomio-home .ym-credit-text{display:flex;flex-direction:column;gap:5px;line-height:1.4}.yomio-home .ym-credit-text strong{font-weight:500;font-size:clamp(14px,1.042vw,18px)}.yomio-home .ym-credit-text>span{font-size:clamp(13px,.977vw,17px)}.yomio-home #ym-artwork-dialog{position:fixed;inset:0;max-width:min(1100px,92vw);width:1100px;max-height:92svh;padding:0;border:1px solid #69819a66;border-radius:22px;background:#081723;color:var(--ink);overflow:auto;box-shadow:0 24px 80px #0007}.yomio-home #ym-artwork-dialog::backdrop{background:#020811cc;backdrop-filter:blur(12px)}.yomio-home #ym-artwork-detail-image{display:block;width:100%;height:auto;max-height:70svh;object-fit:contain;background:#020c12}.yomio-home .ym-dialog-close{position:absolute;right:14px;top:14px;background:#071421de;width:40px;height:40px;border-radius:50%;z-index:1}.yomio-home .ym-dialog-close:hover{background:#274058}.yomio-home .ym-artwork-detail-caption{display:flex;align-items:center;gap:14px;padding:20px 26px}.yomio-home .ym-artwork-detail-caption>img{border-radius:50%;object-fit:cover}.yomio-home .ym-artwork-detail-caption h2{font-size:22px;margin:0 0 5px;font-weight:500}.yomio-home .ym-artwork-detail-caption p{font-size:15px;color:var(--muted);margin:0}
+@media(max-width:1200px){.yomio-home .ym-gallery-filters{width:62%;gap:3px}.yomio-home .ym-gallery-filters button{padding:10px 14px}.yomio-home .ym-gallery-header{gap:16px}.yomio-home .ym-commerce-title{font-size:clamp(13px,1.675vw,21px)}}
+@media(max-width:760px){.yomio-home .ym-commerce-section{aspect-ratio:auto;display:block;padding:44px 0 40px}.yomio-home .ym-commerce-grid{display:flex;align-items:center;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 20px 18px;scrollbar-color:#506777 #0b1b25;scrollbar-width:thin;scroll-padding-inline:20px}.yomio-home .ym-commerce-card{flex:0 0 70%;scroll-snap-align:center}.yomio-home .ym-commerce-card>img{height:370px;object-fit:contain}.yomio-home .ym-commerce-perfume{flex-basis:86%}.yomio-home .ym-commerce-perfume>img{height:370px}.yomio-home .ym-commerce-title{font-size:23px;left:12%;bottom:12%}.yomio-home .ym-commerce-perfume .ym-commerce-title{bottom:12%;left:7%}.yomio-home .ym-commerce-model .ym-commerce-title,.yomio-home .ym-commerce-portrait .ym-commerce-title{bottom:15%}.yomio-home .ym-commerce-arrow{bottom:13%;right:7%;width:44px}.yomio-home .ym-gallery-section{padding:24px 20px 38px}.yomio-home .ym-gallery-header{display:block;padding:0;margin-bottom:20px}.yomio-home .ym-gallery-header h2{font-size:28px;margin-bottom:18px}.yomio-home .ym-gallery-filters{width:100%;max-width:none;overflow-x:auto;justify-content:flex-start;gap:8px;padding:2px 2px 8px;scrollbar-width:thin;scrollbar-color:#506777 #0b1b25}.yomio-home .ym-gallery-filters button{flex-shrink:0;font-size:14px;min-height:44px;padding:9px 17px}.yomio-home .ym-artwork-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.yomio-home .ym-artwork-card{aspect-ratio:1.25;border-radius:16px}.yomio-home .ym-artwork-credit{left:10px;bottom:10px;gap:7px}.yomio-home .ym-credit-text{gap:4px}.yomio-home .ym-credit-text strong{font-size:13px}.yomio-home .ym-credit-text>span{font-size:12px}.yomio-home .ym-author-avatar{width:26px}.yomio-home .ym-artwork-shade{inset:35% 0 0;background:linear-gradient(transparent,#000c)}.yomio-home .ym-artwork-detail-caption{padding:16px 18px}.yomio-home .ym-artwork-detail-caption h2{font-size:19px}}
+@media(max-width:430px){.yomio-home .ym-artwork-grid{grid-template-columns:1fr}.yomio-home .ym-artwork-card{aspect-ratio:480/240}.yomio-home .ym-credit-text strong{font-size:16px}.yomio-home .ym-credit-text>span{font-size:14px}.yomio-home .ym-artwork-credit{left:14px;bottom:13px;gap:10px}.yomio-home .ym-author-avatar{width:32px}.yomio-home .ym-commerce-card>img{height:340px}.yomio-home .ym-commerce-perfume>img{height:340px}}
+@media(prefers-reduced-motion:reduce){.yomio-home .ym-commerce-card:hover,.yomio-home .ym-artwork-card:hover .ym-artwork-cover{transform:none}}
+
+@media(min-width:1201px){.yomio-home .ym-gallery-filters button:first-child{min-width:124px}}
+
+/* The homepage owns its canvas; shared account controls keep their production behavior. */
+.yomio-home{box-sizing:border-box;width:100%;min-height:100svh;overflow-x:clip;--cyan:#f6f8ff;--text:#f6f8ff;--surface:#10263b;--bg:#06121e}
+.yomio-home main:focus{outline:none}
+.yomio-home a,.yomio-home button{font-weight:400}
+.yomio-home .ym-brand{font-weight:800}
+.yomio-home #ym-prompt{background:transparent;color:#fff;padding:0;min-height:0;box-shadow:none;border-radius:0;color-scheme:dark}
+.yomio-home #ym-prompt::placeholder{color:#ebedf2;opacity:.85}
+.yomio-home.yomio-home .ym-header .auth-entry-link{background:#10263b90;color:#f6f8ff;box-shadow:none}
+.yomio-home .ym-nav-link{display:flex;align-items:center}
+.yomio-home .ym-models-heading a{display:flex;align-items:center;gap:9px;font-size:17px;padding:0}
+.yomio-home .ym-header .header-actions{display:flex;align-items:center;margin-left:auto;gap:clamp(8px,1.1vw,20px);flex-shrink:0;white-space:nowrap;color:#f6f8ff}
+.yomio-home .ym-header .header-icon-button{width:32px;height:40px;padding:4px;display:grid;place-items:center;border:0;background:transparent;color:#f6f8ff;border-radius:8px}
+.yomio-home .ym-header .header-icon-button:hover{background:#ffffff16}
+.yomio-home .ym-header .header-icon-button svg{width:24px;height:24px}
+.yomio-home .ym-header .header-divider{display:block;height:21px;width:1px;background:#dce7f580}
+.yomio-home .ym-header .header-wallet{display:flex;align-items:center;gap:18px;background:transparent;padding:0;border:0;box-shadow:none;border-radius:0;backdrop-filter:none}
+.yomio-home .ym-header .header-points{display:flex;align-items:center;gap:10px;color:#f6f8ff;font-size:clamp(16px,1.36vw,23px);font-weight:400;font-variant-numeric:tabular-nums}
+.yomio-home .ym-header .header-points svg{width:24px;height:24px}
+.yomio-home .ym-header .recharge-link{display:block;min-height:0;padding:8px 0;background:transparent;color:#f6f8ff;border-radius:0;font-size:clamp(16px,1.26vw,21px);font-weight:400}
+.yomio-home .ym-header .auth-entry-link{padding:8px 12px;background:#10263b90;color:#f6f8ff;font-size:15px}
+.yomio-home .ym-header .avatar-button{width:clamp(38px,3vw,51px);height:clamp(38px,3vw,51px);border:0;background:#203c55;color:#f6f8ff;overflow:hidden;display:grid;place-items:center}
+.yomio-home .ym-header .avatar-button img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.yomio-home .ym-header .avatar-menu,.yomio-home .ym-header .language-menu{background:#10263bf5;color:#f6f8ff;border:1px solid #69819a66;backdrop-filter:blur(20px);max-height:70svh;overflow:auto;text-shadow:none}
+.yomio-home .ym-header .avatar-menu-head span{color:#c7d6e6}
+.yomio-home .ym-header .avatar-menu a:hover,.yomio-home .ym-header .avatar-menu button:hover,.yomio-home .ym-header .language-menu button:hover{background:#274058;color:#fff}
+.yomio-home .ym-entry-error{color:#ffe2e2;font-size:14px;line-height:1.5;margin:12px 18px}
+.yomio-home .ym-footer{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 24px;background:#020c12;color:#c7d6e6;padding:22px 20px;font-size:12px}
+.yomio-home .ym-footer a:hover{text-decoration:underline;text-underline-offset:4px}
+.yomio-home ::-webkit-scrollbar{height:7px;width:7px}
+.yomio-home ::-webkit-scrollbar-track{background:#0b1b25}
+.yomio-home ::-webkit-scrollbar-thumb{background:#506777;border-radius:4px}
+@media(max-width:1200px){.yomio-home .ym-header .language-wrap,.yomio-home .ym-header .invitation-link,.yomio-home .ym-header .header-divider{display:none}}
+@media(max-width:760px){.yomio-home .ym-header .header-actions{grid-column:2;grid-row:1;gap:10px;min-width:0}.yomio-home .ym-header .header-wallet{gap:0}.yomio-home .ym-header .header-points{font-size:15px;gap:5px}.yomio-home .ym-header .header-points svg{width:19px;height:19px}.yomio-home .ym-header .recharge-link{display:none}.yomio-home .ym-header .avatar-button{width:35px;height:35px}.yomio-home .ym-header .auth-entry-link{font-size:13px;min-height:35px;padding:5px 8px}.yomio-home .ym-models-heading a{font-size:13px}.yomio-home .ym-header .header-actions .avatar-menu{width:240px;max-width:calc(100vw - 40px)}}
+
+/* Interaction polish preserves the three-screen composition and its resting geometry. */
+.yomio-home {
+  --feedback-time: 140ms;
+  --state-time: 220ms;
+  --preview-time: 360ms;
+}
+.yomio-home :is(a, button) { touch-action: manipulation; }
+.yomio-home :is(.ym-categories button, .ym-model-card, .ym-commerce-card, .ym-artwork-card, .ym-dialog-close, .header-icon-button, .avatar-button, .auth-entry-link) {
+  transition: transform var(--state-time) var(--easing), background-color var(--feedback-time) ease-out, border-color var(--feedback-time) ease-out;
+}
+.yomio-home :is(.ym-nav-link, .ym-models-heading a, .recharge-link) {
+  transition: color var(--feedback-time) ease-out, opacity var(--feedback-time) ease-out;
+}
+.yomio-home .ym-nav-link:focus-visible::after { transform: scaleX(1); }
+.yomio-home .ym-prompt-bar { transition: border-color 180ms ease-out, box-shadow 180ms ease-out; }
+.yomio-home .ym-prompt-bar:focus-within { border-color: #e6ddff; box-shadow: 0 8px 28px #02111a40; }
+.yomio-home #ym-prompt::placeholder { opacity: 1; }
+.yomio-home .ym-submit-prompt { position: relative; transition: transform var(--feedback-time) var(--easing), background-color var(--feedback-time) ease-out; }
+.yomio-home .ym-submit-prompt::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
+.yomio-home .ym-submit-prompt svg { transition: transform var(--feedback-time) var(--easing), opacity var(--feedback-time) ease-out; }
+.yomio-home .ym-prompt-bar:not(.ym-has-prompt) .ym-submit-prompt svg { opacity: .72; }
+.yomio-home .ym-submit-prompt:hover { transform: none; background: #eee8ff; }
+.yomio-home .ym-submit-prompt:hover svg { transform: translateX(2px); }
+.yomio-home .ym-commerce-arrow {
+  transition: transform var(--state-time) var(--easing), background-color var(--feedback-time) ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .yomio-home .ym-commerce-card:hover { transform: translateY(-4px); }
+  .yomio-home .ym-commerce-card:hover .ym-commerce-arrow { transform: translate(2px, -2px); background: #ffffff14; }
+  .yomio-home .ym-artwork-card:hover .ym-artwork-cover { transform: scale(1.025); }
+}
+.yomio-home :is(.ym-categories button, .ym-model-card, .ym-artwork-card, .ym-dialog-close, .header-icon-button, .avatar-button, .auth-entry-link):active {
+  transform: scale(.98); transition-duration: 80ms;
+}
+.yomio-home .ym-commerce-card:active { transform: scale(.99); transition-duration: 80ms; }
+.yomio-home .ym-submit-prompt:active { transform: scale(.93); transition-duration: 80ms; }
+.yomio-home .ym-gallery-filters { overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #506777 transparent; }
+.yomio-home .ym-gallery-filters button { transition: background-color var(--feedback-time) ease-out, border-color var(--feedback-time) ease-out, transform var(--feedback-time) var(--easing); }
+.yomio-home .ym-gallery-filters button[aria-pressed=true]:hover { background: #263747d1; }
+.yomio-home .ym-gallery-filters button:active { transform: scale(.97); transition-duration: 80ms; }
+.yomio-home .ym-commerce-grid { overscroll-behavior-x: contain; scroll-padding-inline: 20px; scrollbar-width: thin; scrollbar-color: #506777 transparent; }
+.yomio-home .ym-artwork-cover { transition: transform 360ms var(--easing); }
+.yomio-home #ym-artwork-dialog { transform-origin: top left; scrollbar-width: thin; scrollbar-color: #506777 #081723; overscroll-behavior: contain; }
+.yomio-home .ym-dialog-close { display: grid; place-items: center; width: 44px; height: 44px; }
+.yomio-home #ym-artwork-dialog[data-motion=opening]::backdrop { animation: ym-preview-scrim-in var(--preview-time) var(--easing); }
+.yomio-home #ym-artwork-dialog[data-motion=closing]::backdrop { animation: ym-preview-scrim-out 200ms ease-out forwards; }
+.yomio-home .ym-header :is(.avatar-menu, .language-menu) { transform-origin: top right; animation: ym-menu-in 180ms var(--easing); }
+@keyframes ym-preview-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ym-preview-scrim-out { from { opacity: var(--ym-scrim-start, 1); } to { opacity: 0; } }
+@keyframes ym-menu-in { from { opacity: .4; transform: translateY(-3px) scale(.985); } to { opacity: 1; transform: none; } }
+@media (hover: none) {
+  .yomio-home :is(.ym-model-card, .ym-commerce-card, .ym-categories button):hover,
+  .yomio-home .ym-artwork-card:hover .ym-artwork-cover,
+  .yomio-home .ym-submit-prompt:hover svg { transform: none; }
+  .yomio-home :is(.ym-model-card, .ym-artwork-card, .ym-categories button):active { transform: scale(.98); }
+  .yomio-home .ym-commerce-card:active { transform: scale(.99); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .yomio-home *, .yomio-home *::before, .yomio-home *::after {
+    animation: none !important;
+    transition: color 120ms ease-out, background-color 120ms ease-out, border-color 120ms ease-out, opacity 120ms ease-out !important;
+  }
+  .yomio-home :is(.ym-categories button, .ym-model-card, .ym-commerce-card, .ym-artwork-card, .ym-dialog-close, .ym-submit-prompt, .header-icon-button, .avatar-button, .auth-entry-link):is(:hover, :active), .yomio-home .ym-gallery-filters button:active, .yomio-home .ym-submit-prompt:hover svg, .yomio-home .ym-commerce-card:hover .ym-commerce-arrow, .yomio-home .ym-artwork-card:hover .ym-artwork-cover { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .yomio-home :is(.ym-prompt-bar, .ym-categories button) { background: #132b40; backdrop-filter: none; }
+  .yomio-home .ym-header :is(.avatar-menu, .language-menu) { background: #10263b; backdrop-filter: none; }
+  .yomio-home #ym-artwork-dialog::backdrop { background: #020811f5; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .yomio-home :is(.ym-prompt-bar, .ym-model-card, .ym-categories button) { border-color: #c7d6e6; }
+}
+
+/* One moving selection surface; the original rail and every item retain their geometry. */
+
+/* The circle stays anchored while a clipped glass panel unfolds below it. */
+
+/* The prompt grows within its reserved anchor; surrounding sections stay in place. */
+.yomio-home .ym-creation { z-index: 6; }
+.yomio-home .ym-prompt-shell { position: relative; height: 68px; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar {
+  position: absolute; z-index: 2; top: 0; left: 0; display: block; padding: 0; overflow: hidden;
+  transition: width 340ms var(--easing), height 340ms var(--easing), left 340ms var(--easing), transform 340ms var(--easing), border-radius 340ms var(--easing), border-color 180ms ease-out;
+}
+.yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true] {
+  width: calc(100% + 72px); height: auto; padding-bottom: 20px; left: -36px; transform: translateY(-90px); border-radius: 24px;
+  border-color: #e6ddff; background: linear-gradient(110deg,#263b4ff5,#3d3a46f5);
+}
+.yomio-home .ym-prompt-input-row { display: flex; align-items: center; gap: 20px; height: 66px; padding: 10px 24px; transition: height 340ms var(--easing); }
+.yomio-home .ym-prompt-shell #ym-prompt {
+  flex: 1; width: 0; min-width: 0; height: 32px; padding: 4px 0; margin: 0; border: 0; outline: none;
+  resize: none; overflow: hidden; font: inherit; font-size: 16px; line-height: 24px;
+  transition: height 340ms var(--easing); scrollbar-width: thin;
+}
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-prompt-input-row { height: 120px; align-items: flex-start; }
+.yomio-home .ym-prompt-bar[data-expanded=true] #ym-prompt { height: 96px; overflow-y: auto; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-prompt-spark { margin-top: 5px; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-submit-prompt { align-self: flex-end; }
+.yomio-home .ym-prompt-header { display: flex; align-items: center; justify-content: space-between; height: 0; padding: 0 24px; overflow: hidden; opacity: 0; pointer-events: none; transition: height 340ms var(--easing), opacity 160ms ease-out; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-prompt-header { height: 48px; opacity: 1; pointer-events: auto; }
+.yomio-home .ym-prompt-types { display: flex; gap: 5px; }
+.yomio-home .ym-prompt-types button { padding: 5px 13px; font-size: 13px; border-radius: 9px; color: var(--muted); transition: background-color 140ms ease-out, color 140ms ease-out; }
+.yomio-home .ym-prompt-types button[aria-pressed=true] { background: #eee8ff22; color: #fff; }
+.yomio-home .ym-prompt-close { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; }
+.yomio-home .ym-prompt-close svg { width: 18px; height: 18px; }
+.yomio-home .ym-prompt-close:hover { background: #ffffff18; }
+.yomio-home .ym-prompt-parameters { padding: 0 24px; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 180ms ease-out, transform 340ms var(--easing); }
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-prompt-parameters { opacity: 1; pointer-events: auto; transform: none; }
+.yomio-home .ym-prompt-fields { display: grid; grid-template-columns: minmax(0,1.8fr) repeat(3,minmax(0,1fr)); gap: 12px; }
+.yomio-home .ym-prompt-fields label { min-width: 0; display: flex; flex-direction: column; gap: 5px; color: var(--muted); font-size: 11px; line-height: 15px; }
+.yomio-home.yomio-home .ym-prompt-shell .ym-prompt-fields :is(select,input) {
+  box-sizing: border-box; width: 100%; min-width: 0; margin: 0; height: 34px; min-height: 0; padding: 4px 9px;
+  background: #0c223e88; color: #fff; color-scheme: dark; border: 1px solid #afc5df40; border-radius: 9px; font: inherit; font-size: 13px;
+}
+.yomio-home .ym-prompt-fields :is(select,input):disabled { opacity: .65; cursor: default; }
+.yomio-home .ym-prompt-fields :is(select,input):focus-visible { outline: 2px solid #c2afff; outline-offset: 2px; }
+.yomio-home .ym-prompt-note { display: flex; align-items: center; gap: 10px; min-height: 20px; margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 16px; }
+.yomio-home .ym-prompt-note :is(a,button) { color: #e3d6ff; font-size: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.yomio-home .ym-prompt-note .ym-entry-error { margin: 0; font-size: 12px; line-height: 16px; }
+.yomio-home .ym-prompt-fields input[aria-invalid=true] { border-color: #ffd2d2; }
+@media (max-width: 760px) {
+  .yomio-home .ym-prompt-shell { height: 60px; }
+  .yomio-home .ym-prompt-shell .ym-prompt-bar { height: 60px; }
+  .yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true] { width: 100%; height: auto; left: 0; transform: translateY(-68px); }
+  .yomio-home .ym-prompt-input-row { height: 58px; padding: 9px 12px; gap: 12px; }
+  .yomio-home .ym-prompt-shell #ym-prompt { font-size: 13px; }
+  .yomio-home .ym-prompt-header,.yomio-home .ym-prompt-parameters { padding-left: 12px; padding-right: 12px; }
+  .yomio-home .ym-prompt-bar[data-expanded=true] .ym-prompt-input-row { height: 100px; }
+  .yomio-home .ym-prompt-bar[data-expanded=true] #ym-prompt { height: 80px; }
+  .yomio-home .ym-prompt-fields { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .yomio-home .ym-prompt-parameters { transform: none !important; } }
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) { .yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true] { background: #132b40; backdrop-filter: none; } }
+
+/* Use the shared theme preference without replacing or remounting the video. */
+/* The source photos include a dark rectangular matte outside their card silhouettes.
+   Match each intrinsic image ratio so object-fit: contain stays aligned on mobile. */
+.yomio-home .ym-commerce-watch { --ym-photo-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 303 473'%3E%3Cpath d='M32 4L274 29Q300 32 300 60V413Q299 438 273 443L35 468Q4 469 3 440V32Q4 6 32 4Z'/%3E%3C/svg%3E"); }
+.yomio-home .ym-commerce-skincare { --ym-photo-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 363 480'%3E%3Cpath d='M34 5L334 35Q360 38 360 68V412Q360 440 333 444L35 476Q3 476 3 444V33Q3 4 34 5Z'/%3E%3C/svg%3E"); }
+.yomio-home .ym-commerce-perfume { --ym-photo-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 570 521'%3E%3Crect x='3' y='3' width='564' height='514' rx='31'/%3E%3C/svg%3E"); }
+.yomio-home .ym-commerce-model { --ym-photo-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 363 480'%3E%3Cpath d='M34 37L329 5Q359 3 359 34V443Q359 477 329 475L34 444Q4 441 4 410V65Q4 37 34 37Z'/%3E%3C/svg%3E"); }
+.yomio-home .ym-commerce-portrait { --ym-photo-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 303 473'%3E%3Cpath d='M32 31L269 5Q300 3 300 36V440Q300 469 273 468L32 442Q4 440 4 409V60Q4 34 32 31Z'/%3E%3C/svg%3E"); }
+.yomio-home .ym-commerce-card > img {
+  -webkit-mask-image: var(--ym-photo-mask); mask-image: var(--ym-photo-mask);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+:root[data-theme="light"] .yomio-home {
+  color-scheme: light;
+  --ink: #172e48; --muted: #486079; --accent: #6740ce; --navy: #edf5fc;
+  --line: #9aafc466; --glass: #eff7ffdb;
+  --cyan: #172e48; --text: #172e48; --surface: #f5f9fe; --bg: #edf4fa;
+  --ym-hover: #d7e6f3; --ym-selected: #e4dcfa; --ym-focus: #6740ce;
+  color: var(--ink); background: var(--bg);
+}
+/* Blend only the bottom edge so the transition does not wash over the video. */
+:root[data-theme="light"] .yomio-home .ym-shade { background: linear-gradient(180deg,#010c1a99 0%,#010c1a66 16%,#010c1a14 37%,#020d1b0a 75%,#01091314 100%); }
+:root[data-theme="light"] .yomio-home .ym-shade::after {
+  content: ''; position: absolute; inset: auto 0 0; height: clamp(40px, 6svh, 80px);
+  pointer-events: none;
+  background: linear-gradient(180deg, #edf4fa00 0%, #edf4fa06 35%, #edf4fa1a 60%, #edf4fa52 80%, #edf4faa6 92%, var(--bg) 100%);
+}
+:root[data-theme="light"] .yomio-home .ym-header { color: #f6f8ff; text-shadow: 0 2px 12px #00102566; }
+:root[data-theme="light"] .yomio-home .ym-nav-link::after { background: currentColor; }
+:root[data-theme="light"] .yomio-home .ym-header :is(.header-actions,.header-icon-button,.header-points,.recharge-link) { color: #f6f8ff; }
+:root[data-theme="light"] .yomio-home .ym-header .header-divider { background: #dce7f580; }
+:root[data-theme="light"] .yomio-home .ym-header .auth-entry-link,
+:root[data-theme="light"] .yomio-home .ym-header .avatar-button { background: var(--glass); color: var(--ink); }
+:root[data-theme="light"] .yomio-home .ym-header :is(.avatar-menu,.language-menu) { background: #f5f9fef5; color: var(--ink); border-color: var(--line); }
+:root[data-theme="light"] .yomio-home .ym-header .avatar-menu-head span { color: var(--muted); }
+:root[data-theme="light"] .yomio-home .ym-header .header-icon-button:hover { background: #ffffff16; color: #f6f8ff; }
+:root[data-theme="light"] .yomio-home .ym-header :is(.avatar-menu a,.avatar-menu button,.language-menu button):hover { background: var(--ym-hover); color: var(--ink); }
+:root[data-theme="light"] .yomio-home .ym-prompt-bar { background: #f3f8ffe0; border-color: #ffffffc9; box-shadow: 0 8px 28px #233d5824; }
+:root[data-theme="light"] .yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true] { background: #f3f8fff5; border-color: #9e8ac5; }
+:root[data-theme="light"] .yomio-home .ym-prompt-bar:focus-within { border-color: var(--ym-focus); }
+:root[data-theme="light"] .yomio-home #ym-prompt { color: var(--ink); caret-color: var(--ym-focus); color-scheme: light; }
+:root[data-theme="light"] .yomio-home #ym-prompt::placeholder { color: var(--muted); }
+:root[data-theme="light"] .yomio-home .ym-prompt-spark { color: var(--accent); filter: none; }
+:root[data-theme="light"] .yomio-home .ym-submit-prompt { background: var(--accent); color: #fff; }
+:root[data-theme="light"] .yomio-home .ym-submit-prompt:hover { background: #5530b5; }
+:root[data-theme="light"] .yomio-home .ym-prompt-types button[aria-pressed=true] { background: var(--ym-selected); color: #452482; }
+:root[data-theme="light"] .yomio-home .ym-prompt-close:hover { background: var(--ym-hover); }
+:root[data-theme="light"] .yomio-home.yomio-home .ym-prompt-shell .ym-prompt-fields :is(select,input) { background: #fff; color: var(--ink); color-scheme: light; border-color: #a7b8ca; }
+:root[data-theme="light"] .yomio-home .ym-prompt-note :is(a,button) { color: #5936ad; }
+:root[data-theme="light"] .yomio-home .ym-entry-error { color: #a32838; }
+:root[data-theme="light"] .yomio-home .ym-prompt-fields input[aria-invalid=true] { border-color: #a32838; }
+:root[data-theme="light"] .yomio-home .ym-categories button { background: var(--glass); border-color: #b4c7d9; }
+:root[data-theme="light"] .yomio-home .ym-categories button:hover { background: var(--ym-hover); }
+:root[data-theme="light"] .yomio-home .ym-categories button[aria-pressed=true] { background: var(--ym-selected); border-color: #9274c7; }
+:root[data-theme="light"] .yomio-home .ym-models-heading a { padding: 5px 10px; border-radius: 18px; background: var(--glass); }
+:root[data-theme="light"] .yomio-home .ym-below-fold { background: var(--bg); }
+:root[data-theme="light"] .yomio-home .ym-commerce-section { background: linear-gradient(var(--bg),#f7faff 35%); }
+/* Photo overlays keep white type in both themes. */
+:root[data-theme="light"] .yomio-home :is(.ym-commerce-title,.ym-commerce-arrow,.ym-dialog-close) { color: #f6f8ff; }
+:root[data-theme="light"] .yomio-home .ym-gallery-section { background: #f7faff; }
+:root[data-theme="light"] .yomio-home .ym-gallery-filters button:hover { background: var(--ym-hover); }
+:root[data-theme="light"] .yomio-home .ym-gallery-filters button[aria-pressed=true] { background: #dce9f5; border-color: #91aac2; }
+:root[data-theme="light"] .yomio-home #ym-artwork-dialog { background: var(--surface); border-color: var(--line); scrollbar-color: #8299b0 var(--surface); }
+:root[data-theme="light"] .yomio-home #ym-artwork-detail-image { background: #e4edf6; }
+:root[data-theme="light"] .yomio-home .ym-footer { background: #edf4fa; color: var(--muted); }
+:root[data-theme="light"] .yomio-home :is(button,a,input,select):focus-visible { outline-color: var(--ym-focus); }
+:root[data-theme="light"] .yomio-home ::-webkit-scrollbar-track { background: #e4edf6; }
+:root[data-theme="light"] .yomio-home ::-webkit-scrollbar-thumb { background: #8299b0; }
+:root[data-theme="light"] .yomio-home :is(.ym-gallery-filters,.ym-commerce-grid) { scrollbar-color: #8299b0 transparent; }
+.yomio-home .ym-header .theme-toggle { width: 40px; height: 40px; }
+@media (max-width: 760px) {
+  .yomio-home .ym-header { grid-template-columns: auto minmax(0, 1fr); }
+  .yomio-home .ym-header .theme-toggle { width: 44px; height: 44px; }
+  .yomio-home .ym-header .header-actions { gap: 6px; max-width: 100%; }
+  .yomio-home .ym-header .auth-entry-link { min-width: 0; white-space: normal; text-align: center; overflow-wrap: anywhere; }
+}
+@media (max-width: 380px) {
+  .yomio-home .ym-header .header-wallet { display: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  :root[data-theme="light"] .yomio-home :is(.ym-prompt-bar,.ym-categories button),
+  :root[data-theme="light"] .yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true],
+  :root[data-theme="light"] .yomio-home .ym-header :is(.avatar-menu,.language-menu) { background: #f3f8ff; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  :root[data-theme="light"] .yomio-home :is(.ym-prompt-bar,.ym-model-card,.ym-categories button) { border-color: #486079; }
+}

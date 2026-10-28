@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.log
+audit.json
+.env
+.env.local
+playwright-report/
+test-results/
+.impeccable/review/
+.original-baseline.json
+current-test-results.json
+.deployment/
+!.env.production
+!.impeccable/
+.impeccable/*
+!.impeccable/design.json

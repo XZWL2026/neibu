@@ -1,0 +1,15 @@
+{
+  "name": "@xzwl/frontend-boundaries",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/frontend-boundaries.test.mjs"
+  },
+  "dependencies": {
+    "@babel/parser": "7.29.8",
+    "@babel/traverse": "7.29.8",
+    "@vue/compiler-sfc": "3.5.13",
+    "parse5": "8.0.1"
+  }
+}

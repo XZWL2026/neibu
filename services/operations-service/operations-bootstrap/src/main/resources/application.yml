@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: operations-service
+  datasource:
+    url: ${OPERATIONS_DB_URL}
+    username: ${OPERATIONS_DB_USERNAME}
+    password: ${OPERATIONS_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${OPERATIONS_DB_POOL_SIZE:10}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+server:
+  port: 8220
+mybatis-plus:
+  configuration:
+    local-cache-scope: STATEMENT
+
+xzwl:
+  iam-session:
+    enabled: true
+    base-url: ${OPERATIONS_IAM_SERVICE_URL:http://127.0.0.1:8210}

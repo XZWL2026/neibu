@@ -1,0 +1,11 @@
+.media-load { position:relative; display:block; min-width:0; overflow:hidden; }
+.media-load > :is(img,video) { display:block; }
+.media-loading-overlay { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; background:#10191c35; }
+.media-load[data-ready=false] > .media-loading-overlay { background:#1c272c; }
+.media-loading-spinner { display:block; width:26px; height:26px; border:2px solid #839ca04d; border-top-color:#c4edf2; border-radius:50%; animation:media-loading-spin .85s linear infinite; }
+.media-preview-unavailable { position:absolute; inset:0; display:grid; place-items:center; color:#adbfc2; background:#1c272c; }
+@keyframes media-loading-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce){.media-loading-spinner{animation:none}}
+
+.media-library-item .creator-media-preview > .media-load { width:100%; height:100%; }
+.creator-media-preview:has(.media-load[data-loading=true]) > .media-library-kind-icon { visibility:hidden; }

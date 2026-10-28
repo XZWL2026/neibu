@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${BILLING_DB_URL:jdbc:mysql://127.0.0.1:3306/billing_db?connectionTimeZone=UTC}
+    username: ${BILLING_DB_USERNAME}
+    password: ${BILLING_DB_PASSWORD}
+server:
+  address: 127.0.0.1
+iam:
+  service-url: http://127.0.0.1:8210
+spring.cloud.openfeign.client.config.iam-service:
+  connectTimeout: 2000
+  readTimeout: 3000

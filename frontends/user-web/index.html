@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
+    <link rel="preload" as="image" href="/src/assets/brand.webp" fetchpriority="high" />
+    <link data-home-poster rel="preload" as="image" href="/src/home/reference/assets/yomio-line-logo.svg" fetchpriority="high" media="not all" />
+    <link data-home-preload="light" rel="preload" as="image" href="/src/assets/home/light-home-reference-0928.webp" fetchpriority="high" media="not all" />
+    <link data-home-preload="dark" rel="preload" as="image" href="/src/assets/home/dark-home-reference-0928.webp" fetchpriority="high" media="not all" />
+    <link data-canvas-preload="light" rel="preload" as="image" href="/src/assets/home/light-canvas-reference-0928.webp" fetchpriority="high" media="not all" />
+    <link data-canvas-preload="dark" rel="preload" as="image" href="/src/assets/home/dark-canvas-reference-0928.webp" fetchpriority="high" media="not all" />
+    <script>
+      let theme = 'light';
+      try { if (localStorage.getItem('yomio-theme') === 'dark') theme = 'dark'; } catch {}
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+      const path = location.pathname.replace(/\/$/, '') || '/';
+      if (['/', '/home'].includes(path)) document.querySelector('[data-home-poster]').media = 'all';
+      const page = ['/user/login', '/user/register'].includes(path) ? 'home'
+        : path === '/canvas' && !new URLSearchParams(location.search).get('id') ? 'canvas' : null;
+      if (page) {
+        document.querySelector('[data-' + page + '-preload="' + theme + '"]').media = 'all';
+      }
+    </script>
+    <title>YOMIO 一站式AI视频创作平台</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

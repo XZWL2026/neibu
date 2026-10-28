@@ -1,0 +1,54 @@
+/* Keep the creation form independent of legacy directory card/control styles. */
+#app .admin-frame .user-create-dialog {
+  box-sizing: border-box; width: min(640px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+  padding: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  background: var(--panel); color: var(--ink);
+}
+#app .admin-frame .user-create-dialog[open] { display: flex; flex-direction: column; gap: 0; }
+#app .admin-frame .user-create-dialog::backdrop { background: rgb(24 34 49 / .4); }
+html:has(.user-create-dialog[open]), body:has(.user-create-dialog[open]) { overflow: hidden; }
+#app .admin-frame .user-create-dialog > header { flex: none; align-items: flex-start; gap: 20px; padding: 24px 28px 20px; }
+#app .admin-frame .user-create-dialog h2 { margin: 0; font-size: 24px; line-height: 1.4; font-weight: 650; color: var(--ink); }
+#app .admin-frame .user-create-description { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+#app .admin-frame .user-create-dialog > header button { display: grid; place-items: center; flex: none; width: 36px; min-height: 36px; padding: 0; border-color: transparent; color: var(--muted); }
+#app .admin-frame .user-create-dialog > :is([role=alert], [role=status]) { flex: none; margin: 0 28px 16px; font-size: 13px; line-height: 1.6; }
+#app .admin-frame .user-create-dialog > [role=alert] { color: var(--error); }
+#app .admin-frame .user-create-form { display: grid; flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; gap: 20px; padding: 4px 28px 24px; }
+#app .admin-frame .user-create-fields { display: grid; gap: 24px; min-width: 0; margin: 0; padding: 0; border: 0; }
+#app .admin-frame .user-create-field { display: grid; align-content: start; min-width: 0; gap: 8px; }
+#app .admin-frame .user-create-field > label { display: block; color: var(--ink); font-size: 14px; line-height: 1.5; font-weight: 500; }
+#app .admin-frame .user-create-field em { color: var(--error); font-style: normal; }
+#app .admin-frame .user-create-phone { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; }
+#app .admin-frame .user-create-dialog :is(input[type=tel], select, textarea) { box-sizing: border-box; width: 100%; min-width: 0; min-height: 42px; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--panel); color: var(--ink); font: inherit; }
+#app .admin-frame .user-create-dialog :is(input[type=tel], select, textarea):focus-visible { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 2px; }
+#app .admin-frame .user-create-dialog textarea { min-height: 76px; resize: vertical; max-height: 180px; }
+#app .admin-frame .user-create-dialog .user-create-hint { margin: 0; font-size: 12px; color: var(--muted); }
+#app .admin-frame .user-create-accounts { min-width: 0; margin: 0; padding: 0; border: 0; }
+#app .admin-frame .user-create-accounts legend { margin: 0 0 10px; padding: 0; font-size: 14px; font-weight: 500; color: var(--ink); }
+#app .admin-frame .user-create-choices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+#app .admin-frame .user-create-choice { display: grid; grid-template-columns: 18px minmax(0,1fr); align-items: start; gap: 10px; min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; background: var(--panel); }
+#app .admin-frame .user-create-choice:hover { border-color: var(--accent); }
+#app .admin-frame .user-create-choice.selected { border-color: var(--accent); background: var(--accent-soft); }
+#app .admin-frame .user-create-choice:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+#app .admin-frame .user-create-choice > input[type=radio] { appearance: auto; position: static; width: 18px; height: 18px; min-width: 18px; min-height: 18px; padding: 0; margin: 2px 0 0; border: 0; border-radius: 50%; box-shadow: none; background: transparent; accent-color: var(--accent); outline: none; }
+#app .admin-frame .user-create-choice strong { display: block; color: var(--ink); font-size: 14px; line-height: 1.5; font-weight: 600; }
+#app .admin-frame .user-create-choice-description { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+#app .admin-frame .user-create-fields:disabled .user-create-choice { cursor: not-allowed; opacity: .65; }
+#app .admin-frame .user-create-other { display: grid; grid-template-columns: 170px minmax(0,1fr); align-items: start; gap: 20px; }
+#app .admin-frame .user-create-optional { margin-inline-start: 6px; color: var(--muted); font-size: 12px; font-weight: 400; }
+#app .admin-frame .user-create-count { margin: -2px 0 0; text-align: right; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+#app .admin-frame .user-create-form .user-create-notice { display: flex; align-items: flex-start; gap: 9px; padding: 12px; margin: 0; border-radius: 7px; background: var(--surface-inset); color: var(--muted); font-size: 12px; line-height: 1.7; }
+#app .admin-frame .user-create-notice .promoter-icon { margin-top: 1px; }
+#app .admin-frame .user-create-dialog > .dialog-footer { flex: none; display: flex; justify-content: flex-end; gap: 10px; margin: 0; padding: 16px 28px; border-top: 1px solid var(--line); background: var(--panel); }
+#app .admin-frame .user-create-dialog > .dialog-footer button { min-width: 92px; min-height: 42px; }
+@media (max-width: 600px) {
+  #app .admin-frame .user-create-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+  #app .admin-frame .user-create-dialog > header { padding: 20px 20px 16px; }
+  #app .admin-frame .user-create-form { padding: 4px 20px 20px; }
+  #app .admin-frame .user-create-dialog > :is([role=alert], [role=status]) { margin-inline: 20px; }
+  #app .admin-frame .user-create-fields { gap: 20px; }
+  #app .admin-frame .user-create-choice { padding: 12px 10px; gap: 8px; }
+  #app .admin-frame .user-create-other { grid-template-columns: minmax(0,1fr); gap: 16px; }
+  #app .admin-frame .user-create-dialog :is(input[type=tel], select, textarea) { font-size: 16px; }
+  #app .admin-frame .user-create-dialog > .dialog-footer { padding: 14px 20px; }
+}

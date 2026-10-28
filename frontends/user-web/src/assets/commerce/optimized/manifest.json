@@ -1,0 +1,138 @@
+[
+  {
+    "source": "inspiration-cake-0930.png",
+    "bytes": 2426118,
+    "outputs": [
+      {
+        "file": "cake-400.webp",
+        "bytes": 39444,
+        "width": 400,
+        "height": 400
+      },
+      {
+        "file": "cake-800.webp",
+        "bytes": 111404,
+        "width": 800,
+        "height": 800
+      }
+    ]
+  },
+  {
+    "source": "inspiration-jewelry-0930.png",
+    "bytes": 2816035,
+    "outputs": [
+      {
+        "file": "jewelry-400.webp",
+        "bytes": 47376,
+        "width": 400,
+        "height": 400
+      },
+      {
+        "file": "jewelry-800.webp",
+        "bytes": 140558,
+        "width": 800,
+        "height": 800
+      }
+    ]
+  },
+  {
+    "source": "inspiration-shoes-0930.png",
+    "bytes": 2618728,
+    "outputs": [
+      {
+        "file": "shoes-400.webp",
+        "bytes": 32118,
+        "width": 400,
+        "height": 400
+      },
+      {
+        "file": "shoes-800.webp",
+        "bytes": 90886,
+        "width": 800,
+        "height": 800
+      }
+    ]
+  },
+  {
+    "source": "inspiration-headphones-0930.png",
+    "bytes": 2633588,
+    "outputs": [
+      {
+        "file": "headphones-400.webp",
+        "bytes": 32564,
+        "width": 400,
+        "height": 400
+      },
+      {
+        "file": "headphones-800.webp",
+        "bytes": 89108,
+        "width": 800,
+        "height": 800
+      }
+    ]
+  },
+  {
+    "source": "inspiration-livingroom-0930.png",
+    "bytes": 2906865,
+    "outputs": [
+      {
+        "file": "livingroom-400.webp",
+        "bytes": 48932,
+        "width": 400,
+        "height": 600
+      },
+      {
+        "file": "livingroom-800.webp",
+        "bytes": 177280,
+        "width": 800,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "source": "inspiration-portrait-0930.png",
+    "bytes": 2448774,
+    "outputs": [
+      {
+        "file": "portrait-400.webp",
+        "bytes": 26332,
+        "width": 400,
+        "height": 600
+      },
+      {
+        "file": "portrait-800.webp",
+        "bytes": 83788,
+        "width": 800,
+        "height": 1200
+      }
+    ]
+  },
+  {
+    "source": "inspiration-figtart-0930.png",
+    "bytes": 2069217,
+    "outputs": [
+      {
+        "file": "figtart-400.webp",
+        "bytes": 39356,
+        "width": 400,
+        "height": 533
+      },
+      {
+        "file": "figtart-800.webp",
+        "bytes": 105076,
+        "width": 800,
+        "height": 1067
+      }
+    ]
+  },
+  {
+    "source": "editorial-atlas-0930.png",
+    "bytes": 2680183,
+    "outputs": [
+      {
+        "file": "editorial-atlas.webp",
+        "bytes": 347644
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+server:
+  address: 127.0.0.1
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+gateway:
+  upstreams:
+    routing: ${GATEWAY_ROUTING_URI:http://127.0.0.1:8216}
+    canvas: ${GATEWAY_CANVAS_URI:http://127.0.0.1:8218}
+    iam: ${GATEWAY_IAM_URI:http://127.0.0.1:8210}
+    user: ${GATEWAY_USER_URI:http://127.0.0.1:8211}
+    access: ${GATEWAY_ACCESS_URI:http://127.0.0.1:8212}
+    billing: ${GATEWAY_BILLING_URI:http://127.0.0.1:8214}
+    payment: ${GATEWAY_PAYMENT_URI:http://127.0.0.1:8215}
+    storage: ${GATEWAY_STORAGE_URI:http://127.0.0.1:8219}
+    media: ${GATEWAY_MEDIA_URI:http://127.0.0.1:8217}
+    promotion: ${GATEWAY_PROMOTION_URI:http://127.0.0.1:8213}
+    operations: ${GATEWAY_OPERATIONS_URI:http://127.0.0.1:8220}

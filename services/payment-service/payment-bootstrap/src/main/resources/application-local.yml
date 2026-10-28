@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${PAYMENT_DB_URL:jdbc:mysql://127.0.0.1:3306/payment_db?connectionTimeZone=UTC}
+    username: ${PAYMENT_DB_USERNAME}
+    password: ${PAYMENT_DB_PASSWORD}
+server:
+  address: 127.0.0.1
+payment:
+  user-internal-token: ${IAM_USER_INTERNAL_TOKEN}
+abp:
+  internal-token: ${ABP_INTERNAL_TOKEN}

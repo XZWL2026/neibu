@@ -1,0 +1,372 @@
+/* Shared operational patterns have priority over lazy legacy page declarations. */
+#app .admin-frame :is(.user-directory, .api-management, .agent-management, .consumption-page, .finance-page, .provider-logs, .provider-infrastructure, .pricing-editor, .referral-management-page, .income-page, .benefit-rules) {
+  --user-ink: #202d43; --user-muted: #657187; --user-blue: #4f46e5; --user-line: #e3e7ee;
+  --consumption-ink: #202d43; --consumption-muted: #657187; --consumption-blue: #4f46e5;
+  --log-muted: #657187; --log-line: #e3e7ee; --log-accent: #4f46e5; --log-error: #c43d52;
+  --income-line: #e3e7ee; --income-muted: #657187; --rule-blue: #4f46e5; --rule-muted: #657187;
+  --line: #e3e7ee; --muted: #657187; --text: #202d43; --ink: #202d43; --accent: #4f46e5; color: var(--ink);
+}
+
+/* One control vocabulary. Naive UI controls retain their library states. */
+#app .admin-frame :is(button:not(.n-button), a.primary-action, a.secondary-action) { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 7px 13px; border: 1px solid var(--line); border-radius: var(--radius-control); background: #fff; color: #465269; box-shadow: none; font-size: 13px; font-weight: 500; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 150ms, border-color 150ms, color 150ms; }
+#app .admin-frame button:not(.n-button):hover:not(:disabled) { background: #f8f9fc; border-color: #bdc5d2; }
+#app .admin-frame :is(.primary-action, .finance-primary, .primary, button[data-benefit-save]) { min-height: 38px; background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 550; }
+#app .admin-frame :is(.primary-action, .finance-primary, .primary, button[data-benefit-save]):hover:not(:disabled) { background: #4338ca; color: #fff; border-color: #4338ca; }
+#app .admin-frame button:not(.n-button):disabled { opacity: .48; cursor: not-allowed; }
+#app .admin-frame :is(.icon-button, .drawer-close, .finance-icon-button, .pricing-remove, .infra-secret button) { min-height: 32px; min-width: 32px; padding: 5px; border-color: transparent; background: transparent; }
+#app .admin-frame :is(.table-action, .table-text-action, .income-link, .infra-text-button, .pricing-resolution, .api-section-title button) { min-height: 28px; padding: 3px 6px; border: 0; color: var(--accent); background: transparent; box-shadow: none; }
+#app .admin-frame :is(.danger-action, .pricing-delete-model) { color: var(--error); }
+#app .admin-frame :is(input:not([type=checkbox]):not([type=radio]), select, textarea) { min-height: 38px; min-width: 0; max-width: 100%; padding: 8px 11px; border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); background: #fff; box-shadow: none; font-size: 13px; line-height: 1.5; color-scheme: light; }
+#app .admin-frame :is(input, textarea)::placeholder { color: #6b7589; opacity: 1; }
+#app .admin-frame :is(input:not([type=checkbox]):not([type=radio]), select, textarea):hover:not(:disabled) { border-color: #bdc5d2; }
+#app .admin-frame :is(input, select, textarea):focus-visible { outline: 2px solid #a5a0ef; outline-offset: 1px; border-color: var(--accent); }
+#app .admin-frame :is(input, textarea)[readonly] { background: var(--surface-inset); color: var(--muted); }
+#app .admin-frame :is(input, select, textarea):disabled { color: var(--muted); background: #f8f9fc; }
+#app .admin-frame :is(input[type=checkbox], input[type=radio]) { accent-color: var(--accent); }
+#app .admin-frame :is(.configuration-grid, .payout-fields) { gap: 20px; }
+#app .admin-frame :is(.configuration-grid label, .payout-fields label, .portal-account-form label) { min-width: 0; color: #596579; font-size: 12px; }
+#app .admin-frame :is(.configuration-grid input, .configuration-grid select, .payout-fields input, .payout-fields select) { width: 100%; }
+#app .admin-frame button:not(.n-button)[aria-pressed=true] { color: var(--accent); background: var(--accent-soft); border-color: #d4d0fa; }
+#app .admin-frame :is(.period-buttons, .finance-presets, .rank-period) { display: flex; flex-wrap: wrap; gap: 4px; }
+#app .admin-frame :is(.period-buttons, .finance-presets, .rank-period) button { min-height: 30px; padding: 5px 10px; border-color: transparent; background: transparent; font-size: 12px; }
+
+/* Joined ledger bands replace independent decorative metric tiles. */
+#app .admin-frame :is(.user-stat-cards, .overview-finance-summary, .finance-stats, .income-stats, .consumption-summary, .withdrawal-report-summary, .reconciliation-summary, .benefit-audit-summary, .benefit-settings-meta) { display: grid; gap: 0; margin: 0; border: 1px solid var(--line); border-radius: var(--radius-panel); background: #fff; overflow: hidden; }
+#app .admin-frame :is(.user-stat-cards > article, .overview-finance-summary > article, .finance-stats > article, .income-stats > article, .consumption-summary > article, .withdrawal-report-summary > div, .reconciliation-summary > div, .benefit-audit-summary > div, .benefit-settings-meta > div) { position: relative; display: grid; align-content: start; min-width: 0; min-height: 136px; gap: 10px; padding: 23px 24px; border: 0; border-radius: 0; background: #fff; box-shadow: none; }
+#app .admin-frame :is(.user-stat-cards > article, .overview-finance-summary > article, .finance-stats > article, .income-stats > article, .consumption-summary > article, .withdrawal-report-summary > div, .reconciliation-summary > div, .benefit-audit-summary > div, .benefit-settings-meta > div) + :is(article, div) { border-left: 1px solid var(--line-subtle); }
+#app .admin-frame .user-stat-cards .stat-body { display: grid; grid-template-columns: minmax(0,1fr); gap: 8px; width: 100%; }
+#app .admin-frame :is(.user-stat-cards .stat-icon, .summary-icon, .finance-stat-icon, .finance-icon, .review-stat-art, .income-stats > article > i, .payment-stat-trend) { display: none; }
+#app .admin-frame :is(.user-stat-cards h2, .summary-card h2, .finance-stats article > div > span, .income-stats article > div > span, .consumption-summary article > span, .withdrawal-report-summary dt, .reconciliation-summary dt, .benefit-audit-summary dt, .benefit-settings-meta dt) { margin: 0; color: var(--muted); font-size: 12px; font-weight: 500; line-height: 1.5; white-space: normal; }
+#app .admin-frame :is(.user-stat-cards strong, .summary-card .summary-amount, .finance-stats article > div > strong, .income-stats article > div > strong, .consumption-summary article > strong, .withdrawal-report-summary dd, .reconciliation-summary dd, .benefit-audit-summary dd) { display: block; margin: 0; color: var(--ink); font-size: 28px; font-weight: 650; line-height: 1.35; letter-spacing: -.025em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+#app .admin-frame .user-stat-cards .stat-change { display: flex; align-items: baseline; gap: 7px; font-size: 11px; font-weight: 500; line-height: 1.5; }
+#app .admin-frame :is(.stat-change small, .summary-trend small, .income-stats small, .finance-stats small) { margin: 0; color: var(--muted); font-size: 11px; font-weight: 400; }
+#app .admin-frame :is(.stat-change.up, .summary-trend.up strong, .income-stats .decrease) { color: var(--success); }
+#app .admin-frame :is(.stat-change.down, .summary-trend.down strong, .income-stats .increase) { color: var(--error); }
+#app .admin-frame :is(.stat-change.unknown, .summary-trend.unknown strong) { color: var(--muted); }
+#app .admin-frame .summary-card { grid-template-columns: minmax(0,1fr); }
+#app .admin-frame .summary-card :is(h2, .summary-amount, .summary-trend) { grid-column: 1; grid-row: auto; }
+#app .admin-frame .summary-card .summary-amount { white-space: normal; overflow: visible; }
+#app .admin-frame .summary-trend { display: flex; align-items: baseline; gap: 7px; text-align: left; }
+#app .admin-frame .summary-trend strong { color: var(--success); font-size: 11px; font-weight: 500; }
+#app .admin-frame :is(.finance-stats > article > div, .income-stats > article > div) { display: grid; gap: 9px; padding: 0; min-width: 0; }
+
+/* Content owns its container; filtering and records are one continuous workspace. */
+#app .admin-frame :is(.records-workspace, .directory-panel, .admin-card, .finance-card, .finance-filters, .finance-list, .provider-log-filters, .provider-log-list, .provider-log-detail, .infra-card, .infra-detail, .pricing-detail, .referral-card, .referral-panel, .income-list, .benefit-default-card, .benefit-rule-card, .benefit-promoter-card, .benefit-settings-card, .promotion-rules-card, .consumption-list-panel, .consumption-chart-card, .finance-trend-panel, .native-panel) { min-width: 0; border: 1px solid var(--line); border-radius: var(--radius-panel); background: #fff; color: var(--ink); box-shadow: none; }
+#app .admin-frame :is(.admin-card, .finance-card, .provider-log-filters, .infra-card, .infra-detail, .pricing-detail, .referral-card, .benefit-default-card, .benefit-rule-card, .benefit-promoter-card, .benefit-settings-card, .promotion-rules-card, .finance-trend-panel, .native-panel) { padding: 24px; }
+#app .admin-frame .records-workspace { display: grid; gap: 0; overflow: visible; }
+#app .admin-frame .records-workspace > :is(.directory-filters, .directory-list) { border: 0; border-radius: 0; margin: 0; background: transparent; }
+#app .admin-frame .records-workspace > .directory-filters { border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; padding: 20px 24px; }
+#app .admin-frame .records-workspace > .directory-list { padding: 0; border-radius: 0 0 12px 12px; overflow: visible; }
+#app .admin-frame .directory-list > header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 18px 24px; border-bottom: 1px solid var(--line-subtle); }
+#app .admin-frame :is(.directory-list h2, .finance-list h2, .infra-card-heading h2, .referral-section-header h2, .benefit-rules h2, .native-title h2, .finance-trend-panel h2, .consumption-chart-card h2, .admin-card h2) { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.5; }
+#app .admin-frame :is(.directory-list h2 small, .finance-list h2 small, .referral-section-header p, .native-title p, .infra-card p, .admin-card p) { color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.65; }
+#app .admin-frame .directory-list h2 > .promoter-icon { color: var(--muted); width: 17px; height: 17px; }
+#app .admin-frame :is(.filter-fields, .agent-filter-fields) { display: flex; flex-wrap: wrap; align-items: end; gap: 14px; }
+#app .admin-frame .filter-fields > label:not(.directory-search) { display: grid; flex: 1 1 105px; gap: 7px; color: var(--muted); font-size: 11px; }
+#app .admin-frame .filter-fields .directory-search { flex: 2 1 235px; min-width: 180px; }
+#app .admin-frame .directory-search { position: relative; }
+#app .admin-frame .directory-search input { width: 100%; height: 38px !important; padding-left: 36px; background: #fff !important; }
+#app .admin-frame .directory-search > .promoter-icon { position: absolute; left: 12px; top: 10px; color: var(--muted); width: 17px; height: 17px; }
+#app .admin-frame .directory-dates { display: flex; align-items: center; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+#app .admin-frame .directory-dates legend { margin-bottom: 7px; padding: 0; color: var(--muted); font-size: 11px; }
+#app .admin-frame .directory-dates input { width: 130px; }
+#app .admin-frame .filter-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line-subtle); }
+#app .admin-frame .filter-bottom > div:last-child { display: flex; gap: 8px; }
+#app .admin-frame :is(.api-directory-panel, .finance-filters) { padding: 20px 24px; }
+#app .admin-frame .api-filters { padding-bottom: 18px; border-bottom: 1px solid var(--line-subtle); margin-bottom: 14px; }
+#app .admin-frame :is(.finance-filter-row, .finance-filter-actions, .agent-filter-actions) { gap: 10px; }
+#app .admin-frame .finance-filter-row + .finance-filter-row { border-top: 1px solid var(--line-subtle); padding-top: 16px; margin-top: 16px; }
+#app .admin-frame .finance-search input { padding-left: 36px; }
+#app .admin-frame .finance-list { overflow: visible; }
+/* Pagination bounds these rows; expand the current page instead of nesting vertical scroll. */
+#app .admin-frame :is(.data-table-region, .daily-finance .finance-table, .provider-log-rows, .provider-log-timeline ol) { height: auto; max-height: none; }
+#app .admin-frame .finance-list h2::before, #app .admin-frame .finance-drawer h3::before { display: none; }
+
+/* Quiet tabular data with local overflow. */
+#app .admin-frame :is(.table-wrap, .directory-table, .income-table-wrap, .pricing-table-wrap, .referral-table-scroll, .benefit-table-wrap, .provider-log-table-wrap) { min-width: 0; max-width: 100%; overflow-x: auto; border-color: var(--line-subtle); background: #fff; }
+#app .admin-frame :is(table, .n-data-table) { font-variant-numeric: tabular-nums; }
+#app .admin-frame :is(th,td) { padding: 14px 16px; border-bottom: 1px solid var(--line-subtle); font-size: 13px; letter-spacing: 0; }
+#app .admin-frame th { color: #596579; background: #f8f9fc; font-weight: 500; }
+#app .admin-frame :is(td, td strong) { color: var(--ink); }
+#app .admin-frame td small { color: var(--muted); font-size: 11px; }
+#app .admin-frame tbody tr:hover td { background: #f8f8fe; }
+#app .admin-frame caption:not(.sr-only) { color: var(--ink); padding: 18px 16px; text-align: left; font-size: 14px; font-weight: 550; }
+#app .admin-frame .directory-table .n-data-table :is(.n-data-table-th, .n-data-table-td) { padding: 14px 12px; font-size: 13px; }
+#app .admin-frame :is(.user-name, .agent-name) { min-height: 28px; padding: 0; border: 0; background: transparent; color: var(--ink); font-weight: 550; }
+#app .admin-frame :is(.user-name, .agent-name):hover:not(:disabled) { border: 0; background: transparent; color: var(--accent); }
+#app .admin-frame .table-text-action { color: var(--ink); font-weight: 550; }
+#app .admin-frame :is(.user-avatar, .profile-avatar, .agent-detail-avatar, .income-avatar) { color: #4f46e5; background: #eeedfc; box-shadow: none; }
+#app .admin-frame :is(.directory-pagination, .finance-pagination, .income-pagination, .referral-pagination, .benefit-pagination, .infra-pagination) { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0; padding: 18px 24px; color: var(--muted); font-size: 12px; }
+#app .admin-frame :is(.page-controls, .selection-actions) { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+#app .admin-frame :is(.page-controls, .income-pagination, .referral-pagination, .benefit-pagination, .infra-pagination) button { min-width: 32px; min-height: 32px; padding: 5px 9px; }
+#app .admin-frame button[aria-current=page] { border-color: var(--accent); background: var(--accent); color: #fff; }
+#app .admin-frame .selection-actions select { min-height: 34px; padding: 5px 10px; }
+#app .admin-frame :is(.list-tools, .infra-tools) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+#app .admin-frame :is(.list-tools summary, .row-menu summary, .consumption-row-actions summary) { display: flex; align-items: center; gap: 7px; cursor: pointer; color: #465269; }
+#app .admin-frame .column-settings { color: var(--ink); background: #fff; border-color: var(--line); border-radius: 10px; box-shadow: 0 10px 30px #1822311a; }
+
+/* Semantic states, with readable text alongside colour. */
+#app .admin-frame :is(.pill, .status, .infra-badge, .income-badge, .pricing-badge, .finance-status) { padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 500; line-height: 1.6; }
+#app .admin-frame :is(.pill.green, .status.green, .status-success, .status-green, .finance-status.PAID, .income-badge.PAID) { color: #15805e; background: #edf8f2; }
+#app .admin-frame :is(.pill.red, .status.red, .status-error, .status-red, .income-badge.REJECTED) { color: #c43d52; background: #fff0f3; }
+#app .admin-frame :is(.pill.blue, .status.blue) { color: #4f46e5; background: #eeedfc; }
+#app .admin-frame :is(.pill.purple, .status.purple) { color: #7651a3; background: #f4effa; }
+#app .admin-frame :is(.pill.orange, .pill.gold, .status.orange, .api-type) { color: #956014; background: #fcf4e8; }
+#app .admin-frame .summary-card { background: #fff; }
+#app .admin-frame .finance-heading, #app .admin-frame .page-heading > div:first-child { display: block; }
+#app .admin-frame .income-stats { margin-bottom: 20px; }
+#app .admin-frame :is(.provider-log-error, .income-error, .benefit-error, .pricing-error, .finance-error, .native-error, .reconciliation-load-error, .benefit-audit-load-error, .field-error, .withdrawal-feedback-error, .corporate-transfers [role=alert], .recharge-management [role=alert]) { color: var(--error); }
+#app .admin-frame .notice { color: var(--success); }
+#app .admin-frame :is(.provider-log-empty, .income-empty, .referral-empty, .benefit-empty, .pricing-empty, .infra-empty, .consumption-empty, .table-empty) { color: var(--muted); padding: 52px 16px; font-size: 13px; line-height: 1.7; text-align: center; }
+
+/* Overview: a ledger band, a full-width trend, and a joined model matrix. */
+#app .admin-frame .finance-trend-panel > header { margin-bottom: 18px; }
+#app .admin-frame .trend-note { color: var(--muted); font-size: 11px; }
+#app .admin-frame .native-header { margin-bottom: 20px; }
+#app .admin-frame .native-title > div { display: grid; gap: 4px; }
+#app .admin-frame .native-icon { display: none; }
+#app .admin-frame .native-filters { gap: 8px; }
+#app .admin-frame .native-filters input { min-height: 38px; width: 142px; }
+#app .admin-frame .native-model-grid { gap: 0; border: 1px solid var(--line-subtle); border-radius: 8px; overflow: hidden; }
+#app .admin-frame .native-model-card { border: 0; border-radius: 0; background: #fff; box-shadow: none; }
+#app .admin-frame .native-model-card + .native-model-card { border-left: 1px solid var(--line-subtle); }
+#app .admin-frame .native-model-card h3 { padding: 14px 16px; background: #f8f9fc; color: var(--ink); font-size: 13px; font-weight: 600; }
+#app .admin-frame .native-model-card dl { padding: 7px 16px; }
+#app .admin-frame .native-model-card dl > div { padding: 8px 0; color: var(--muted); font-size: 12px; }
+#app .admin-frame .native-model-card dd.has-usage { color: var(--ink); font-weight: 550; }
+#app .admin-frame .native-model-card .native-model-total { border-color: var(--line-subtle); color: var(--ink); font-size: 12px; }
+#app .admin-frame .finance-card header { flex-wrap: wrap; }
+#app .admin-frame .finance-card h3 { font-size: 16px; font-weight: 600; color: var(--ink); }
+#app .admin-frame .finance-meta { padding: 0; border: 0; color: var(--muted); font-size: 11px; }
+#app .admin-frame .finance-meta strong { color: var(--ink); font-size: 12px; }
+#app .admin-frame .chart-accessible-data { margin-top: 14px; overflow: auto; border-top: 1px solid var(--line-subtle); }
+#app .admin-frame .chart-accessible-data summary { cursor: pointer; padding: 12px 0 0; color: var(--muted); font-size: 12px; }
+#app .admin-frame .chart-accessible-data table { border-collapse: collapse; width: 100%; min-width: 360px; }
+#app .admin-frame .chart-accessible-data :is(th,td) { padding: 9px 12px; }
+#app .admin-frame .trend-empty { min-height: 260px; display: grid; place-items: center; color: var(--muted); }
+
+/* Configuration: persistent tabs and open, clearly separated form sections. */
+#app .admin-frame :is(.pricing-heading, .infra-heading) { margin-bottom: 24px; }
+#app .admin-frame .infra-tabs { width: 100%; gap: 6px; margin-bottom: 24px; padding: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+#app .admin-frame .infra-tabs button { flex: 0 0 auto; min-width: 106px; min-height: 44px; padding: 10px 16px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; color: var(--muted); }
+#app .admin-frame .infra-tabs button[aria-pressed=true] { color: var(--accent); border-bottom-color: var(--accent); background: transparent; }
+#app .admin-frame .infra-tabs button::after { display: none; }
+#app .admin-frame .infra-card-heading { padding: 0; margin-bottom: 20px; background: transparent; gap: 12px; }
+#app .admin-frame .ark-connection .configuration-fields { margin: 0; padding: 0; background: transparent; }
+#app .admin-frame .ark-connection .configuration-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+#app .admin-frame .ark-connection .infra-protocol-fields { grid-template-columns: minmax(0,2fr) minmax(0,1fr); margin-top: 20px; }
+#app .admin-frame .infra-advanced { border-radius: 7px; background: #f8f9fc; padding: 14px 16px; margin-block: 20px; }
+#app .admin-frame .infra-advanced summary { color: #596579; font-size: 12px; }
+#app .admin-frame :is(.pricing-model, .pricing-detail-model) { border-color: var(--line); border-radius: 8px; box-shadow: none; background: #fff; }
+#app .admin-frame .pricing-model-heading { border: 0; border-radius: 0; background: #f8f9fc; padding: 15px 16px; }
+#app .admin-frame .pricing-model-heading strong { color: var(--ink); font-size: 14px; font-weight: 550; }
+#app .admin-frame .pricing-accounts { gap: 0; border-bottom: 1px solid var(--line); margin-bottom: 22px; padding: 0; }
+#app .admin-frame .pricing-accounts button { align-items: start; flex: 1; min-height: 80px; padding: 14px 18px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; color: var(--muted); box-shadow: none; }
+#app .admin-frame .pricing-accounts button[aria-pressed=true] { border-bottom-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+#app .admin-frame .pricing-accounts button i { color: inherit; background: transparent; box-shadow: none; }
+#app .admin-frame .pricing-accounts button strong { color: inherit; font-size: 14px; font-weight: 550; }
+#app .admin-frame .pricing-accounts button small { color: var(--muted); font-size: 11px; }
+#app .admin-frame .pricing-section-heading { margin-top: 24px; }
+#app .admin-frame .pricing-section-heading i { background: transparent; color: var(--muted); box-shadow: none; }
+#app .admin-frame .pricing-section-heading h2 { color: var(--ink); font-size: 15px; }
+#app .admin-frame .pricing-footer { position: sticky; bottom: 0; z-index: 4; padding: 16px 0; border-top: 1px solid var(--line); background: var(--surface); }
+#app .admin-frame .pricing-fields { padding: 0; }
+
+/* Detail surfaces and promotion flows */
+#app .admin-frame dialog { max-width: calc(100vw - 28px); max-height: calc(100dvh - 32px); border: 0; border-radius: 12px; padding: 24px; overflow: auto; color: var(--ink); background: #fff; box-shadow: 0 18px 60px #18223126; }
+#app .admin-frame dialog::backdrop { background: #18223166; backdrop-filter: none; }
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer) { border: 0; border-radius: 12px 0 0 12px; color: var(--ink); background: #fff; }
+#app .admin-frame :is(.income-drawer, .pricing-detail, .infra-detail) { color: var(--ink); background: #fff; border-color: var(--line); box-shadow: none; }
+#app .admin-frame :is(.detail-balance, .detail-finance, .detail-records, .detail-key, .detail-adjustment, .agent-detail-panel, .api-detail-panel, .income-section, .finance-detail-state) { border-color: var(--line-subtle); border-radius: 8px; background: #fff; color: var(--ink); box-shadow: none; }
+#app .admin-frame :is(.detail-balance, .api-balance, .income-calculation, .income-result > article, .adjustment-preview) { background: #f8f9fc; border: 0; border-radius: 8px; box-shadow: none; }
+#app .admin-frame :is(.agent-detail-person h2, .api-client-detail h2, .finance-drawer h2, .user-detail-content h3) { color: var(--ink); }
+#app .admin-frame :is(.reference-create-dialog, .account-type-cards label.selected) { background: #fff; box-shadow: none; }
+#app .admin-frame .account-type-cards label { border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: none; }
+#app .admin-frame .account-type-cards label.selected { border-color: var(--accent); background: var(--accent-soft); }
+#app .admin-frame .account-card-icon { background: transparent; color: var(--muted); border-radius: 0; box-shadow: none; }
+#app .admin-frame .create-step h3 > span { color: var(--accent); background: var(--accent-soft); }
+#app .admin-frame .income-route { padding: 0 !important; }
+#app .admin-frame .income-heading { display: flex; flex-wrap: wrap; padding: 0; margin: 0 0 20px; background: transparent; }
+#app .admin-frame .income-heading h2 { color: var(--ink); font-size: 17px; font-weight: 600; }
+#app .admin-frame .income-heading p { color: var(--muted); font-size: 12px; }
+#app .admin-frame .income-status { background: transparent; gap: 24px; }
+#app .admin-frame :is(.income-status button, .income-tabs button) { border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; }
+#app .admin-frame :is(.income-status button, .income-tabs button)[aria-pressed=true] { color: var(--accent); border-bottom-color: var(--accent); background: transparent; }
+#app .admin-frame :is(.referral-section-icon, .benefit-title-icon) { display: none; }
+#app .admin-frame .referral-status-cards button { border: 1px solid var(--line); background: #fff; color: var(--muted); border-radius: 7px; }
+#app .admin-frame :is(.withdrawal-report-filters, .reconciliation-filters, .benefit-audit-filters) { padding: 20px; border-color: var(--line); border-radius: 12px; background: #fff; }
+#app .admin-frame :is(.withdrawal-report-filters, .reconciliation-filters, .benefit-audit-filters) label { color: var(--muted); }
+#app .admin-frame :is(.reconciliation-preview, .promotion-admin-note) { border-color: #e9d7b3; color: #77511a; background: #fcf7ed; }
+#app .admin-frame .portal-accounts { display: grid; gap: 20px; }
+#app .admin-frame .portal-accounts > p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+#app .admin-frame .portal-account-form { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 18px; }
+#app .admin-frame .portal-account-form small { color: var(--muted); }
+#app .admin-frame .record-card > header { background: transparent; }
+
+/* Route-specific compositions still use the shared vocabulary. */
+#app .admin-frame .finance-records-workspace > :is(.finance-filters, .finance-list) { margin: 0; border: 0; border-radius: 0; }
+#app .admin-frame .finance-records-workspace > .finance-filters { border-bottom: 1px solid var(--line); }
+#app .admin-frame .finance-records-workspace > .finance-list { border-radius: 0 0 12px 12px; }
+#app .admin-frame :is(.finance-page, .consumption-page, .recharge-management, .corporate-transfers) { display: grid; gap: 24px; }
+#app .admin-frame .api-management .api-stats { grid-template-columns: repeat(4,minmax(0,1fr)); }
+#app .admin-frame .consumption-charts { grid-template-columns: minmax(0,1fr) minmax(0,1.6fr); gap: 20px; }
+#app .admin-frame .consumption-chart-card { height: auto; min-height: 320px; padding: 22px; overflow: visible; }
+#app .admin-frame .consumption-chart-card h2::before, #app .admin-frame .consumption-panel h2::before { display: none; }
+#app .admin-frame .consumption-chart-card .chart-legend { display: none; }
+#app .admin-frame .consumption-share { height: auto; min-height: 230px; }
+#app .admin-frame .share-chart { position: relative; flex: 0 0 200px; width: 200px; min-width: 0; }
+#app .admin-frame .share-chart-total { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; pointer-events: none; }
+#app .admin-frame .share-chart-total strong { max-width: 110px; overflow-wrap: anywhere; text-align: center; font-size: 18px; font-variant-numeric: tabular-nums; }
+#app .admin-frame .share-chart-total span { color: var(--muted); font-size: 12px; }
+#app .admin-frame .analysis-state { min-height: 200px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; align-content: center; gap: 12px; color: var(--muted); line-height: 1.7; text-align: center; }
+@media (max-width: 1400px) {
+  #app .admin-frame .consumption-share { flex-direction: column; align-items: stretch; }
+  #app .admin-frame .share-chart { flex-basis: auto; align-self: center; }
+  #app .admin-frame .consumption-share-legend { flex: none; max-width: none; width: 100%; }
+}
+#app .admin-frame .consumption-ranking { grid-column: 1/-1; min-height: 190px; }
+#app .admin-frame .consumption-ranking .rank-controls { gap: 10px; flex-wrap: wrap; margin: 0 0 16px; font-size: 12px; }
+#app .admin-frame .consumption-ranking .rank-controls input[type=date] { width: 138px; font-size: 12px; }
+#app .admin-frame .consumption-ranking .consumption-rank-list { max-height: 310px; }
+#app .admin-frame .rank-number { border-radius: 5px; background: #f0f1f6; color: var(--muted); box-shadow: none; }
+#app .admin-frame .rank-bar { background: #f0f1f6; height: 4px; }
+#app .admin-frame .rank-model > button { color: var(--ink); }
+#app .admin-frame .consumption-list-panel { padding: 0; }
+#app .admin-frame .consumption-list-toolbar { display: flex; flex-wrap: wrap; margin: 0; padding: 22px 24px; border-bottom: 1px solid var(--line); gap: 14px; }
+#app .admin-frame .consumption-list-toolbar h2 { font-size: 16px; font-weight: 600; gap: 10px; margin: 0; }
+#app .admin-frame .consumption-list-toolbar h2 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+#app .admin-frame .consumption-list-total { border: 0; background: transparent; color: var(--muted); box-shadow: none; margin-left: auto; padding: 0; }
+#app .admin-frame .consumption-list-total strong { color: var(--ink); }
+#app .admin-frame .consumption-filters { width: 100%; flex-wrap: wrap; gap: 10px; }
+#app .admin-frame .consumption-record-detail { background: transparent; padding: 0; border: 0; }
+#app .admin-frame .consumption-detail-heading h1 { color: var(--ink); font-size: 28px; font-weight: 650; letter-spacing: -.025em; }
+#app .admin-frame .consumption-detail-heading nav > a { display: inline-flex; align-items: center; gap: 5px; background: #fff; color: var(--accent); font-size: 12px; }
+#app .admin-frame .consumption-panel { border-color: var(--line); border-radius: 12px; padding: 22px; box-shadow: none; }
+#app .admin-frame .consumption-diagnostic { border: 0; border-radius: 0; padding: 0 0 18px; border-bottom: 1px solid var(--line); }
+#app .admin-frame .consumption-diagnostic > header { margin: 0 0 12px; padding: 0; background: transparent; }
+#app .admin-frame .chain-icon { color: var(--accent); background: var(--accent-soft); box-shadow: none; border-radius: 8px; }
+#app .admin-frame .consumption-panel dt { color: var(--muted); }
+#app .admin-frame .consumption-prompt { color: #596579; background: #f8f9fc; border-color: var(--line); }
+#app .admin-frame .page-panel:has(.benefit-rules) { padding: 0 !important; }
+#app .admin-frame .benefit-default-card { grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto; gap: 16px; }
+#app .admin-frame .benefit-default-card > i { display: none; }
+#app .admin-frame .benefit-default-value > strong { color: var(--ink); font-size: 28px; }
+#app .admin-frame .benefit-default-card .benefit-example { grid-column: auto; grid-row: auto; color: var(--muted); }
+#app .admin-frame .benefit-default-card .benefit-edit-default { grid-column: auto; grid-row: auto; }
+#app .admin-frame .benefit-default-card .benefit-inline-edit { grid-column: 1/-1; }
+#app .admin-frame .benefit-rules .current-page { color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+#app .admin-frame .referral-step { border: 0; border-radius: 0; background: transparent; padding: 0; box-shadow: none; }
+#app .admin-frame .referral-confirm { background: var(--accent); color: #fff; border-color: var(--accent); }
+#app .admin-frame .portal-accounts { grid-template-columns: minmax(0,1.6fr) minmax(290px,1fr); align-items: start; }
+#app .admin-frame .portal-accounts > p { grid-column: 1/-1; }
+#app .admin-frame .portal-accounts > .portal-account-form { grid-column: 2; grid-row: 2 / span 3; grid-template-columns: minmax(0,1fr); }
+#app .admin-frame .portal-accounts > .table-wrap { grid-column: 1; grid-row: 2; }
+#app .admin-frame .portal-accounts > form:not(.portal-account-form) { grid-column: 1; display: grid; gap: 14px; }
+#app .admin-frame .portal-account-form > button { justify-self: stretch; }
+#app .admin-frame .password-change-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 620px; margin: 0 0 24px; }
+#app .admin-frame .password-change-form :is(h2,p,label) { grid-column: 1/-1; }
+#app .admin-frame .password-change-form label { display: grid; gap: 8px; color: var(--muted); font-size: 12px; }
+#app .admin-frame .api-create-simple { padding: 0; }
+#app .admin-frame .api-create-simple-header h2 { font-size: 23px; color: var(--ink); }
+#app .admin-frame .api-create-simple-header p { color: var(--muted); font-size: 13px; }
+#app .admin-frame .api-create-step-number { color: var(--accent); background: var(--accent-soft); }
+
+/* Focused financial controls use the same command and selection vocabulary. */
+#app .admin-frame .api-create-simple-segments label.selected { border-color: var(--accent); background: var(--accent); color: #fff; }
+#app .admin-frame :is(.api-create-simple-phone, .api-create-simple-money, .api-create-simple-segments label):focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+#app .admin-frame :is(.api-portal-entry, .agent-enter, .detail-edit-name, .detail-type-trigger, .detail-key button, .agent-rate button, .reference-adjustment .amount-stepper button, .api-profile-actions summary, .detail-tabs button, .api-tabs button, .api-client-pricing button:not(.primary-action), .api-section-title button:not(.primary-action), .api-price-tools summary) { color: var(--accent); }
+#app .admin-frame .api-price-tools summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+#app .admin-frame .api-client-pricing .api-section-title .primary-action { color: #fff; background: var(--accent); border: 1px solid var(--accent); min-height: 36px; padding: 7px 13px; }
+#app .admin-frame :is(.api-section-title h3 > svg, .detail-type-trigger > svg, .detail-key > svg) { color: var(--accent); }
+#app .admin-frame :is(.api-tabs button[aria-selected=true], .detail-tabs button[aria-pressed=true], .agent-detail-tabs button[aria-pressed=true]) { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+#app .admin-frame .reference-presets button { padding: 7px 8px; color: var(--accent); background: var(--accent-soft); border-color: transparent; white-space: nowrap; }
+#app .admin-frame .reference-presets button[aria-pressed=true] { border-color: var(--accent); background: #fff; }
+#app .admin-frame .api-quota .reference-presets { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+#app .admin-frame .reference-amount { align-self: start; }
+#app .admin-frame .reference-amount .amount-stepper { display: flex; align-items: center; min-height: 42px; background: #fff; border-color: var(--line); }
+#app .admin-frame .reference-amount .amount-stepper button { flex: 0 0 32px; width: 32px; min-width: 32px; min-height: 40px; padding: 4px; border: 0; }
+#app .admin-frame .reference-amount .amount-stepper input { flex: 1; width: 0; height: 40px; min-height: 40px; padding: 7px 8px; border: 0; font-size: 18px; }
+#app .admin-frame .reference-amount .amount-stepper:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 1200px) {
+  #app .admin-frame :is(.user-stat-cards > article, .overview-finance-summary > article, .finance-stats > article, .income-stats > article) { padding: 20px; }
+  #app .admin-frame :is(.user-stat-cards strong, .summary-card .summary-amount, .finance-stats article > div > strong, .income-stats article > div > strong) { font-size: 25px; }
+  #app .admin-frame .portal-accounts { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .portal-accounts > :is(.table-wrap,.portal-account-form,form:not(.portal-account-form)) { grid-column: 1; grid-row: auto; }
+  #app .admin-frame .portal-accounts > .portal-account-form { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #app .admin-frame .benefit-audit-filters { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+  #app .admin-frame :is(.user-stat-cards, .overview-finance-summary, .finance-stats, .income-stats, .consumption-summary, .withdrawal-report-summary, .reconciliation-summary, .benefit-audit-summary, .benefit-settings-meta) { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #app .admin-frame :is(.user-stat-cards > article, .overview-finance-summary > article, .finance-stats > article, .income-stats > article, .consumption-summary > article, .withdrawal-report-summary > div, .reconciliation-summary > div, .benefit-audit-summary > div, .benefit-settings-meta > div) { min-height: 125px; padding: 18px 16px; border-bottom: 1px solid var(--line-subtle); }
+  #app .admin-frame :is(.user-stat-cards > article, .overview-finance-summary > article, .finance-stats > article, .income-stats > article, .consumption-summary > article, .withdrawal-report-summary > div, .reconciliation-summary > div, .benefit-audit-summary > div, .benefit-settings-meta > div):nth-child(odd) { border-left: 0; }
+  #app .admin-frame .user-stat-cards > article:last-child:nth-child(odd) { grid-column: 1/-1; }
+  #app .admin-frame :is(.user-stat-cards strong, .summary-card .summary-amount, .finance-stats article > div > strong, .income-stats article > div > strong, .withdrawal-report-summary dd, .reconciliation-summary dd, .benefit-audit-summary dd) { font-size: 24px; }
+  #app .admin-frame :is(.admin-card, .finance-card, .provider-log-filters, .infra-card, .infra-detail, .pricing-detail, .referral-card, .benefit-default-card, .benefit-rule-card, .benefit-promoter-card, .benefit-settings-card, .promotion-rules-card, .finance-trend-panel, .native-panel, .api-directory-panel, .finance-filters) { padding: 18px 16px; }
+  #app .admin-frame .records-workspace > .directory-filters { padding: 18px 16px; }
+  #app .admin-frame .filter-fields .directory-search { flex-basis: 100%; }
+  #app .admin-frame .filter-fields > label:not(.directory-search) { flex-basis: calc(50% - 14px); }
+  #app .admin-frame .directory-dates { width: 100%; }
+  #app .admin-frame .directory-dates input { flex: 1; width: 0; }
+  #app .admin-frame :is(.directory-list > header, .directory-pagination, .finance-pagination, .income-pagination, .referral-pagination, .benefit-pagination) { padding: 16px; }
+  #app .admin-frame .page-controls { justify-content: flex-start; gap: 5px; }
+  #app .admin-frame .page-controls > span { width: 100%; }
+  #app .admin-frame :is(.configuration-grid, .payout-fields, .portal-account-form, .ark-connection .configuration-grid, .ark-connection .infra-protocol-fields, .benefit-audit-filters) { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .native-model-grid { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .native-model-card + .native-model-card { border-left: 0; border-top: 1px solid var(--line-subtle); }
+  #app .admin-frame .native-filters { width: 100%; }
+  #app .admin-frame .native-filters input { width: 100%; }
+  #app .admin-frame .pricing-accounts { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #app .admin-frame .pricing-accounts button { min-height: 76px; padding: 12px; }
+  #app .admin-frame .api-management .api-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #app .admin-frame .consumption-charts { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .consumption-list-toolbar { padding: 18px 16px; }
+  #app .admin-frame .consumption-detail-heading h1 { font-size: 24px; }
+  #app .admin-frame .consumption-panel { padding: 18px 16px; }
+  #app .admin-frame .benefit-default-card { grid-template-columns: minmax(0,1fr) auto; }
+  #app .admin-frame .benefit-default-card .benefit-example { grid-column: 1/-1; }
+  #app .admin-frame .portal-accounts > .portal-account-form { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer) { border-radius: 0; }
+  #app .admin-frame .api-quota .reference-adjustment fieldset { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  #app .admin-frame .api-quota .reference-adjustment .adjustment-direction { position: static; width: auto; grid-column: 1; grid-row: 1; }
+  #app .admin-frame .api-quota .reference-adjustment .reference-amount { grid-column: 1; grid-row: 2; }
+  #app .admin-frame .api-quota .reference-adjustment .reference-presets { grid-column: 1; grid-row: 3; }
+  #app .admin-frame .api-quota .reference-adjustment .adjustment-preview { grid-column: 1; grid-row: 4; gap: 10px; padding: 14px; }
+  #app .admin-frame .api-quota .adjustment-preview > div { display: flex; align-items: baseline; justify-content: space-between; }
+  #app .admin-frame .api-quota .reference-adjustment .adjustment-preview :is(span,strong) { font-size: 12px; }
+}
+@media (pointer: coarse) { #app .admin-frame :is(button:not(.n-button), input:not([type=checkbox]):not([type=radio]), select) { min-height: 42px; } }
+/* Task-first record views and explicit status changes. */
+#app .admin-frame .directory-statistics { border: 1px solid var(--line); border-radius: var(--radius-panel); background: var(--panel); }
+#app .admin-frame .directory-statistics > summary { padding: 14px 20px; cursor: pointer; font-weight: 550; }
+#app .admin-frame .directory-statistics > summary span { margin-inline-start: 16px; color: var(--muted); font-size: 13px; font-weight: 400; }
+#app .admin-frame .directory-statistics .user-stat-cards { border: 0; border-top: 1px solid var(--line); border-radius: 0 0 var(--radius-panel) var(--radius-panel); }
+#app .admin-frame .directory-search-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+#app .admin-frame .directory-search-row .directory-search { flex: 1 1 260px; }
+#app .admin-frame .directory-advanced { margin-top: 20px; display: grid; gap: 14px; }
+#app .admin-frame .directory-advanced .filter-fields { grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); }
+#app .admin-frame .directory-advanced .directory-dates { grid-column: span 2; }
+#app .admin-frame .analysis-disclosure { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+#app .admin-frame .analysis-disclosure button { display: inline-flex; align-items: center; gap: 8px; }
+#app .admin-frame .analysis-disclosure > span { color: var(--muted); font-size: 13px; }
+#app .admin-frame .benefit-rule-columns { grid-template-columns: minmax(0,1fr); }
+#app .admin-frame .benefit-audit-filters { grid-template-columns: repeat(auto-fit,minmax(min(100%,180px),1fr)); min-width: 0; }
+#app .admin-frame .benefit-audit-filters > * { min-width: 0; }
+#app .admin-frame .status-action-dialog { width: min(520px,calc(100vw - 32px)); }
+#app .admin-frame .status-action-dialog h2 { margin: 0; font-size: 20px; }
+#app .admin-frame .status-action-dialog p { color: var(--muted); line-height: 1.7; }
+#app .admin-frame .status-action-dialog ul { max-height: 35dvh; overflow-y: auto; padding-inline-start: 20px; }
+#app .admin-frame .status-action-dialog li { padding: 8px 0; overflow-wrap: anywhere; }
+#app .admin-frame .status-action-dialog small { display: block; color: var(--muted); }
+#app .admin-frame .status-action-dialog footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+#app .admin-frame .account-role-filter { display: flex; align-items: center; gap: 12px; margin-block: 20px; }
+@media (min-width: 761px) {
+  #app .admin-frame .api-directory-table :is(th,td):last-child { position: sticky; right: 0; background: var(--panel); z-index: 1; }
+}
+@media (max-width: 760px) {
+  #app .admin-frame .directory-search-row .directory-search { flex-basis: 100%; }
+  #app .admin-frame .directory-advanced .filter-fields { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .directory-advanced .directory-dates { grid-column: auto; }
+}
+#app .admin-frame .directory-statistics > summary > svg { float: right; transition: transform .15s ease; }
+#app .admin-frame .directory-statistics[open] > summary > svg { transform: rotate(180deg); }

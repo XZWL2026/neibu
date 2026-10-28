@@ -1,0 +1,115 @@
+/* Nested workspaces share the same spacing and scroll contract as the shell.
+   Keep these selectors above lazy legacy styles without affecting normal pages. */
+html:has(#app dialog:modal) { overflow: hidden; }
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) {
+  position: fixed; inset: 0 0 0 auto; margin: 0; height: 100dvh; max-height: 100dvh;
+  max-width: 100vw; padding: 0; border: 0; border-radius: 12px 0 0 12px;
+  background: #fff; color: var(--ink); overflow: hidden; box-sizing: border-box;
+  box-shadow: -12px 0 48px #18223124;
+}
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer)[open] { display: flex; flex-direction: column; gap: 0; }
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer)::backdrop { background: #18223152; }
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) > header {
+  flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 24px; margin: 0; border-bottom: 1px solid var(--line); background: #fff;
+}
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) > header h2 { margin: 0; color: var(--ink); font-size: 20px; line-height: 1.4; }
+#app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) > header button { flex-shrink: 0; min-width: 36px; min-height: 36px; padding: 6px; border-color: transparent; }
+#app .admin-frame :is(.user-detail-content, .agent-detail-content, .finance-drawer-body, .income-drawer-body) {
+  flex: 1; min-height: 0; min-width: 0; padding: 24px; overflow: auto;
+  overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #bdc5d2 #f8f9fc;
+}
+#app .admin-frame .user-detail-content { align-content: start; }
+#app .admin-frame .agent-detail-content > * { flex-shrink: 0; }
+#app .admin-frame .agent-detail-content .agent-detail-panel { min-height: 280px; }
+#app .admin-frame .agent-detail-content .agent-statistics { min-height: 280px; }
+#app .admin-frame .api-client-detail { min-width: 0; }
+#app .admin-frame .api-tabs { overflow-x: auto; min-width: 0; scrollbar-width: thin; }
+#app .admin-frame .api-tabs button { flex: 1 0 auto; }
+#app .admin-frame .api-client-profile { padding: 20px 24px; }
+#app .admin-frame .api-tab-content { padding: 20px 24px; overscroll-behavior: contain; }
+#app .admin-frame .api-records { overflow-x: auto; }
+#app .admin-frame .finance-review-actions { padding: 16px 24px; border-top: 1px solid var(--line); background: #fff; }
+
+/* Forms: one frame, one scrolling body, visible commands. */
+#app .admin-frame .api-create-dialog { padding: 0; overflow: hidden; width: min(640px, calc(100vw - 28px)); }
+#app .admin-frame .api-create-dialog:has(.api-price-settings) { width: min(1040px, calc(100vw - 28px)); }
+#app .admin-frame .api-create-simple-header { padding: 20px 24px; border-bottom: 1px solid var(--line); }
+#app .admin-frame .api-create-simple-header h2 { font-size: 24px; color: var(--ink); }
+#app .admin-frame .api-create-fields-scroll > fieldset { padding: 24px; gap: 20px; }
+#app .admin-frame .api-create-simple-field { gap: 8px; }
+#app .admin-frame :is(.api-create-simple-field > span:first-child, .api-create-simple-pricing > span) { font-size: 14px; font-weight: 550; color: var(--ink); }
+#app .admin-frame .api-create-simple-form .api-create-simple-field input { height: 42px; min-height: 42px; font-size: 14px; padding: 9px 12px; }
+#app .admin-frame :is(.api-create-simple-phone, .api-create-simple-money) { min-height: 42px; border-color: var(--line); }
+#app .admin-frame .api-create-simple-field :is(.api-create-simple-phone, .api-create-simple-money) input { height: 40px; min-height: 40px; border: 0; background: transparent; outline: none; box-shadow: none; }
+#app .admin-frame .api-create-simple-form .api-create-simple-phone select { flex: 0 0 86px; width: 86px; min-height: 26px; height: 26px; border: 0; border-right: 1px solid var(--line); border-radius: 0; padding: 0 8px; font-size: 14px; background: transparent; }
+#app .admin-frame .api-create-simple-money > span { flex-basis: 40px; width: 40px; font-size: 18px; border-color: var(--line); }
+#app .admin-frame .api-create-simple-pricing { padding-top: 20px; margin-top: 0; }
+#app .admin-frame .api-create-simple-segments label { min-height: 40px; padding: 8px 12px; font-size: 14px; }
+#app .admin-frame .api-create-simple-segments label.selected { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+#app .admin-frame :is(.api-create-simple-phone, .api-create-simple-money, .api-create-simple-segments label):focus-within { outline: 2px solid #a5a0ef; outline-offset: 2px; }
+#app .admin-frame .api-create-simple-footer { padding: 16px 24px; gap: 12px; justify-content: flex-end; border-top: 1px solid var(--line); }
+#app .admin-frame .api-create-simple-footer button { flex: 0 1 auto; min-width: 96px; min-height: 40px; font-size: 14px; padding: 9px 20px; }
+#app .admin-frame .api-create-simple-error { padding: 0 24px 12px; }
+#app .admin-frame .api-price-settings { height: min(820px, calc(100dvh - 32px)); min-height: 0; }
+#app .admin-frame .api-price-settings-header { padding: 18px 24px; gap: 12px; }
+#app .admin-frame .api-price-settings-header h2 { font-size: 24px; }
+#app .admin-frame .api-price-settings-body { padding: 20px 24px; min-height: 0; }
+#app .admin-frame .api-price-settings-choices label { min-height: 42px; font-size: 14px; }
+#app .admin-frame .api-price-settings-choices label.selected { border-color: var(--accent); background: var(--accent-soft); }
+#app .admin-frame .api-price-settings-choices input[type=radio] { width: 20px; height: 20px; min-height: 20px; padding: 0; flex: 0 0 20px; }
+#app .admin-frame .api-price-settings-footer { padding: 16px 24px; }
+
+/* Recharge used a dark legacy palette; all details now use operational ink. */
+#app .admin-frame .review-details { padding: 0; color-scheme: light; overflow: hidden; }
+#app .admin-frame .review-dialog-body { display: flex; flex-direction: column; max-height: calc(100dvh - 32px); padding: 0; }
+#app .admin-frame .review-dialog-body > header { flex: 0 0 auto; padding: 18px 24px; margin: 0; border-bottom: 1px solid var(--line); }
+#app .admin-frame .review-dialog-body h2 { font-size: 20px; color: var(--ink); }
+#app .admin-frame .review-details dl { min-height: 0; overflow: auto; padding: 24px; gap: 24px; overscroll-behavior: contain; }
+#app .admin-frame .review-details dt { color: var(--muted); font-size: 13px; }
+#app .admin-frame .review-details dd { color: var(--ink); font-size: 14px; line-height: 1.7; }
+
+#app .admin-frame .consumption-prompt-dialog { width: min(800px, calc(100vw - 28px)); padding: 0; overflow: hidden; }
+#app .admin-frame .consumption-prompt-dialog[open] { display: flex; flex-direction: column; }
+#app .admin-frame .consumption-prompt-dialog > header { flex-shrink: 0; margin: 0; padding: 18px 24px; border-bottom: 1px solid var(--line); }
+#app .admin-frame .consumption-prompt-dialog h2 { margin: 0; font-size: 20px; }
+#app .admin-frame .consumption-prompt-dialog > p { margin: 0; padding: 24px; min-height: 0; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; overscroll-behavior: contain; }
+
+#app .admin-frame .income-drawer { width: min(580px, 100vw); }
+#app .admin-frame .income-drawer .income-close { position: static; font-size: 16px; }
+#app .admin-frame .income-drawer .income-profile { padding: 0 0 20px; flex-wrap: wrap; }
+#app .admin-frame .income-drawer .income-tabs { overflow-x: auto; justify-content: space-between; }
+#app .admin-frame .income-drawer .income-tabs button { flex-shrink: 0; }
+#app .admin-frame .income-drawer :is(dt, small, .income-profile p) { color: var(--muted); }
+#app .admin-frame .income-drawer .income-actions { position: sticky; bottom: -24px; background: #fff; border-top: 1px solid var(--line); padding: 16px 0; margin-bottom: -24px; }
+#app .admin-frame .income-drawer .income-detail-table { overflow-x: auto; }
+#app .admin-frame .income-drawer button.income-history-rates { display: grid; justify-items: center; gap: 6px; padding: 10px 8px; }
+#app .admin-frame .income-drawer .income-history-rates strong { margin: 0; white-space: nowrap; }
+#app .admin-frame .benefit-select-field { display: grid; gap: 9px; font-size: 13px; }
+#app .admin-frame .agent-record-tabs { overflow-x: auto; }
+#app .admin-frame .agent-record-tabs button { flex: 1 0 auto; }
+#app .admin-frame .agent-statistics > footer { flex-wrap: wrap; }
+#app .admin-frame :is(.pricing-detail, .infra-detail, .mps-editor) { top: 80px; scroll-margin-top: 80px; }
+#app .admin-frame .mps-checkbox-group input[type=checkbox] { width: 16px; height: 16px; min-height: 16px; margin: 0; padding: 0; }
+#app .admin-frame .mps-card input[role=switch] { width: 34px; height: 20px; min-height: 20px; padding: 0; flex: 0 0 34px; }
+#app .admin-frame .mps-card input[role=switch]:checked { background: var(--accent); }
+#app .admin-frame .receipt-preview > header { flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 600px) {
+  #app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) { width: 100vw; border-radius: 0; }
+  #app .admin-frame :is(.user-detail-drawer, .agent-detail-drawer, .api-detail-drawer, .finance-drawer, .income-drawer) > header { padding: 14px 16px; }
+  #app .admin-frame :is(.user-detail-content, .agent-detail-content, .finance-drawer-body, .income-drawer-body, .api-tab-content) { padding: 16px; }
+  #app .admin-frame .api-client-profile { padding: 16px; gap: 12px; }
+  #app .admin-frame .api-client-profile .profile-avatar { width: 48px; height: 48px; }
+  #app .admin-frame .agent-detail-profile { flex-wrap: wrap; }
+  #app .admin-frame .agent-detail-person { min-width: 180px; }
+  #app .admin-frame .agent-detail-person small { font-size: 12px; }
+  #app .admin-frame .agent-enter { margin-left: auto; }
+  #app .admin-frame .income-drawer .income-actions { bottom: -16px; margin-bottom: -16px; }
+  #app .admin-frame :is(.api-create-simple-header, .api-create-fields-scroll > fieldset, .api-price-settings-header, .api-price-settings-body, .review-details dl, .review-dialog-body > header, .consumption-prompt-dialog > header, .consumption-prompt-dialog > p) { padding: 16px; }
+  #app .admin-frame :is(.api-create-simple-footer, .api-price-settings-footer, .finance-review-actions) { padding: 14px 16px; }
+  #app .admin-frame .api-create-simple-pricing { flex-direction: column; align-items: stretch; gap: 10px; }
+  #app .admin-frame .api-create-simple-segments { flex-basis: auto; }
+  #app .admin-frame .api-create-simple-form { max-height: calc(100dvh - 112px); }
+  #app .admin-frame .income-result { grid-template-columns: minmax(0, 1fr); }
+}

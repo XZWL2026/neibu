@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "workspaces": [
+    "frontends/*",
+    "frontends/packages/*"
+  ],
+  "scripts": {
+    "generate:api": "orval --config frontends/packages/api-contracts/orval.config.ts",
+    "check:api-generation": "node frontends/packages/api-contracts/scripts/check-generation.mjs",
+    "test:api-generation-checker": "node frontends/packages/api-contracts/scripts/test-check-generation.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node frontends/packages/frontend-boundaries/tests/frontend-boundaries.test.mjs && npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "generate:api-new-system": "orval --config frontends/packages/api-contracts/orval.new-system.config.ts",
+    "check:api-new-system": "node frontends/packages/api-contracts/scripts/check-generation.mjs --new-system",
+    "test:api-request": "vitest run --exclude '**/.worktrees/**' frontends/packages/api-contracts/tests frontends/user-web/src/api.test.ts frontends/admin-web/src/api.test.ts frontends/partner-web/src/api.test.ts"
+  },
+  "devDependencies": {
+    "orval": "8.26.0",
+    "vitest": "4.1.11"
+  }
+}

@@ -1,0 +1,837 @@
+[ {
+  "service" : "access",
+  "method" : "GET",
+  "path" : "/api/v1/access/keys"
+}, {
+  "service" : "access",
+  "method" : "POST",
+  "path" : "/api/v1/access/keys"
+}, {
+  "service" : "access",
+  "method" : "GET",
+  "path" : "/api/v1/access/keys/{id}/secret"
+}, {
+  "service" : "access",
+  "method" : "PATCH",
+  "path" : "/api/v1/access/keys/{id}/status"
+}, {
+  "service" : "access",
+  "method" : "GET",
+  "path" : "/api/v1/admin/access/keys"
+}, {
+  "service" : "access",
+  "method" : "POST",
+  "path" : "/api/v1/admin/access/keys/lookup"
+}, {
+  "service" : "access",
+  "method" : "GET",
+  "path" : "/api/v1/admin/access/keys/{id}"
+}, {
+  "service" : "access",
+  "method" : "GET",
+  "path" : "/api/v1/admin/access/keys/{id}/secret"
+}, {
+  "service" : "access",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/access/keys/{id}/status"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/api-users/{ownerId}/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/billing/api-users/{ownerId}/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/api-users/{ownerId}/media-prices/audit"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/consumptions"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/consumptions/analytics"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/consumptions/{id}"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/consumptions/{id}/files/{fileId}/access-url"
+}, {
+  "service" : "billing",
+  "method" : "POST",
+  "path" : "/api/v1/admin/billing/credits"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/daily-finance"
+}, {
+  "service" : "billing",
+  "method" : "POST",
+  "path" : "/api/v1/admin/billing/debits"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/billing/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/users/{ownerId}/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/billing/users/{ownerId}/media-prices"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/users/{ownerId}/media-prices/audit"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/billing/wallets/{keyId}/adjustments"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/billing/model-prices"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/billing/portal/consumptions"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/billing/portal/summary"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/billing/wallets/{keyId}"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/billing/wallets/{keyId}/ledger"
+}, {
+  "service" : "billing",
+  "method" : "GET",
+  "path" : "/api/v1/settings/runtime"
+}, {
+  "service" : "billing",
+  "method" : "PUT",
+  "path" : "/api/v1/settings/runtime"
+}, {
+  "service" : "canvas",
+  "method" : "GET",
+  "path" : "/api/v1/canvases"
+}, {
+  "service" : "canvas",
+  "method" : "POST",
+  "path" : "/api/v1/canvases"
+}, {
+  "service" : "canvas",
+  "method" : "DELETE",
+  "path" : "/api/v1/canvases/{canvasId}"
+}, {
+  "service" : "canvas",
+  "method" : "GET",
+  "path" : "/api/v1/canvases/{canvasId}"
+}, {
+  "service" : "canvas",
+  "method" : "PUT",
+  "path" : "/api/v1/canvases/{canvasId}"
+}, {
+  "service" : "canvas",
+  "method" : "POST",
+  "path" : "/api/v1/canvases/{canvasId}/copies"
+}, {
+  "service" : "canvas",
+  "method" : "POST",
+  "path" : "/api/v1/canvases/{canvasId}/media-references"
+}, {
+  "service" : "iam",
+  "method" : "GET",
+  "path" : "/api/v1/admin/admins"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/admin/admins"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/admin/admins/{id}/agent-ticket"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/admin/admins/{id}/password"
+}, {
+  "service" : "iam",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/admins/{id}/role"
+}, {
+  "service" : "iam",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/admins/{id}/status"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/admin/api-users/{id}/agent-ticket"
+}, {
+  "service" : "iam",
+  "method" : "GET",
+  "path" : "/api/v1/admin/iam/sms-provider-status"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/admin/login"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/admin/password"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/logout"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/otp/login"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/otp/send"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/phone/login"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/portal/login"
+}, {
+  "service" : "iam",
+  "method" : "GET",
+  "path" : "/api/v1/auth/portal/options"
+}, {
+  "service" : "iam",
+  "method" : "POST",
+  "path" : "/api/v1/auth/portal/tickets"
+}, {
+  "service" : "iam",
+  "method" : "GET",
+  "path" : "/api/v1/auth/session"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/ark-connection"
+}, {
+  "service" : "media",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/media/ark-connection"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/ark-connection/models"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/admin/media/ark-connection/test"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/mps-configuration"
+}, {
+  "service" : "media",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/media/mps-configuration"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/admin/media/mps-configuration/test"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/native-video-usage"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/provider-logs"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/provider-logs/tasks"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/provider-logs/{id}"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/provider-status"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/tasks/{id}"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/admin/media/tasks/{id}/files/{fileId}/access-url"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/depth-options"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/depth-tasks"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/generation-options"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/portraits"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/portraits"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/portraits/{portraitId}"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/product-suites"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites/copy"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites/plan"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites/quotes"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/product-suites/templates"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites/video-breakdown"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/product-suites/{suiteId}"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/product-suites/{suiteId}/modules/{module}/regenerations"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/quotes"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/tasks"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/tasks"
+}, {
+  "service" : "media",
+  "method" : "DELETE",
+  "path" : "/api/v1/media/tasks/{taskId}"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/tasks/{taskId}"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/tasks/{taskId}/outputs/{outputIndex}/enhancement-options"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/tasks/{taskId}/outputs/{outputIndex}/enhancements"
+}, {
+  "service" : "media",
+  "method" : "POST",
+  "path" : "/api/v1/media/tasks/{taskId}/regenerations"
+}, {
+  "service" : "media",
+  "method" : "GET",
+  "path" : "/api/v1/media/tasks/{taskId}/results"
+}, {
+  "service" : "operations",
+  "method" : "GET",
+  "path" : "/api/v1/admin/operations/{resource}"
+}, {
+  "service" : "operations",
+  "method" : "GET",
+  "path" : "/api/v1/admin/operations/{resource}/{recordId}"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/account-identities"
+}, {
+  "service" : "payment",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/payments/accounts/{id}"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/api-creation-options"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/corporate-transfers"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/corporate-transfers/{id}/proof"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/orders"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/recharge-options"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/admin/payments/recharges"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/admin/payments/recharges"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/admin/payments/recharges/{id}/confirm"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/admin/payments/recharges/{id}/reject"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/payments/corporate-transfers"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/payments/recharge-options"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/payments/recharges"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/payments/recharges"
+}, {
+  "service" : "payment",
+  "method" : "GET",
+  "path" : "/api/v1/payments/recharges/{id}"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/api/v1/payments/recharges/{id}/refund"
+}, {
+  "service" : "payment",
+  "method" : "POST",
+  "path" : "/callbacks/payment"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-directory"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-directory/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-directory/{userId}/downlines"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-directory/{userId}/operations"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-income"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-income/{userId}/consumptions"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/agent-income/{userId}/draft"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/agent-income/{userId}/draft"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/applications"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/applications/{applicationId}"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/applications/{applicationId}/review"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/benefit-audit"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/benefit-settings"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/benefit-settings"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/benefit-settings/history"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/commissions"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/commissions/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/operations/referral-adjustments"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/operations/referrals/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/operations/referrals/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/payout-accounts"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/payouts"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/payouts"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/payouts/{id}/account"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/payouts/{id}/adjustments"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/payouts/{id}/adjustments"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/payouts/{id}/complete"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/payouts/{id}/decision"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/promoters"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters/overview"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters/{userId}/consumptions"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters/{userId}/downlines"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/promoters/{userId}/recharges"
+}, {
+  "service" : "promotion",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/promotions/promoters/{userId}/status"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/reconciliation"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/reconciliation/preview"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/referrals/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/referrals/{userId}/bindings"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/referrals/{userId}/history"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/withdrawal-report"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/withdrawals"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/admin/promotions/withdrawals/{withdrawalId}"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/withdrawals/{withdrawalId}/complete"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/admin/promotions/withdrawals/{withdrawalId}/decision"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/promotions/applications"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/applications/{applicationId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/commissions/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/commissions/{userId}/ledger"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/promotions/invitations/bind"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/participation"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/consumptions"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/downlines"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/overview"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/paid-months"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/payout-accounts"
+}, {
+  "service" : "promotion",
+  "method" : "PUT",
+  "path" : "/api/v1/promotions/portal/payout-accounts/{payoutAccountId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/recharges"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/portal/withdrawals"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/promotions/portal/withdrawals"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/promoters/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/promotions/referrals/bindings"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/referrals/{userId}"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/referrals/{userId}/history"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/rewards"
+}, {
+  "service" : "promotion",
+  "method" : "POST",
+  "path" : "/api/v1/promotions/withdrawals"
+}, {
+  "service" : "promotion",
+  "method" : "GET",
+  "path" : "/api/v1/promotions/withdrawals/{withdrawalId}"
+}, {
+  "service" : "routing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/routing/models"
+}, {
+  "service" : "routing",
+  "method" : "DELETE",
+  "path" : "/api/v1/admin/routing/models/{modelId}"
+}, {
+  "service" : "routing",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/routing/models/{modelId}"
+}, {
+  "service" : "routing",
+  "method" : "GET",
+  "path" : "/api/v1/admin/routing/providers"
+}, {
+  "service" : "routing",
+  "method" : "PUT",
+  "path" : "/api/v1/admin/routing/providers/{providerId}"
+}, {
+  "service" : "storage",
+  "method" : "GET",
+  "path" : "/api/v1/admin/storage/provider-status"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/avatars"
+}, {
+  "service" : "storage",
+  "method" : "GET",
+  "path" : "/api/v1/files/avatars/{fileId}/access-url"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/processing-videos"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/reference-images"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/reference-media"
+}, {
+  "service" : "storage",
+  "method" : "GET",
+  "path" : "/api/v1/files/{fileId}/access-url"
+}, {
+  "service" : "storage",
+  "method" : "GET",
+  "path" : "/api/v1/files/{fileId}/image-content"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/{fileId}/match"
+}, {
+  "service" : "storage",
+  "method" : "POST",
+  "path" : "/api/v1/files/{fileId}/reference-clip"
+}, {
+  "service" : "storage",
+  "method" : "GET",
+  "path" : "/api/v1/files/{fileId}/video-content"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/admin/api-users/directory"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/admin/users"
+}, {
+  "service" : "user",
+  "method" : "POST",
+  "path" : "/api/v1/admin/users"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/admin/users/directory"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/admin/users/{id}"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/admin/users/{id}/directory-detail"
+}, {
+  "service" : "user",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/users/{id}/nickname"
+}, {
+  "service" : "user",
+  "method" : "PATCH",
+  "path" : "/api/v1/admin/users/{id}/status"
+}, {
+  "service" : "user",
+  "method" : "GET",
+  "path" : "/api/v1/users/me"
+}, {
+  "service" : "user",
+  "method" : "PATCH",
+  "path" : "/api/v1/users/me"
+} ]

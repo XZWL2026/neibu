@@ -1,0 +1,36 @@
+@import "../../shared/api-documentation.css";
+.admin-frame.api-docs-theme { display: block; padding-top:0; background: #fff; color: #232631; color-scheme: light; --panel: #fff; --line: #e5e8ef; --muted: #667085; --cyan: #315efb; }
+.api-docs-theme .workspace-header { top:0; height: 66px; padding: 0 28px; background: #fff; border-color: var(--line); }
+.api-docs-theme .brand-block { padding: 0; }
+.api-docs-theme .brand-logo { width: 126px; filter: brightness(0); }
+.api-docs-theme .api-recharge-link { background: #eef2ff; color: #315efb; }
+.api-docs-theme .admin-role { background: #f5f6fa; border-color: var(--line); color: #596174; }
+.api-docs-theme .header-tools > button { background: #eef2ff; color: #596174; border-color: var(--line); }
+.api-docs-theme .admin-menu { background: #fff; box-shadow: 0 8px 32px #25345418; }
+.api-docs-theme .admin-menu button { color: #232631; }
+.api-docs-theme .admin-menu button:hover { background: #f3f5fa; }
+.api-docs-theme .main-content { padding: 0; }
+@media(max-width:700px){.api-docs-theme .workspace-header{padding:0 16px}.api-docs-theme .brand-logo{width:88px}}
+
+/* Keep the documentation navigation usable without consuming the mobile viewport. */
+.console-doc-mobile-nav { display: none; }
+.api-docs-theme .header-tools > button { width: 44px; height: 44px; }
+.api-docs-theme :is(button,a,select):focus-visible { outline: 2px solid #315efb; outline-offset: 3px; }
+.api-docs-theme .console-doc-code pre { font-size: 13px; }
+.api-docs-theme .console-doc-languages button { min-height: 40px; padding-inline: 12px; }
+.api-docs-theme .console-doc-base-url { border-left-width: 1px; }
+.api-docs-theme .console-doc-base-url code { font-size: 20px; }
+.api-docs-theme .console-doc-body h2 { scroll-margin-top: 90px; }
+@media (max-width: 700px) {
+ .api-docs-theme .workspace-header { height: 60px; }
+ .api-docs-theme .console-doc-layout { gap: 20px; }
+ .api-docs-theme .console-doc-nav { display: none; }
+ .console-doc-mobile-nav { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 8px 12px; padding-top: 16px; }
+ .console-doc-mobile-nav label { grid-column: 1 / -1; color: #535b6b; font-size: 12px; }
+ .console-doc-mobile-nav select { min-width: 0; width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #cdd5e1; border-radius: 6px; background: #fff; color: #232631; font: inherit; }
+ .console-doc-mobile-nav a { display: inline-flex; min-height: 44px; align-items: center; color: #2554d5; text-decoration: none; font-size: 13px; }
+ .api-docs-theme .console-doc-heading h1 { font-size: 26px; margin-top: 12px; }
+ .api-docs-theme .console-doc-base-url { padding: 12px 14px; }
+ .api-docs-theme .console-doc-base-url code { font-size: 18px; }
+ .api-docs-theme .console-doc-languages button { min-height: 44px; }
+}

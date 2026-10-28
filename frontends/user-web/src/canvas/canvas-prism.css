@@ -1,0 +1,10 @@
+.canvas-prism-backdrop .canvas-prism-viewport { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.canvas-prism-backdrop .canvas-prism-viewport > .prism { position: absolute; inset: 0; }
+.canvas-prism-backdrop[data-prism-theme="dark"] .canvas-prism-viewport { background: #070b0d; }
+.canvas-prism-backdrop[data-prism-theme="light"] .canvas-prism-viewport { background: #f4f6f8; }
+.canvas-prism-backdrop .prism:not([data-ready="true"])::before {
+  content: ''; position: absolute; inset: 14% 25%; opacity: .4;
+  background: linear-gradient(135deg, #7443e9, #e762bd 36%, #77d3e5 67%, #ffedb8);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.canvas-prism-backdrop[data-prism-theme="light"]::after { background: linear-gradient(transparent, #f4f6f870); }

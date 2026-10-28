@@ -1,0 +1,39 @@
+/* Transparent glass prompt pills. The hero remains visible through the fill. */
+.yomio-home .ym-categories button{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  color:#fff;
+  border:1px solid #ffffff68;
+  background:linear-gradient(145deg,#ffffff25,#edf5ff09 48%,#ffffff13);
+  -webkit-backdrop-filter:blur(18px) saturate(165%) brightness(1.08);
+  backdrop-filter:blur(18px) saturate(165%) brightness(1.08);
+  box-shadow:inset 0 1px 0 #ffffff5c,inset 0 -1px 0 #ffffff0f,0 4px 18px #0000001f;
+  text-shadow:0 1px 6px #0006;
+  transition:transform .25s var(--ease),border-color .2s,box-shadow .2s,background .2s;
+}
+.yomio-home .ym-categories button::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.5;
+  background:radial-gradient(ellipse at var(--glass-x,25%) var(--glass-y,0%),#ffffff45,transparent 72%);
+  transition:opacity .25s;
+}
+.yomio-home .ym-categories button:hover{
+  border-color:#ffffffa6;
+  background:linear-gradient(145deg,#ffffff31,#edf5ff0d 48%,#ffffff1a);
+  box-shadow:inset 0 1px 0 #ffffff80,inset 0 -1px 0 #ffffff1a,0 6px 20px #0003;
+  transform:translateY(-2px);
+}
+.yomio-home .ym-categories button:hover::before{opacity:.8}
+.yomio-home .ym-categories button[aria-pressed=true]{
+  border-color:#ecddffc9;
+  background:linear-gradient(145deg,#eee5ff32,#e9dfff10 48%,#ffffff1c);
+  box-shadow:inset 0 1px 0 #ffffff80,inset 0 -1px 0 #ffffff1f,0 0 0 1px #e2d4ff25,0 4px 18px #0003;
+}
+.yomio-home .ym-categories button:active{transform:translateY(0) scale(.97)}
+.yomio-home .ym-categories button svg,.yomio-home .ym-categories button span{position:relative;z-index:1}
+@media(prefers-reduced-transparency:reduce){.yomio-home .ym-categories button{background:#54606b8c}}

@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "services": [
+    {
+      "service": "gateway-service",
+      "owner": "platform-team",
+      "schema": "none",
+      "port": 8200,
+      "publicApi": [
+        "/api/platform/smoke"
+      ],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": [
+        "compatibility-smoke-service"
+      ]
+    },
+    {
+      "service": "compatibility-smoke-service",
+      "owner": "platform-team",
+      "schema": "none",
+      "port": 8299,
+      "publicApi": [
+        "/api/platform/smoke"
+      ],
+      "internalApi": [
+        "/internal/v1/platform/smoke"
+      ],
+      "eventsPublished": [
+        "SmokeOccurred.v1"
+      ],
+      "eventsConsumed": [
+        "SmokeOccurred.v1"
+      ],
+      "syncDependencies": []
+    },
+    {
+      "service": "iam-service",
+      "owner": "platform-team",
+      "schema": "iam_db",
+      "port": 8210,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "user-service",
+      "owner": "platform-team",
+      "schema": "user_db",
+      "port": 8211,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "access-service",
+      "owner": "platform-team",
+      "schema": "access_db",
+      "port": 8212,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "billing-service",
+      "owner": "platform-team",
+      "schema": "billing_db",
+      "port": 8214,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "payment-service",
+      "owner": "platform-team",
+      "schema": "payment_db",
+      "port": 8215,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "routing-service",
+      "owner": "platform-team",
+      "schema": "routing_db",
+      "port": 8216,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "storage-service",
+      "owner": "platform-team",
+      "schema": "storage_db",
+      "port": 8219,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "media-service",
+      "owner": "platform-team",
+      "schema": "media_db",
+      "port": 8217,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "operations-service",
+      "owner": "platform-team",
+      "schema": "operations_db",
+      "port": 8220,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    },
+    {
+      "service": "promotion-service",
+      "owner": "platform-team",
+      "schema": "promotion_db",
+      "port": 8213,
+      "publicApi": [],
+      "internalApi": [],
+      "eventsPublished": [],
+      "eventsConsumed": [],
+      "syncDependencies": []
+    }
+  ]
+}

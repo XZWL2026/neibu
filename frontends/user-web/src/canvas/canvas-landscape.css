@@ -1,0 +1,25 @@
+html[data-theme] .canvas-design .canvas-feature-backdrop {
+  & .canvas-landscape-viewport { position: absolute; inset: 0; overflow: hidden; }
+  & .canvas-landscape-still, & .canvas-landscape-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+  & .canvas-landscape-video { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+  &[data-ready="true"] .canvas-landscape-video { opacity: 1; }
+}
+
+@media (max-width: 760px) {
+  html[data-theme] .app-frame.canvas-home-frame.circle-navigation-frame.canvas-design .canvas-feature-backdrop {
+    aspect-ratio: auto; padding-bottom: 78px; background: var(--canvas-panel);
+    & .canvas-landscape-viewport { position: relative; inset: auto; aspect-ratio: 1.45; }
+    & .canvas-feature-actions { max-width: calc(100% - 32px); }
+    &::after { bottom: 78px; }
+    & .canvas-home-name, & .canvas-home-name summary { color: var(--canvas-ink); text-decoration-color: var(--canvas-muted); text-shadow: none; }
+    & .canvas-feature-start { background: var(--canvas-button); color: var(--canvas-button-ink); }
+    & .canvas-feature-start:hover:not(:disabled) { background: var(--canvas-button); }
+    & :is(button, summary):focus-visible { outline-color: var(--canvas-ink); }
+    & .canvas-landscape-still, & .canvas-landscape-video { object-position: 55% 50%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme] .canvas-design .canvas-feature-backdrop {
+    & .canvas-landscape-video { display: none; }
+  }
+}

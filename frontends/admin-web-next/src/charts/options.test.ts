@@ -1,0 +1,6 @@
+import {expect,it} from 'vitest';
+import {donutOption,lineOption,plottedAmount} from './options';
+it('keeps refund-driven negative net consumption inside the chart axis',()=>{expect(lineOption(['2026-09-01'],[{name:'净消费',values:[-12.3456]}]).yAxis).toMatchObject({min:undefined});expect(lineOption(['2026-09-01'],[{name:'净消费',values:[12.3456]}]).yAxis).toMatchObject({min:0});});
+it('plots known amounts without inventing unknown zeros',()=>{expect(plottedAmount(null)).toBeNull();expect(plottedAmount('not-a-number')).toBeNull();expect(plottedAmount('100.1234')).toBe(100.1234);const option=lineOption(['2026-09-01'],[{name:'视频',values:[100]},{name:'总消费',values:[null]}]);expect(option.series).toEqual(expect.arrayContaining([expect.objectContaining({data:[null],connectNulls:false}),expect.objectContaining({data:[100]})]));});
+it('does not render an invented distribution when accounting is incomplete',()=>{expect(donutOption([{name:'model',amount:'10.0000'}],false).series).toEqual([expect.objectContaining({data:[]})]);});
+it('uses a confined rich-text tooltip instead of interpreting model names as HTML',()=>{expect(donutOption([],true).tooltip).toMatchObject({renderMode:'richText',confine:true});expect(lineOption([],[]).tooltip).toMatchObject({renderMode:'richText',confine:true});});

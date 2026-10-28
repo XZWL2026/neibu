@@ -1,0 +1,8 @@
+CREATE TABLE admin_user_create_request (
+    request_id VARCHAR(64) NOT NULL PRIMARY KEY,
+    creator_id VARCHAR(128) NOT NULL,
+    phone VARCHAR(16) NOT NULL,
+    nickname VARCHAR(64) NOT NULL,
+    user_id VARCHAR(36) NOT NULL,
+    created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin;

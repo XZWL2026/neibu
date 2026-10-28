@@ -1,0 +1,1 @@
+CREATE INDEX ix_media_native_finished ON media_provider_operation (generation_finished_at);

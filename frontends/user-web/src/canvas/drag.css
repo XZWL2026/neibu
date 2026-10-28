@@ -1,0 +1,7 @@
+.canvas-media-preview { position: relative; }
+.canvas-media-preview:has(> video) { min-height: 0; }
+.canvas-media-preview img, .canvas-node-heading, .canvas-asset-caption { cursor: grab; }
+.canvas-video-drag-area { position: absolute; inset: 0 0 64px; cursor: grab; }
+.react-flow__node.dragging .canvas-video-drag-area,
+.react-flow__node.dragging .canvas-media-preview img,
+.react-flow__node.dragging .canvas-node-heading { cursor: grabbing; }

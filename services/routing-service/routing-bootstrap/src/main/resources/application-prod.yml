@@ -1,0 +1,43 @@
+spring:
+  config:
+    import:
+      - "nacos:xzwl-common.yaml?group=XZWL&refreshEnabled=false"
+      - "nacos:routing-service.yaml?group=XZWL&refreshEnabled=false"
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: false
+    nacos:
+      username: ${NACOS_USERNAME}
+      password: ${NACOS_PASSWORD}
+      discovery:
+        enabled: true
+        server-addr: ${NACOS_SERVER_ADDR:172.31.218.45:8848}
+        namespace: ${NACOS_NAMESPACE:xzwl-prod}
+        group: XZWL
+        ip: ${SERVICE_BIND_ADDRESS}
+        metadata:
+          config-revision: ${xzwl.release.revision}
+          service-revision: ${xzwl.release.service-revision}
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+      config:
+        enabled: true
+        server-addr: ${NACOS_SERVER_ADDR:172.31.218.45:8848}
+        namespace: ${NACOS_NAMESPACE:xzwl-prod}
+        group: XZWL
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        refresh-enabled: false
+        import-check:
+          enabled: true
+server:
+  address: ${SERVICE_BIND_ADDRESS}
+xzwl:
+  discovery:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

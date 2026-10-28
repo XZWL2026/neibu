@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+server:
+  address: ${SERVICE_BIND_ADDRESS}
+xzwl:
+  discovery:
+    enabled: false

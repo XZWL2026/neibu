@@ -1,0 +1,1 @@
+ALTER TABLE promotion_invitation ADD COLUMN short_id INT NOT NULL AUTO_INCREMENT UNIQUE;

@@ -1,0 +1,80 @@
+/* Compact model navigation over the existing hero video. */
+.yomio-home .ym-models {
+  --model-bottom-gap: clamp(24px, 3svh, 36px);
+  left: 7.6%; right: 7.6%; bottom: var(--model-bottom-gap); isolation: isolate; background: transparent;
+  text-shadow: 0 2px 12px #00102599;
+}
+.yomio-home .ym-models::before {
+  content: ''; position: absolute; z-index: -1; pointer-events: none;
+  top: -90px; bottom: calc(-1 * var(--model-bottom-gap)); left: calc(50% - 50vw); right: calc(50% - 50vw);
+  background: linear-gradient(180deg, transparent, #06121ee6 42%, #000811 100%);
+}
+.yomio-home .ym-model-grid { position: relative; gap: 0; }
+.yomio-home .ym-model-grid::before {
+  content: ''; position: absolute; top: 0; left: 0; height: 2px; pointer-events: none;
+  width: var(--model-line-width, 0px); opacity: var(--model-line-visible, 0);
+  transform: translate3d(var(--model-line-x, 0px), var(--model-line-y, 0px), 0);
+  background: linear-gradient(90deg, #cce9ff 0%, #ddecff 68%, #a4ceff40 85%, transparent);
+  box-shadow: 0 3px 9px #6daeff80;
+  transition: transform 380ms var(--easing), width 380ms var(--easing), opacity 160ms ease-out;
+}
+.yomio-home .ym-model-card {
+  position: relative; display: flex; align-items: flex-start; justify-content: center;
+  min-width: 0; min-height: 64px; padding: 8px 20px 22px;
+  border: 0; border-radius: 0; background: transparent; color: #e0e5ed;
+  box-shadow: none; transform: none;
+}
+.yomio-home .ym-model-card:first-child { justify-content: flex-start; padding-left: 0; }
+.yomio-home .ym-model-card:last-child { justify-content: flex-end; padding-right: 0; }
+.yomio-home .ym-model-card:not(:last-child)::after {
+  content: ''; position: absolute; top: 14px; right: 0; width: 1px; height: 24px;
+  background: #dce7f580;
+}
+.yomio-home .ym-model-name {
+  position: relative; display: inline-flex; align-items: baseline; gap: .2em; white-space: nowrap;
+  font-family: 'YomioNoto', Arial, sans-serif; font-size: clamp(22px, 2vw, 38px);
+  line-height: 1.25; font-weight: 400; letter-spacing: -.025em; color: inherit;
+  transition: color 200ms var(--easing);
+}
+.yomio-home .ym-model-family { font: inherit; }
+.yomio-home .ym-model-version {
+  position: relative; top: -.55em; padding: 0; font-size: .62em; line-height: 1;
+  font-weight: 400; letter-spacing: -.02em; color: inherit;
+  font-variant-numeric: lining-nums; vertical-align: baseline;
+}
+.yomio-home .ym-model-card.ym-highlighted { color: #f6f8ff; }
+.yomio-home .ym-model-card:is(:hover, :focus-visible, :active) { background: transparent; color: #fff; transform: none; }
+.yomio-home .ym-model-card:focus-visible { outline: 2px solid #c2afff; outline-offset: 4px; }
+.yomio-home .ym-models-tagline {
+  display: flex; align-items: center; justify-content: center; gap: 26px;
+  margin: 30px 0 0; color: #d0d7e0; font-size: 14px; font-weight: 400;
+  line-height: 1.6; letter-spacing: .75em; text-indent: .75em;
+}
+.yomio-home .ym-models-tagline::before,
+.yomio-home .ym-models-tagline::after {
+  content: ''; flex: 0 0 26px; height: 1px; background: #d0d7e099;
+}
+/* A restrained downward shadow separates the surfaces without a luminous band. */
+:root[data-theme='light'] .yomio-home .ym-commerce-section {
+  background: linear-gradient(var(--bg), #f7faff 35%);
+  box-shadow: inset 0 5px 7px -5px #00081138;
+}
+:root[data-theme='light'] .yomio-home .ym-model-card { background: transparent; color: #e0e5ed; }
+:root[data-theme='light'] .yomio-home .ym-model-card:is(.ym-highlighted, :hover, :focus-visible) { color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .yomio-home .ym-model-grid::before { transition: none !important; }
+}
+@media (max-width: 760px) {
+  .yomio-home .ym-stage { min-height: 0; padding-bottom: 28px; }
+  .yomio-home .ym-models { --model-bottom-gap: 28px; inset: auto; }
+  .yomio-home .ym-model-grid { gap: 20px 0; }
+  .yomio-home .ym-model-card,
+  .yomio-home .ym-model-card:first-child,
+  .yomio-home .ym-model-card:last-child { justify-content: center; padding: 8px 10px 22px; }
+  .yomio-home .ym-model-card:nth-child(2)::after { content: none; }
+  .yomio-home .ym-model-name { font-size: clamp(20px, 5.2vw, 30px); }
+  .yomio-home .ym-model-version { font-size: max(12px, .62em); }
+  .yomio-home .ym-models-tagline { gap: 14px; margin-top: 26px; font-size: 12px; letter-spacing: .4em; text-indent: .4em; }
+  .yomio-home .ym-models-tagline::before,
+  .yomio-home .ym-models-tagline::after { flex-basis: 20px; }
+}

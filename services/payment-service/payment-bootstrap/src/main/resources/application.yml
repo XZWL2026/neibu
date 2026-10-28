@@ -1,0 +1,37 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  task:
+    scheduling:
+      pool:
+        size: 2
+  application:
+    name: payment-service
+  datasource:
+    url: ${PAYMENT_DB_URL}
+    username: ${PAYMENT_DB_USERNAME}
+    password: ${PAYMENT_DB_PASSWORD}
+  flyway:
+    enabled: true
+server:
+  port: 8215
+abp:
+  internal-token: ${ABP_INTERNAL_TOKEN}
+payment:
+  provider: ${PAYMENT_PROVIDER:disabled}
+  user-internal-token: ${IAM_USER_INTERNAL_TOKEN}
+  iam-service-url: ${IAM_SERVICE_URL:http://127.0.0.1:8210}
+  user-service-url: ${USER_SERVICE_URL:http://127.0.0.1:8211}
+  access-service-url: ${ACCESS_SERVICE_URL:http://127.0.0.1:8212}
+  billing-service-url: ${BILLING_SERVICE_URL:http://127.0.0.1:8214}
+  promotion-service-url: ${PROMOTION_SERVICE_URL:http://127.0.0.1:8213}

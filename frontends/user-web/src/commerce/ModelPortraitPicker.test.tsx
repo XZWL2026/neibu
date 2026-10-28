@@ -1,0 +1,116 @@
+import '@testing-library/jest-dom/vitest';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { ModelPortraitPicker } from './ModelPortraitPicker';
+import * as api from '../api';
+import * as session from '../userSession';
+import { resolvePreview } from '../canvas/production-api';
+vi.mock('../api', async original => ({ ...await original<typeof import('../api')>(), mediaOptionsGetApiV1MediaGenerationOptions: vi.fn(),
+  mediaQuotePostApiV1MediaQuotes: vi.fn(), mediaSubmitPostApiV1MediaTasks: vi.fn(), mediaGetGetApiV1MediaTasksTaskId: vi.fn() }));
+vi.mock('../userSession', async original => ({ ...await original<typeof import('../userSession')>(), useOptionalUserSession: vi.fn() }));
+vi.mock('../canvas/production-api', async original => ({ ...await original<typeof import('../canvas/production-api')>(), resolvePreview: vi.fn() }));
+const reply = (data: unknown) => ({ data }) as never;
+const option = { type: 'IMAGE', model: 'image-a', displayName: '图片模型', maxCount: 1, aspectRatios: ['3:4', '1:1'], resolutions: ['1K'] };
+const ready = { userId: 'owner-a', authenticated: true, status: 'ready', accountType: 'PERSONAL', availablePoints4: '100.0000', currentKey: { enabled: true, kind: '媒体 Key', relationship: 'Owner' } };
+const submit = vi.mocked(api.mediaSubmitPostApiV1MediaTasks);
+beforeEach(() => {
+  vi.resetAllMocks(); localStorage.clear();
+  vi.mocked(session.useOptionalUserSession).mockReturnValue(ready as never);
+  vi.mocked(api.mediaOptionsGetApiV1MediaGenerationOptions).mockResolvedValue(reply({ models: [option] }));
+  vi.mocked(api.mediaQuotePostApiV1MediaQuotes).mockResolvedValue(reply({ points: '10.0000' }));
+  submit.mockResolvedValue(reply({ id: 'portrait-task', type: 'IMAGE', status: 'RUNNING' }));
+  vi.mocked(api.mediaGetGetApiV1MediaTasksTaskId).mockResolvedValue(reply({ id: 'portrait-task', type: 'IMAGE', status: 'SUCCEEDED', results: [{ fileId: 'portrait-file', index: 0 }] }));
+  vi.mocked(resolvePreview).mockResolvedValue('https://example.test/model.png');
+});
+afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+it('quotes without generating, submits one adult portrait and only selects a successful real file', async () => {
+  const select = vi.fn(); render(<ModelPortraitPicker owner="owner-a" onSelect={select} />);
+  const button = await screen.findByRole('button', { name: /生成模特形象.*10/ });
+  expect(submit).not.toHaveBeenCalled(); expect(select).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText('成年年龄段'), { target: { value: '40–55岁' } });
+  fireEvent.click(button);
+  await screen.findByRole('button', { name: '使用此模特' });
+  expect(submit).toHaveBeenCalledWith(expect.objectContaining({ type: 'IMAGE', count: 1, references: [], prompt: expect.stringContaining('明确已成年') }), expect.anything());
+  expect(submit.mock.calls[0][0].prompt).toContain('40–55岁');
+  expect(select).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole('button', { name: '使用此模特' }));
+  expect(select).toHaveBeenCalledWith({ fileId: 'portrait-file', preview: 'https://example.test/model.png', name: 'AI 模特形象' });
+  expect(screen.queryByRole('button', { name: '查看提示词' })).not.toBeInTheDocument();
+});
+it('blocks duplicate clicks and restores the same unknown key after remount without auto sending', async () => {
+  let reject!: (error: unknown) => void;
+  submit.mockReturnValueOnce(new Promise((_, no) => { reject = no; }));
+  const view = render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  fireEvent.click(screen.getByRole('button', { name: '提交中…' })); expect(submit).toHaveBeenCalledTimes(1);
+  await act(async () => reject(new TypeError('unknown')));
+  await screen.findByRole('button', { name: '使用原请求重试' });
+  const first = submit.mock.calls[0]; view.unmount();
+  render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  const retry = await screen.findByRole('button', { name: '使用原请求重试' });
+  expect(submit).toHaveBeenCalledTimes(1); fireEvent.click(retry);
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(2)); expect(submit.mock.calls[1]).toEqual(first);
+});
+it('invalidates price on settings changes and blocks API accounts and storage failures', async () => {
+  const view = render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  await screen.findByRole('button', { name: /生成模特形象.*10/ });
+  vi.mocked(api.mediaQuotePostApiV1MediaQuotes).mockReturnValue(new Promise(() => {}));
+  fireEvent.change(screen.getByLabelText('模特画面比例'), { target: { value: '1:1' } });
+  expect(screen.getByRole('button', { name: /生成模特形象/ })).toBeDisabled();
+  vi.mocked(api.mediaQuotePostApiV1MediaQuotes).mockResolvedValue(reply({ points: '10.0000' }));
+  fireEvent.change(screen.getByLabelText('模特画面比例'), { target: { value: '3:4' } });
+  await waitFor(() => expect(screen.getByRole('button', { name: /生成模特形象/ })).toBeEnabled());
+  vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('storage'); });
+  fireEvent.click(screen.getByRole('button', { name: /生成模特形象/ }));
+  expect(submit).not.toHaveBeenCalled(); expect(await screen.findByRole('alert')).toHaveTextContent('保存');
+  vi.mocked(session.useOptionalUserSession).mockReturnValue({ ...ready, accountType: 'API' } as never);
+  view.rerender(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  expect(screen.getByRole('button', { name: /生成模特形象/ })).toBeDisabled();
+});
+it('never exposes an old owner’s late result after owner changes', async () => {
+  let finish!: (value: never) => void; submit.mockReturnValue(new Promise(resolve => { finish = resolve; }));
+  const select = vi.fn(); const view = render(<ModelPortraitPicker owner="owner-a" onSelect={select} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  vi.mocked(session.useOptionalUserSession).mockReturnValue({ ...ready, userId: 'owner-b' } as never);
+  view.rerender(<ModelPortraitPicker owner="owner-b" onSelect={select} />);
+  await act(async () => finish(reply({ id: 'portrait-task', status: 'SUCCEEDED', results: [{ fileId: 'portrait-file' }] })));
+  expect(screen.queryByRole('button', { name: '使用此模特' })).not.toBeInTheDocument(); expect(select).not.toHaveBeenCalled();
+});
+it('restores an accepted task after remount without charging again', async () => {
+  const first = render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  await screen.findByRole('button', { name: '使用此模特' }); first.unmount();
+  render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  expect(await screen.findByRole('button', { name: '使用此模特' })).toBeInTheDocument();
+  expect(submit).toHaveBeenCalledTimes(1);
+});
+it('offers a newly quoted explicit retry after failed generation', async () => {
+  vi.mocked(api.mediaGetGetApiV1MediaTasksTaskId).mockResolvedValueOnce(reply({ id: 'portrait-task', type: 'IMAGE', status: 'FAILED', results: [], failureMessage: '模特生成失败', refundStatus: 'COMPLETED' }));
+  render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  await screen.findByText('模特生成失败失败积分已退回。');
+  const again = await screen.findByRole('button', { name: /生成模特形象.*10/ });
+  await waitFor(() => expect(again).toBeEnabled());
+  expect(submit).toHaveBeenCalledTimes(1); fireEvent.click(again);
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(2));
+  expect(submit.mock.calls[1][1]).not.toEqual(submit.mock.calls[0][1]);
+});
+it('preserves the pending key if model availability and balance change before confirmation', async () => {
+  submit.mockRejectedValueOnce(new TypeError('unknown'));
+  const view = render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  await screen.findByRole('button', { name: '使用原请求重试' }); const first = submit.mock.calls[0]; view.unmount();
+  vi.mocked(session.useOptionalUserSession).mockReturnValue({ ...ready, availablePoints4: '0.0000', status: 'disabled' } as never);
+  vi.mocked(api.mediaOptionsGetApiV1MediaGenerationOptions).mockResolvedValue(reply({ models: [] }));
+  render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: '使用原请求重试' }));
+  await waitFor(() => expect(submit).toHaveBeenCalledTimes(2)); expect(submit.mock.calls[1]).toEqual(first);
+});
+it('unlocks an unknown request after the backend definitively rejects confirmation', async () => {
+  submit.mockRejectedValueOnce(new TypeError('unknown')).mockRejectedValueOnce(new api.ApiError(new Response('', { status: 422 }), {}));
+  render(<ModelPortraitPicker owner="owner-a" onSelect={vi.fn()} />);
+  fireEvent.click(await screen.findByRole('button', { name: /生成模特形象.*10/ }));
+  fireEvent.click(await screen.findByRole('button', { name: '使用原请求重试' }));
+  await waitFor(() => expect(screen.getByLabelText('模特性别')).toBeEnabled());
+  expect(screen.queryByRole('button', { name: '使用原请求重试' })).not.toBeInTheDocument();
+});

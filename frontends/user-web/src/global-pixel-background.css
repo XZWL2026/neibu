@@ -1,0 +1,13 @@
+/* The supplied PixelCard treatment belongs to the page, below all content. */
+html[data-yomio-background] { background: #020d13; }
+html[data-yomio-background][data-theme="light"] { background: #f4f6f8; }
+html[data-yomio-background] body { isolation: isolate; background: transparent; }
+.global-pixel-background { position: fixed; inset: 0; z-index: -1; overflow: hidden; contain: strict; pointer-events: none; }
+.global-pixel-background > div { position: absolute; inset: 0; }
+.global-pixel-background canvas { display: block; width: 100%; height: 100%; }
+html[data-yomio-background] :is(.app-frame, .main-content, .canvas-home, .canvas-workspace, .canvas-stage, .creator-stage, .account-page, .account-recharge-page, .commerce-workbench, .commerce-inspiration, .public-api-docs) {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+html[data-yomio-background] .react-flow { --xy-background-color: transparent; --xy-background-color-default: transparent; }
+html[data-yomio-background] .react-flow__background { display: none; }

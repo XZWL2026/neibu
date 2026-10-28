@@ -1,0 +1,14 @@
+import image0 from './reference/assets/01-art-user-cloud-palace.webp';
+import image1 from './reference/assets/02-art-user-wind-girl.webp';
+import image2 from './reference/assets/03-art-user-mirror-portrait.webp';
+import image3 from './reference/assets/04-art-user-alpine-meadow.webp';
+import image4 from './reference/assets/05-art-user-panda.webp';
+import image5 from './reference/assets/06-art-user-cinematic-cars.webp';
+import image6 from './reference/assets/07-art-user-cyber-girl.webp';
+import image7 from './reference/assets/08-art-user-ocean-rays.webp';
+import image8 from './reference/assets/09-art-user-crystal-eye.webp';
+import image9 from './reference/assets/10-art-user-mountain-pavilion.webp';
+import image10 from './reference/assets/11-art-user-botanical-perfume.webp';
+import image11 from './reference/assets/12-art-user-white-angel.webp';
+const gallery: Record<string, string> = {'01': image0,'02': image1,'03': image2,'04': image3,'05': image4,'06': image5,'07': image6,'08': image7,'09': image8,'10': image9,'11': image10,'12': image11};
+export const referenceGalleryImage = (id: string) => gallery[id];

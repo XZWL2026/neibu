@@ -1,0 +1,21 @@
+server:
+  port: 8299
+
+spring:
+  application:
+    name: compatibility-smoke-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        refresh-enabled: false
+        import-check:
+          enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

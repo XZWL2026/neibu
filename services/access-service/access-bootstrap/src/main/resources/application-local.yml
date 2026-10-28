@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${ACCESS_DB_URL:jdbc:mysql://127.0.0.1:3306/access_db?connectionTimeZone=UTC}
+    username: ${ACCESS_DB_USERNAME}
+    password: ${ACCESS_DB_PASSWORD}
+server:
+  address: 127.0.0.1
+access:
+  key-encryption-key: ${ACCESS_KEY_ENCRYPTION_KEY}
+  user-internal-token: ${IAM_USER_INTERNAL_TOKEN}
+abp:
+  internal-token: ${ABP_INTERNAL_TOKEN}

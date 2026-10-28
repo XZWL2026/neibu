@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: billing-service
+  datasource:
+    url: ${BILLING_DB_URL}
+    username: ${BILLING_DB_USERNAME}
+    password: ${BILLING_DB_PASSWORD}
+  flyway:
+    enabled: true
+server:
+  port: 8214
+abp:
+  internal-token: ${ABP_INTERNAL_TOKEN}
+billing:
+  media-service-url: ${BILLING_MEDIA_SERVICE_URL:http://127.0.0.1:8217}
+  user-service-url: ${BILLING_USER_SERVICE_URL:http://127.0.0.1:8211}
+  media-prices: ${BILLING_MEDIA_PRICES:[]}
+  access-service-url: ${ACCESS_SERVICE_URL:http://127.0.0.1:8212}
+iam:
+  service-url: ${IAM_SERVICE_URL:http://127.0.0.1:8210}
+spring.cloud.openfeign.client.config.iam-service:
+  connectTimeout: 2000
+  readTimeout: 3000

@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: iam-service
+  datasource:
+    url: ${IAM_DB_URL}
+    username: ${IAM_DB_USERNAME}
+    password: ${IAM_DB_PASSWORD}
+  session:
+    timeout: 30m
+    jdbc:
+      initialize-schema: never
+  flyway:
+    locations: classpath:db/migration
+mybatis-plus:
+  configuration:
+    local-cache-scope: statement
+iam:
+  sms:
+    provider: ${IAM_SMS_PROVIDER:disabled}
+    volcengine:
+      sms-account: ${IAM_VOLC_SMS_ACCOUNT:}
+      sign: ${IAM_VOLC_SMS_SIGN:}
+      template-id: ${IAM_VOLC_SMS_TEMPLATE_ID:}
+      code-param: ${IAM_VOLC_SMS_CODE_PARAM:code}
+  local-otp:
+    enabled: ${IAM_LOCAL_OTP_ENABLED:false}
+    code: ${IAM_LOCAL_OTP_CODE:123456}
+  user-service-url: ${USER_SERVICE_URL:http://127.0.0.1:8211}
+server:
+  port: 8210
+  servlet:
+    session:
+      cookie:
+        name: XZWL_SESSION
+        http-only: true
+        secure: true
+        same-site: lax

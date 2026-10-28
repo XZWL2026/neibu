@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@xzwl/api-contracts/new-system": ["src/contracts/new-system.ts"],
+      "@xzwl/api-contracts/gateway": ["src/contracts/gateway.ts"]
+    },
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"],
+  "exclude": ["src/legacy-tests/**"]
+}

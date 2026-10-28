@@ -1,0 +1,9 @@
+.image-parameters { display: flex; flex-wrap: wrap; gap: 10px; }
+.image-parameters label { display: flex; flex-direction: column; gap: 5px; color: #b7c5bf; font-size: 12px; min-width: 0; }
+.image-parameters select, .image-parameters input { max-width: 100%; border: 1px solid #46514e; border-radius: 8px; padding: 8px; background: #303734; color: #edf3f1; font: inherit; }
+.image-parameters input { width: 70px; }
+.image-composer :focus-visible { outline: 2px solid #bbf2db; outline-offset: 2px; }
+.image-composer .video-task { max-height: 340px; overflow: auto; }
+.image-composer .video-task figure { margin: 12px 0; }
+.image-composer .video-task img { max-height: 240px; max-width: 100%; object-fit: contain; }
+.image-composer figcaption { color: #b7c5bf; font-size: 12px; overflow-wrap: anywhere; }

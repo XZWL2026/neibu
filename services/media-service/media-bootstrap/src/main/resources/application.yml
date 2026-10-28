@@ -1,0 +1,66 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+  application:
+    name: media-service
+  datasource:
+    url: ${MEDIA_DB_URL}
+    username: ${MEDIA_DB_USERNAME}
+    password: ${MEDIA_DB_PASSWORD}
+  flyway:
+    locations: classpath:db/media-migration/common,classpath:db/media-migration/{vendor}
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  servlet:
+    multipart:
+      enabled: false
+server:
+  port: ${MEDIA_PORT:8217}
+# ProviderSettings reads MEDIA_ARK_*, VOLC_ARK_API_KEY, MEDIA_MPS_* and
+# TENCENTCLOUD_SECRET_* directly from process environment; see ../README.md.
+# Credentials are deliberately absent from task/route configuration.
+media:
+  depth:
+    enabled: ${MEDIA_DEPTH_ENABLED:false}
+    url: ${MEDIA_DEPTH_URL:http://127.0.0.1:18727}
+    token: ${MEDIA_DEPTH_TOKEN:}
+  billing:
+    url: ${MEDIA_BILLING_URL:http://127.0.0.1:8214}
+    token: ${MEDIA_BILLING_TOKEN:${ABP_INTERNAL_TOKEN:}}
+  iam:
+    url: ${MEDIA_IAM_URL:http://127.0.0.1:8210}
+  routing:
+    url: ${MEDIA_ROUTING_URL:http://127.0.0.1:8216}
+    token: ${MEDIA_ROUTING_TOKEN:}
+  storage:
+    url: ${MEDIA_STORAGE_URL:http://127.0.0.1:8219}
+    token: ${MEDIA_STORAGE_TOKEN:}
+  http:
+    connect-timeout: ${MEDIA_HTTP_CONNECT_TIMEOUT:5s}
+    read-timeout: ${MEDIA_HTTP_READ_TIMEOUT:180s}
+  worker:
+    enabled: ${MEDIA_WORKER_ENABLED:true}
+    scan-interval: ${MEDIA_SCAN_INTERVAL:1000}
+    image-timeout: ${MEDIA_IMAGE_TIMEOUT:1h}
+    video-timeout: ${MEDIA_VIDEO_TIMEOUT:6h}
+    poll-interval: ${MEDIA_POLL_INTERVAL:10s}
+    retry-interval: ${MEDIA_RETRY_INTERVAL:10s}
+    lease-duration: ${MEDIA_LEASE_DURATION:210s}
+    batch-size: ${MEDIA_BATCH_SIZE:20}
+
+xzwl:
+  api-key:
+    enabled: true
+    access-url: ${ACCESS_SERVICE_URL:http://127.0.0.1:8212}
+    service-token: ${ABP_INTERNAL_TOKEN:}
+  iam-session:
+    enabled: true
+    path-prefix: /api/v1/admin/
+    base-url: ${MEDIA_IAM_URL:http://127.0.0.1:8210}

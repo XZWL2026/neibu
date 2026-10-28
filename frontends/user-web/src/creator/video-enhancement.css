@@ -1,0 +1,86 @@
+.video-enhancement-quote {
+  --enhancement-ink: #e1e8e5;
+  --enhancement-muted: #aebbb5;
+  --enhancement-surface: #1a201e;
+  --enhancement-control: #242c28;
+  --enhancement-hover: #303b35;
+  --enhancement-line: #39473f;
+  --enhancement-accent: #bbf2db;
+  --enhancement-accent-ink: #183c32;
+  --enhancement-warning: #edc399;
+  min-width: 0;
+  padding: 16px;
+  color: var(--enhancement-ink);
+  background: var(--enhancement-surface);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+  container-type: inline-size;
+  color-scheme: dark;
+}
+.video-enhancement-quote p { margin: 0; }
+section.video-enhancement-quote :is(button, select) { min-height: 44px; max-width: 100%; border: 1px solid var(--enhancement-line); border-radius: 8px; padding: 9px 12px; color: var(--enhancement-ink); background: var(--enhancement-control); font: inherit; }
+.video-enhancement-quote button { cursor: pointer; }
+.video-enhancement-quote button:hover:not(:disabled) { background: var(--enhancement-hover); }
+.video-enhancement-quote button:disabled { opacity: .55; cursor: default; }
+.video-enhancement-quote :focus-visible { outline: 2px solid var(--enhancement-accent); outline-offset: 3px; }
+.video-enhancement-quote ::selection { background: var(--enhancement-accent); color: var(--enhancement-accent-ink); }
+.video-version-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.video-native-label { display: inline-flex; align-items: center; gap: 8px; color: var(--enhancement-muted); }
+.video-native-label svg { width: 18px; height: 18px; }
+.video-version-select { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; color: var(--enhancement-muted); }
+.video-version-select select { min-width: 0; }
+.video-enhancement-quote .video-enhancement-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-left: auto; color: var(--enhancement-accent); border-color: var(--enhancement-line); background: transparent; white-space: nowrap; }
+.video-enhancement-toggle svg { width: 16px; height: 16px; transition: transform 160ms ease-out; }
+.video-enhancement-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.video-version-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.video-enhancement-quote .video-version-actions button { font-size: 12px; }
+.video-version-actions button[data-selected="true"] { border-color: var(--enhancement-accent); }
+.video-enhancement-details { display: grid; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--enhancement-line); }
+.video-enhancement-details[hidden] { display: none; }
+.video-enhancement-description { color: var(--enhancement-muted); }
+.video-enhancement-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 20px; }
+.video-enhancement-fields > label { display: grid; gap: 8px; min-width: 0; color: var(--enhancement-muted); }
+.video-enhancement-fields select { width: 100%; }
+.video-enhancement-fee { display: grid; gap: 3px; min-width: 0; }
+.video-enhancement-fee strong { font-size: 16px; font-weight: 600; line-height: 1.4; }
+.video-enhancement-fee > span { color: var(--enhancement-muted); font-size: 12px; }
+.video-enhancement-quote .video-enhancement-confirm { width: 100%; border-color: transparent; color: var(--enhancement-accent-ink); background: var(--enhancement-accent); font-weight: 600; }
+.video-enhancement-quote .video-enhancement-confirm:hover:not(:disabled) { background: #d0f7e8; }
+.video-enhancement-feedback { color: var(--enhancement-warning); }
+.video-enhancement-feedback > button { margin-top: 8px; }
+.video-enhancement-recovery { display: grid; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--enhancement-line); color: var(--enhancement-warning); }
+.video-enhancement-status { display: grid; gap: 6px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--enhancement-line); }
+.video-enhancement-status-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 12px; }
+.video-enhancement-status-heading strong { font-weight: 600; }
+.video-enhancement-status-heading > span { font-size: 12px; color: var(--enhancement-muted); }
+.video-enhancement-status[data-state="success"] .video-enhancement-status-heading > span { color: var(--enhancement-accent); }
+.video-enhancement-status[data-state="failed"] .video-enhancement-status-heading > span { color: var(--enhancement-warning); }
+.video-enhancement-status > p { color: var(--enhancement-muted); font-size: 12px; }
+.video-enhancement-status .video-enhancement-refund { color: var(--enhancement-warning); }
+.video-enhancement-loading { display: grid; gap: 12px; color: var(--enhancement-muted); }
+.video-enhancement-loading > span { display: block; width: 100%; height: 44px; border-radius: 8px; background: var(--enhancement-control); }
+html[data-theme="light"] .video-enhancement-quote {
+  --enhancement-ink: var(--light-ink, #0b1739);
+  --enhancement-muted: var(--light-muted, #536b91);
+  --enhancement-surface: #f5f9ff;
+  --enhancement-control: #edf4ff;
+  --enhancement-hover: #e2edfc;
+  --enhancement-line: #c7d8ee;
+  --enhancement-accent: var(--light-accent, #325ef0);
+  --enhancement-accent-ink: #fff;
+  --enhancement-warning: #815126;
+  color-scheme: light;
+}
+html[data-theme="light"] .video-enhancement-confirm:hover:not(:disabled) { background: #254dc6; }
+@container (max-width: 340px) {
+  .video-version-toolbar { align-items: flex-start; }
+  .video-version-select { width: 100%; }
+  .video-version-select select { flex: 1; }
+  .video-enhancement-fields { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .video-enhancement-fee { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; }
+  .video-enhancement-fee > span:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) { .video-enhancement-quote { padding: 14px; } }
+@media (prefers-reduced-motion: reduce) { .video-enhancement-toggle svg { transition: none; } }

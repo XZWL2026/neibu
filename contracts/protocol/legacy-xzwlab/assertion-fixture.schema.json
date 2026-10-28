@@ -1,0 +1,465 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xzwlab.local/contracts/assertion-fixture.schema.json",
+  "oneOf": [
+    { "$ref": "#/$defs/runtimeInject" },
+    { "$ref": "#/$defs/routeSchema" },
+    { "$ref": "#/$defs/sourceAst" }
+  ],
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "repoRelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!\\.{1,2}$)(?!\\.{1,2}/)(?!.*/\\.{1,2}(?:/|$)).+$"
+    },
+    "stringMap": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "routeTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "path"],
+      "properties": {
+        "method": { "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+        "path": { "type": "string", "pattern": "^/" }
+      }
+    },
+    "sourceRouteTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "method", "path"],
+      "properties": {
+        "scope": { "const": "route" },
+        "method": { "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+        "path": { "type": "string", "pattern": "^/" }
+      }
+    },
+    "applicationTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "method", "path"],
+      "properties": {
+        "scope": { "const": "application" },
+        "method": { "const": null },
+        "path": { "const": null }
+      }
+    },
+    "sourceTarget": {
+      "oneOf": [
+        { "$ref": "#/$defs/sourceRouteTarget" },
+        { "$ref": "#/$defs/applicationTarget" }
+      ]
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "sourcePath", "locatorType", "locator", "observation"],
+      "properties": {
+        "role": {
+          "enum": [
+            "application-entry",
+            "route-registration",
+            "global-hook",
+            "auth-handler",
+            "auth-context",
+            "error-handler",
+            "registered-schema",
+            "runtime-identity",
+            "runtime-response"
+          ]
+        },
+        "sourcePath": { "$ref": "#/$defs/repoRelativePath" },
+        "locatorType": { "enum": ["export", "function", "hook", "route", "schema"] },
+        "locator": { "$ref": "#/$defs/nonEmptyString" },
+        "observation": {
+          "enum": [
+            "compiler-symbol",
+            "registered-schema",
+            "actual-request-identity",
+            "actual-response"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "application-entry" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["export", "function"] },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "route-registration" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "const": "route" },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "global-hook" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "const": "hook" },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "auth-handler" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["function", "hook"] },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "auth-context" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["function", "hook"] },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "error-handler" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["function", "hook"] },
+              "observation": { "const": "compiler-symbol" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "registered-schema" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "const": "schema" },
+              "observation": { "const": "registered-schema" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "runtime-identity" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["function", "hook"] },
+              "observation": { "const": "actual-request-identity" }
+            }
+          }
+        },
+        {
+          "if": { "type": "object", "properties": { "role": { "const": "runtime-response" } }, "required": ["role"] },
+          "then": {
+            "type": "object",
+            "properties": {
+              "locatorType": { "enum": ["function", "route"] },
+              "observation": { "const": "actual-response" }
+            }
+          }
+        }
+      ]
+    },
+    "runtimeInject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "id", "runner", "caseName", "dependencyProfile", "request", "extractor"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "runner": { "const": "runtime-inject" },
+        "caseName": { "$ref": "#/$defs/nonEmptyString" },
+        "dependencyProfile": {
+          "type": "string",
+          "pattern": "^contracts/protocol/legacy-xzwlab/fixtures/dependencies/.+\\.json$"
+        },
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["method", "path", "headers", "query", "body"],
+          "properties": {
+            "method": { "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+            "path": { "type": "string", "pattern": "^/" },
+            "headers": { "$ref": "#/$defs/stringMap" },
+            "query": { "$ref": "#/$defs/stringMap" },
+            "body": true
+          }
+        },
+        "extractor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "selector", "normalization"],
+          "properties": {
+            "kind": { "enum": ["status", "header", "json-pointer"] },
+            "selector": { "type": ["string", "null"] },
+            "normalization": { "enum": ["none", "lowercase-header-name", "canonical-json"] }
+          }
+        }
+      }
+    },
+    "routeSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "id", "runner", "caseName", "target", "extractor"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "runner": { "const": "route-schema" },
+        "caseName": { "$ref": "#/$defs/nonEmptyString" },
+        "target": { "$ref": "#/$defs/routeTarget" },
+        "extractor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "selector", "normalization"],
+          "properties": {
+            "kind": {
+              "enum": [
+                "registered-path-set",
+                "parameter-location-set",
+                "content-type-set",
+                "required-field-set",
+                "schema-locator-set"
+              ]
+            },
+            "selector": { "type": ["string", "null"] },
+            "normalization": { "enum": ["canonical-json", "sorted-unique-json"] }
+          }
+        }
+      }
+    },
+    "sourceAst": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "id",
+        "runner",
+        "caseName",
+        "parser",
+        "sourcePath",
+        "locatorType",
+        "locator",
+        "target",
+        "closure",
+        "extractor"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "runner": { "const": "source-ast" },
+        "caseName": { "$ref": "#/$defs/nonEmptyString" },
+        "parser": { "const": "typescript-compiler-api" },
+        "sourcePath": { "$ref": "#/$defs/repoRelativePath" },
+        "locatorType": { "enum": ["export", "function", "hook", "route", "schema"] },
+        "locator": { "$ref": "#/$defs/nonEmptyString" },
+        "target": { "$ref": "#/$defs/sourceTarget" },
+        "closure": { "enum": ["single-node", "registered-route-call-graph"] },
+        "extractor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "selector", "normalization", "rule", "bindings"],
+          "properties": {
+            "kind": {
+              "enum": [
+                "string-constant",
+                "string-set",
+                "json-scalar",
+                "status-code-set",
+                "header-name-set",
+                "call-target-set",
+                "global-protocol-contract",
+                "auth-contract-set",
+                "response-contract-set"
+              ]
+            },
+            "selector": { "type": ["string", "null"] },
+            "normalization": { "enum": ["none", "canonical-json", "sorted-unique-json"] },
+            "rule": {
+              "enum": [
+                "none",
+                "registered-global-protocol-v1",
+                "registered-route-auth-v1",
+                "registered-route-responses-v1"
+              ]
+            },
+            "bindings": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/sourceBinding" }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "extractor": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "string-constant",
+                      "string-set",
+                      "json-scalar",
+                      "status-code-set",
+                      "header-name-set",
+                      "call-target-set"
+                    ]
+                  }
+                },
+                "required": ["kind"]
+              }
+            },
+            "required": ["extractor"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "extractor": {
+                "type": "object",
+                "properties": {
+                  "selector": { "$ref": "#/$defs/nonEmptyString" },
+                  "rule": { "const": "none" },
+                  "bindings": { "type": "array", "maxItems": 0 }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "extractor": {
+                "type": "object",
+                "properties": { "kind": { "const": "global-protocol-contract" } },
+                "required": ["kind"]
+              }
+            },
+            "required": ["extractor"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "target": { "$ref": "#/$defs/applicationTarget" },
+              "closure": { "const": "registered-route-call-graph" },
+              "extractor": {
+                "type": "object",
+                "properties": {
+                  "selector": { "const": null },
+                  "normalization": { "const": "canonical-json" },
+                  "rule": { "const": "registered-global-protocol-v1" },
+                  "bindings": {
+                    "type": "array",
+                    "allOf": [
+                      { "contains": { "type": "object", "properties": { "role": { "const": "application-entry" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "route-registration" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "global-hook" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "auth-handler" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "error-handler" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "registered-schema" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "runtime-identity" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "runtime-response" } }, "required": ["role"] } }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "extractor": {
+                "type": "object",
+                "properties": { "kind": { "const": "auth-contract-set" } },
+                "required": ["kind"]
+              }
+            },
+            "required": ["extractor"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "target": { "$ref": "#/$defs/sourceRouteTarget" },
+              "closure": { "const": "registered-route-call-graph" },
+              "extractor": {
+                "type": "object",
+                "properties": {
+                  "selector": { "const": null },
+                  "normalization": { "const": "canonical-json" },
+                  "rule": { "const": "registered-route-auth-v1" },
+                  "bindings": {
+                    "type": "array",
+                    "allOf": [
+                      { "contains": { "type": "object", "properties": { "role": { "const": "route-registration" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "auth-handler" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "registered-schema" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "runtime-identity" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "runtime-response" } }, "required": ["role"] } }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "extractor": {
+                "type": "object",
+                "properties": { "kind": { "const": "response-contract-set" } },
+                "required": ["kind"]
+              }
+            },
+            "required": ["extractor"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "target": { "$ref": "#/$defs/sourceRouteTarget" },
+              "closure": { "const": "registered-route-call-graph" },
+              "extractor": {
+                "type": "object",
+                "properties": {
+                  "selector": { "const": null },
+                  "normalization": { "const": "canonical-json" },
+                  "rule": { "const": "registered-route-responses-v1" },
+                  "bindings": {
+                    "type": "array",
+                    "allOf": [
+                      { "contains": { "type": "object", "properties": { "role": { "const": "route-registration" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "error-handler" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "registered-schema" } }, "required": ["role"] } },
+                      { "contains": { "type": "object", "properties": { "role": { "const": "runtime-response" } }, "required": ["role"] } }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

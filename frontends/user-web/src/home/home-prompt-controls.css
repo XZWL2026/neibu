@@ -1,0 +1,57 @@
+.yomio-home .ym-home-toolbar.composer-toolbar { display: flex; flex-wrap: wrap; gap: 8px; overflow: visible; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true]:has(.composer-mode-menu) { overflow: visible; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar[data-expanded=true]:has(.composer-material-entry > [role="menu"], .composer-material-popover:not([hidden])) { overflow: visible; }
+.yomio-home .ym-home-materials { flex: 1; min-width: 0; color: inherit; }
+.yomio-home .ym-home-materials .production-composer-main { display: flex; align-items: flex-start; gap: 16px; padding: 0; min-width: 0; }
+.yomio-home .ym-home-materials .composer-material-entry { flex: 0 0 80px; }
+.yomio-home .ym-prompt-bar:not([data-expanded=true]) .composer-material-entry:not(:has(.composer-material-stack)),
+.yomio-home .ym-home-materials[data-enabled=false] .composer-material-entry { display: none; }
+.yomio-home .ym-prompt-bar[data-expanded=true][data-materials=true] .ym-prompt-spark { display: none; }
+.yomio-home .ym-prompt-bar[data-expanded=true][data-materials=true] #ym-prompt { height: 80px; }
+.yomio-home .ym-home-materials .media-trigger { color: inherit; background: #ffffff08; border-color: var(--line); }
+.yomio-home .ym-home-materials .composer-upload-error { font-size: 11px; line-height: 16px; margin: 4px 0 0; }
+.yomio-home .ym-home-materials .composer-material-entry > [role="menu"] { max-width: calc(100vw - 64px); }
+.yomio-home .ym-home-materials .ym-material-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 18px; }
+.yomio-home .ym-prompt-bar[data-expanded=true][data-materials=true] .ym-prompt-input-row { height: auto; min-height: 120px; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) { position: relative; display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 12px 16px; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) .composer-material-entry { display: contents; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .ym-home-materials .composer-material-popover { position: static; grid-column: 1 / -1; grid-row: 2; width: 100%; max-width: 100%; background: transparent; animation: none; }
+.yomio-home .ym-home-materials .composer-material-popover::after { content: none; }
+.yomio-home .ym-home-materials .composer-materials { width: 100%; padding-bottom: 6px; scrollbar-color: var(--muted) transparent; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) .media-trigger { grid-column: 1; grid-row: 1; }
+.yomio-home .ym-prompt-shell .ym-home-materials #ym-prompt { width: 100%; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) #ym-prompt { grid-column: 2; grid-row: 1; }
+.yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) .composer-material-entry > [role="menu"] { left: 0; top: 88px; }
+.yomio-home .ym-home-materials .composer-material-popover .composer-material-remove { opacity: 1; }
+.yomio-home .ym-prompt-bar:not([data-expanded=true]) .composer-material-popover { display: none; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar:not([data-expanded=true]):has(.composer-material-stack) { height: 116px; }
+.yomio-home .ym-prompt-bar:not([data-expanded=true]):has(.composer-material-stack) .ym-prompt-input-row { height: 108px; }
+.yomio-home .ym-prompt-bar:has(.composer-material-stack) .ym-prompt-spark { display: none; }
+.yomio-home .ym-home-toolbar.composer-toolbar > button,
+.yomio-home .ym-home-toolbar .composer-mode { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; max-width: 100%; padding: 0 12px; color: #e4e4e4; background: #171717; border: 1px solid #454545; border-radius: 999px; font-size: 13px; white-space: nowrap; }
+.yomio-home .ym-home-toolbar svg { width: 16px; height: 16px; }
+.yomio-home .ym-home-toolbar .composer-model { min-width: 0; }
+.yomio-home .ym-home-toolbar :is(button):focus-visible { outline-offset: 2px; }
+.yomio-home .ym-home-toolbar .composer-mode > svg:last-child { transition: transform 120ms; }
+.yomio-home .ym-home-toolbar .composer-mode[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
+.yomio-home .composer-mode-menu { color: #e4e4e4; background: #1b303df5; border-color: #506776; box-shadow: none; }
+.yomio-home .composer-mode-menu button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 10px 14px; border-radius: 10px; color: inherit; font-size: 15px; text-align: left; }
+.yomio-home .composer-mode-menu button:is(:hover, :focus-visible, [aria-checked="true"]) { background: #2d4553; }
+:root[data-theme="light"] .yomio-home .ym-home-toolbar.composer-toolbar > button,
+:root[data-theme="light"] .yomio-home .ym-home-toolbar .composer-mode { color: #345581; background: #f5f9ff; border-color: #c6d8f0; }
+:root[data-theme="light"] .yomio-home .composer-mode-menu { color: #345581; background: #edf4ff; border-color: #c6d8f0; }
+:root[data-theme="light"] .yomio-home .composer-mode-menu button:is(:hover, :focus-visible, [aria-checked="true"]) { background: #d7e6f3; }
+:root[data-theme="light"] .yomio-home .ym-home-toolbar .composer-summary > span + span { border-color: #c6d8f0; }
+:root[data-theme="light"] .yomio-home .ym-home-materials .media-trigger { color: #345581; background: #edf4ff; border-color: #c6d8f0; }
+:root[data-theme="light"] .yomio-home .ym-home-materials .composer-material-popover { color: #345581; background: transparent; }
+@media (max-width: 760px) {
+  .yomio-home .ym-prompt-bar[data-expanded=true][data-materials=true] #ym-prompt { height: 74px; }
+  .yomio-home .ym-home-materials .production-composer-main { gap: 12px; }
+  .yomio-home .ym-home-materials .composer-material-entry { flex-basis: 66px; }
+  .yomio-home .ym-prompt-bar[data-expanded=true] .production-composer-main:has(.composer-material-popover:not([hidden])) { grid-template-columns: 66px minmax(0, 1fr); gap: 12px; }
+  .yomio-home .ym-home-toolbar .composer-mode-wrap { flex: 0 0 auto; max-width: 100%; }
+  .yomio-home .ym-home-toolbar .composer-model { flex: 1 1 120px; }
+  .yomio-home .ym-home-toolbar .composer-model span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .yomio-home .ym-home-toolbar.composer-toolbar > button,
+  .yomio-home .ym-home-toolbar .composer-mode { min-height: 44px; font-size: 12px; }
+}

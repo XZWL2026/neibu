@@ -1,0 +1,31 @@
+import {enableAutoUnmount,mount} from '@vue/test-utils';
+import {afterEach,expect,it} from 'vitest';
+import ApiClientPrices from './ApiClientPrices.vue';
+import type {ResponseBillingDomainPricingMediaPrice as Price} from './api';
+enableAutoUnmount(afterEach);
+it.each(['PERSONAL','ENTERPRISE','API'])('edits only %s user prices and keeps four-place amounts',async accountType=>{
+ const prices:Price[]=['PERSONAL','ENTERPRISE','API'].map(type=>({type:'VIDEO',accountType:type,model:type,resolution:'720p',unit:'SECOND',yuanPerUnit:'1.2345',pointsPerUnit:null,enabled:true}));
+ const view=mount(ApiClientPrices,{props:{prices,modelValue:[],pointsPerYuan4:'10',accountType}});
+ expect(view.findAll('tbody tr')).toHaveLength(1);
+ expect(view.get('tbody tr').text()).toContain(accountType);
+ await view.get('tbody input').setValue('0.1234');
+ expect(view.emitted('update:modelValue')?.[0]?.[0]).toEqual([{...prices.find(p=>p.accountType===accountType),yuanPerUnit:'0.1234'}]);
+});
+it('uses model groups and a side editor, cancels to saved overrides, and advances in visual order',async()=>{
+ const video:Price={type:'VIDEO',accountType:'PERSONAL',model:'video',resolution:'720p',unit:'SECOND',yuanPerUnit:'1.2345',pointsPerUnit:null,enabled:true};
+ const image:Price={...video,type:'IMAGE',model:'image',resolution:'2k',unit:'IMAGE'};
+ const saved=[{...video,yuanPerUnit:'0.3456'}];
+ const view=mount(ApiClientPrices,{props:{prices:[image,video,{...video,resolution:'1080p'}],modelValue:saved,pointsPerYuan4:'10',accountType:'PERSONAL',modelLayout:true,savedPrices:saved,'onUpdate:modelValue':value=>{void view.setProps({modelValue:value});}}});
+ expect(view.findAll('.pricing-section-heading h2').map(h=>h.text())).toEqual(['视频生成模型','图片生成模型']);
+ expect(view.get('.pricing-detail-model strong').text()).toBe('video');
+ await view.get('[aria-label="编辑客户金额（元）"]').setValue('0.9876');
+ expect(view.props('modelValue')[0]?.yuanPerUnit).toBe('0.9876');
+ await view.get('.pricing-detail form').trigger('keydown',{key:'Escape'});
+ expect(view.get<HTMLInputElement>('[aria-label="编辑客户金额（元）"]').element.value).toBe('0.3456');
+ await view.get('.pricing-detail form').trigger('submit');expect(view.emitted('save')).toHaveLength(1);
+ (view.vm as unknown as {advance:()=>void}).advance();await view.vm.$nextTick();
+ expect(view.get('.pricing-specifications [aria-pressed="true"]').text()).toBe('1080p');
+ await view.get('[aria-label="搜索模型名称或规格"]').setValue('image');
+ expect(view.get('.pricing-detail-model strong').text()).toBe('image');
+ expect(view.props('modelValue')).toEqual(saved);
+});

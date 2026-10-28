@@ -1,0 +1,46 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "XZWL Cloud Platform Smoke API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/platform/smoke": {
+      "get": {
+        "operationId": "getPlatformSmoke",
+        "tags": ["platform-smoke"],
+        "responses": {
+          "200": {
+            "description": "Gateway reached the compatibility smoke service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformSmokeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PlatformSmokeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["applicationName", "requestId"],
+        "properties": {
+          "applicationName": {
+            "type": "string",
+            "const": "compatibility-smoke-service"
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

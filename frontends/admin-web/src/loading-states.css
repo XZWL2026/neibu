@@ -1,0 +1,12 @@
+/* Reserve the table body during the first request and keep updates in place. */
+.data-table-region { position: relative; height: 360px; min-height: 0; overflow: auto; }
+.data-update-region { position: relative; }
+.data-table-region[aria-busy="true"] { cursor: progress; }
+.data-table-region[aria-busy="false"] tbody > tr:not(.table-loading-row) {
+  animation: data-row-ready 160ms ease-out;
+}
+@keyframes data-row-ready { from { opacity: .6; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .data-table-region[aria-busy="false"] tbody > tr:not(.table-loading-row) { animation: none; }
+}
+@media (max-width: 760px) { .data-table-region { height: 320px; } }

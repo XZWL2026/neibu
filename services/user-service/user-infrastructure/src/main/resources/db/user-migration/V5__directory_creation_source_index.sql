@@ -1,0 +1,1 @@
+CREATE INDEX idx_admin_user_create_user ON admin_user_create_request(user_id);

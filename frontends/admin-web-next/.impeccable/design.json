@@ -1,0 +1,705 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T04:01:26.013Z",
+  "title": "Design System: YOMIO 管理后台",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Operational Indigo",
+        "tonalRamp": [
+          "oklch(0.150 0.2301 276.97)",
+          "oklch(0.264 0.2301 276.97)",
+          "oklch(0.379 0.2301 276.97)",
+          "oklch(0.493 0.2301 276.97)",
+          "oklch(0.607 0.2301 276.97)",
+          "oklch(0.721 0.2301 276.97)",
+          "oklch(0.836 0.2301 276.97)",
+          "oklch(0.950 0.2301 276.97)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Indigo Hover",
+        "tonalRamp": [
+          "oklch(0.150 0.2146 277.02)",
+          "oklch(0.264 0.2146 277.02)",
+          "oklch(0.379 0.2146 277.02)",
+          "oklch(0.493 0.2146 277.02)",
+          "oklch(0.607 0.2146 277.02)",
+          "oklch(0.721 0.2146 277.02)",
+          "oklch(0.836 0.2146 277.02)",
+          "oklch(0.950 0.2146 277.02)"
+        ]
+      },
+      "accent-pressed": {
+        "role": "primary",
+        "displayName": "Indigo Pressed",
+        "tonalRamp": [
+          "oklch(0.150 0.1773 277.37)",
+          "oklch(0.264 0.1773 277.37)",
+          "oklch(0.379 0.1773 277.37)",
+          "oklch(0.493 0.1773 277.37)",
+          "oklch(0.607 0.1773 277.37)",
+          "oklch(0.721 0.1773 277.37)",
+          "oklch(0.836 0.1773 277.37)",
+          "oklch(0.950 0.1773 277.37)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Indigo Wash",
+        "tonalRamp": [
+          "oklch(0.150 0.0201 289.08)",
+          "oklch(0.264 0.0201 289.08)",
+          "oklch(0.379 0.0201 289.08)",
+          "oklch(0.493 0.0201 289.08)",
+          "oklch(0.607 0.0201 289.08)",
+          "oklch(0.721 0.0201 289.08)",
+          "oklch(0.836 0.0201 289.08)",
+          "oklch(0.950 0.0201 289.08)"
+        ]
+      },
+      "accent-soft-line": {
+        "role": "primary",
+        "displayName": "Selected Boundary",
+        "tonalRamp": [
+          "oklch(0.150 0.0577 289.51)",
+          "oklch(0.264 0.0577 289.51)",
+          "oklch(0.379 0.0577 289.51)",
+          "oklch(0.493 0.0577 289.51)",
+          "oklch(0.607 0.0577 289.51)",
+          "oklch(0.721 0.0577 289.51)",
+          "oklch(0.836 0.0577 289.51)",
+          "oklch(0.950 0.0577 289.51)"
+        ]
+      },
+      "focus-soft": {
+        "role": "primary",
+        "displayName": "Field Focus",
+        "tonalRamp": [
+          "oklch(0.150 0.1130 286.18)",
+          "oklch(0.264 0.1130 286.18)",
+          "oklch(0.379 0.1130 286.18)",
+          "oklch(0.493 0.1130 286.18)",
+          "oklch(0.607 0.1130 286.18)",
+          "oklch(0.721 0.1130 286.18)",
+          "oklch(0.836 0.1130 286.18)",
+          "oklch(0.950 0.1130 286.18)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "White Working Surface",
+        "tonalRamp": [
+          "oklch(0.150 0.0000 0.00)",
+          "oklch(0.264 0.0000 0.00)",
+          "oklch(0.379 0.0000 0.00)",
+          "oklch(0.493 0.0000 0.00)",
+          "oklch(0.607 0.0000 0.00)",
+          "oklch(0.721 0.0000 0.00)",
+          "oklch(0.836 0.0000 0.00)",
+          "oklch(0.950 0.0000 0.00)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Cool Workspace",
+        "tonalRamp": [
+          "oklch(0.150 0.0041 271.37)",
+          "oklch(0.264 0.0041 271.37)",
+          "oklch(0.379 0.0041 271.37)",
+          "oklch(0.493 0.0041 271.37)",
+          "oklch(0.607 0.0041 271.37)",
+          "oklch(0.721 0.0041 271.37)",
+          "oklch(0.836 0.0041 271.37)",
+          "oklch(0.950 0.0041 271.37)"
+        ]
+      },
+      "surface-inset": {
+        "role": "neutral",
+        "displayName": "Inset Surface",
+        "tonalRamp": [
+          "oklch(0.150 0.0041 271.37)",
+          "oklch(0.264 0.0041 271.37)",
+          "oklch(0.379 0.0041 271.37)",
+          "oklch(0.493 0.0041 271.37)",
+          "oklch(0.607 0.0041 271.37)",
+          "oklch(0.721 0.0041 271.37)",
+          "oklch(0.836 0.0041 271.37)",
+          "oklch(0.950 0.0041 271.37)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "tonalRamp": [
+          "oklch(0.150 0.0441 260.60)",
+          "oklch(0.264 0.0441 260.60)",
+          "oklch(0.379 0.0441 260.60)",
+          "oklch(0.493 0.0441 260.60)",
+          "oklch(0.607 0.0441 260.60)",
+          "oklch(0.721 0.0441 260.60)",
+          "oklch(0.836 0.0441 260.60)",
+          "oklch(0.950 0.0441 260.60)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "tonalRamp": [
+          "oklch(0.150 0.0374 262.55)",
+          "oklch(0.264 0.0374 262.55)",
+          "oklch(0.379 0.0374 262.55)",
+          "oklch(0.493 0.0374 262.55)",
+          "oklch(0.607 0.0374 262.55)",
+          "oklch(0.721 0.0374 262.55)",
+          "oklch(0.836 0.0374 262.55)",
+          "oklch(0.950 0.0374 262.55)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(0.150 0.0104 261.79)",
+          "oklch(0.264 0.0104 261.79)",
+          "oklch(0.379 0.0104 261.79)",
+          "oklch(0.493 0.0104 261.79)",
+          "oklch(0.607 0.0104 261.79)",
+          "oklch(0.721 0.0104 261.79)",
+          "oklch(0.836 0.0104 261.79)",
+          "oklch(0.950 0.0104 261.79)"
+        ]
+      },
+      "line-subtle": {
+        "role": "neutral",
+        "displayName": "Line Subtle",
+        "tonalRamp": [
+          "oklch(0.150 0.0063 255.48)",
+          "oklch(0.264 0.0063 255.48)",
+          "oklch(0.379 0.0063 255.48)",
+          "oklch(0.493 0.0063 255.48)",
+          "oklch(0.607 0.0063 255.48)",
+          "oklch(0.721 0.0063 255.48)",
+          "oklch(0.836 0.0063 255.48)",
+          "oklch(0.950 0.0063 255.48)"
+        ]
+      },
+      "control-ink": {
+        "role": "neutral",
+        "displayName": "Control Ink",
+        "tonalRamp": [
+          "oklch(0.150 0.0411 263.24)",
+          "oklch(0.264 0.0411 263.24)",
+          "oklch(0.379 0.0411 263.24)",
+          "oklch(0.493 0.0411 263.24)",
+          "oklch(0.607 0.0411 263.24)",
+          "oklch(0.721 0.0411 263.24)",
+          "oklch(0.836 0.0411 263.24)",
+          "oklch(0.950 0.0411 263.24)"
+        ]
+      },
+      "control-hover-line": {
+        "role": "neutral",
+        "displayName": "Control Hover Line",
+        "tonalRamp": [
+          "oklch(0.150 0.0202 260.17)",
+          "oklch(0.264 0.0202 260.17)",
+          "oklch(0.379 0.0202 260.17)",
+          "oklch(0.493 0.0202 260.17)",
+          "oklch(0.607 0.0202 260.17)",
+          "oklch(0.721 0.0202 260.17)",
+          "oklch(0.836 0.0202 260.17)",
+          "oklch(0.950 0.0202 260.17)"
+        ]
+      },
+      "field-placeholder": {
+        "role": "neutral",
+        "displayName": "Field Placeholder",
+        "tonalRamp": [
+          "oklch(0.150 0.0333 264.26)",
+          "oklch(0.264 0.0333 264.26)",
+          "oklch(0.379 0.0333 264.26)",
+          "oklch(0.493 0.0333 264.26)",
+          "oklch(0.607 0.0333 264.26)",
+          "oklch(0.721 0.0333 264.26)",
+          "oklch(0.836 0.0333 264.26)",
+          "oklch(0.950 0.0333 264.26)"
+        ]
+      },
+      "table-heading": {
+        "role": "neutral",
+        "displayName": "Table Heading",
+        "tonalRamp": [
+          "oklch(0.150 0.0352 260.62)",
+          "oklch(0.264 0.0352 260.62)",
+          "oklch(0.379 0.0352 260.62)",
+          "oklch(0.493 0.0352 260.62)",
+          "oklch(0.607 0.0352 260.62)",
+          "oklch(0.721 0.0352 260.62)",
+          "oklch(0.836 0.0352 260.62)",
+          "oklch(0.950 0.0352 260.62)"
+        ]
+      },
+      "table-hover": {
+        "role": "neutral",
+        "displayName": "Table Hover",
+        "tonalRamp": [
+          "oklch(0.150 0.0079 286.25)",
+          "oklch(0.264 0.0079 286.25)",
+          "oklch(0.379 0.0079 286.25)",
+          "oklch(0.493 0.0079 286.25)",
+          "oklch(0.607 0.0079 286.25)",
+          "oklch(0.721 0.0079 286.25)",
+          "oklch(0.836 0.0079 286.25)",
+          "oklch(0.950 0.0079 286.25)"
+        ]
+      },
+      "nav-ground": {
+        "role": "neutral",
+        "displayName": "Navy Navigation",
+        "tonalRamp": [
+          "oklch(0.150 0.0321 258.31)",
+          "oklch(0.264 0.0321 258.31)",
+          "oklch(0.379 0.0321 258.31)",
+          "oklch(0.493 0.0321 258.31)",
+          "oklch(0.607 0.0321 258.31)",
+          "oklch(0.721 0.0321 258.31)",
+          "oklch(0.836 0.0321 258.31)",
+          "oklch(0.950 0.0321 258.31)"
+        ]
+      },
+      "nav-ink": {
+        "role": "neutral",
+        "displayName": "Nav Ink",
+        "tonalRamp": [
+          "oklch(0.150 0.0254 257.65)",
+          "oklch(0.264 0.0254 257.65)",
+          "oklch(0.379 0.0254 257.65)",
+          "oklch(0.493 0.0254 257.65)",
+          "oklch(0.607 0.0254 257.65)",
+          "oklch(0.721 0.0254 257.65)",
+          "oklch(0.836 0.0254 257.65)",
+          "oklch(0.950 0.0254 257.65)"
+        ]
+      },
+      "nav-label": {
+        "role": "neutral",
+        "displayName": "Nav Label",
+        "tonalRamp": [
+          "oklch(0.150 0.0361 257.86)",
+          "oklch(0.264 0.0361 257.86)",
+          "oklch(0.379 0.0361 257.86)",
+          "oklch(0.493 0.0361 257.86)",
+          "oklch(0.607 0.0361 257.86)",
+          "oklch(0.721 0.0361 257.86)",
+          "oklch(0.836 0.0361 257.86)",
+          "oklch(0.950 0.0361 257.86)"
+        ]
+      },
+      "nav-hover": {
+        "role": "neutral",
+        "displayName": "Nav Hover",
+        "tonalRamp": [
+          "oklch(0.150 0.0396 260.41)",
+          "oklch(0.264 0.0396 260.41)",
+          "oklch(0.379 0.0396 260.41)",
+          "oklch(0.493 0.0396 260.41)",
+          "oklch(0.607 0.0396 260.41)",
+          "oklch(0.721 0.0396 260.41)",
+          "oklch(0.836 0.0396 260.41)",
+          "oklch(0.950 0.0396 260.41)"
+        ]
+      },
+      "nav-current": {
+        "role": "neutral",
+        "displayName": "Current Navigation Ground",
+        "tonalRamp": [
+          "oklch(0.150 0.0687 285.67)",
+          "oklch(0.264 0.0687 285.67)",
+          "oklch(0.379 0.0687 285.67)",
+          "oklch(0.493 0.0687 285.67)",
+          "oklch(0.607 0.0687 285.67)",
+          "oklch(0.721 0.0687 285.67)",
+          "oklch(0.836 0.0687 285.67)",
+          "oklch(0.950 0.0687 285.67)"
+        ]
+      },
+      "nav-indicator": {
+        "role": "neutral",
+        "displayName": "Nav Indicator",
+        "tonalRamp": [
+          "oklch(0.150 0.0964 288.72)",
+          "oklch(0.264 0.0964 288.72)",
+          "oklch(0.379 0.0964 288.72)",
+          "oklch(0.493 0.0964 288.72)",
+          "oklch(0.607 0.0964 288.72)",
+          "oklch(0.721 0.0964 288.72)",
+          "oklch(0.836 0.0964 288.72)",
+          "oklch(0.950 0.0964 288.72)"
+        ]
+      },
+      "nav-focus": {
+        "role": "neutral",
+        "displayName": "Nav Focus",
+        "tonalRamp": [
+          "oklch(0.150 0.1127 287.53)",
+          "oklch(0.264 0.1127 287.53)",
+          "oklch(0.379 0.1127 287.53)",
+          "oklch(0.493 0.1127 287.53)",
+          "oklch(0.607 0.1127 287.53)",
+          "oklch(0.721 0.1127 287.53)",
+          "oklch(0.836 0.1127 287.53)",
+          "oklch(0.950 0.1127 287.53)"
+        ]
+      },
+      "nav-divider": {
+        "role": "neutral",
+        "displayName": "Nav Divider",
+        "tonalRamp": [
+          "oklch(0.150 0.0381 260.50)",
+          "oklch(0.264 0.0381 260.50)",
+          "oklch(0.379 0.0381 260.50)",
+          "oklch(0.493 0.0381 260.50)",
+          "oklch(0.607 0.0381 260.50)",
+          "oklch(0.721 0.0381 260.50)",
+          "oklch(0.836 0.0381 260.50)",
+          "oklch(0.950 0.0381 260.50)"
+        ]
+      },
+      "success": {
+        "role": "neutral",
+        "displayName": "Positive State",
+        "tonalRamp": [
+          "oklch(0.150 0.1059 165.43)",
+          "oklch(0.264 0.1059 165.43)",
+          "oklch(0.379 0.1059 165.43)",
+          "oklch(0.493 0.1059 165.43)",
+          "oklch(0.607 0.1059 165.43)",
+          "oklch(0.721 0.1059 165.43)",
+          "oklch(0.836 0.1059 165.43)",
+          "oklch(0.950 0.1059 165.43)"
+        ]
+      },
+      "success-soft": {
+        "role": "neutral",
+        "displayName": "Success Soft",
+        "tonalRamp": [
+          "oklch(0.150 0.0140 162.48)",
+          "oklch(0.264 0.0140 162.48)",
+          "oklch(0.379 0.0140 162.48)",
+          "oklch(0.493 0.0140 162.48)",
+          "oklch(0.607 0.0140 162.48)",
+          "oklch(0.721 0.0140 162.48)",
+          "oklch(0.836 0.0140 162.48)",
+          "oklch(0.950 0.0140 162.48)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error State",
+        "tonalRamp": [
+          "oklch(0.150 0.1706 15.70)",
+          "oklch(0.264 0.1706 15.70)",
+          "oklch(0.379 0.1706 15.70)",
+          "oklch(0.493 0.1706 15.70)",
+          "oklch(0.607 0.1706 15.70)",
+          "oklch(0.721 0.1706 15.70)",
+          "oklch(0.836 0.1706 15.70)",
+          "oklch(0.950 0.1706 15.70)"
+        ]
+      },
+      "error-soft": {
+        "role": "neutral",
+        "displayName": "Error Soft",
+        "tonalRamp": [
+          "oklch(0.150 0.0166 3.65)",
+          "oklch(0.264 0.0166 3.65)",
+          "oklch(0.379 0.0166 3.65)",
+          "oklch(0.493 0.0166 3.65)",
+          "oklch(0.607 0.0166 3.65)",
+          "oklch(0.721 0.0166 3.65)",
+          "oklch(0.836 0.0166 3.65)",
+          "oklch(0.950 0.0166 3.65)"
+        ]
+      },
+      "warning": {
+        "role": "neutral",
+        "displayName": "Caution State",
+        "tonalRamp": [
+          "oklch(0.150 0.1088 69.49)",
+          "oklch(0.264 0.1088 69.49)",
+          "oklch(0.379 0.1088 69.49)",
+          "oklch(0.493 0.1088 69.49)",
+          "oklch(0.607 0.1088 69.49)",
+          "oklch(0.721 0.1088 69.49)",
+          "oklch(0.836 0.1088 69.49)",
+          "oklch(0.950 0.1088 69.49)"
+        ]
+      },
+      "warning-soft": {
+        "role": "neutral",
+        "displayName": "Warning Soft",
+        "tonalRamp": [
+          "oklch(0.150 0.0181 78.24)",
+          "oklch(0.264 0.0181 78.24)",
+          "oklch(0.379 0.0181 78.24)",
+          "oklch(0.493 0.0181 78.24)",
+          "oklch(0.607 0.0181 78.24)",
+          "oklch(0.721 0.0181 78.24)",
+          "oklch(0.836 0.0181 78.24)",
+          "oklch(0.950 0.0181 78.24)"
+        ]
+      },
+      "category-purple": {
+        "role": "neutral",
+        "displayName": "Category Purple",
+        "tonalRamp": [
+          "oklch(0.150 0.1298 302.93)",
+          "oklch(0.264 0.1298 302.93)",
+          "oklch(0.379 0.1298 302.93)",
+          "oklch(0.493 0.1298 302.93)",
+          "oklch(0.607 0.1298 302.93)",
+          "oklch(0.721 0.1298 302.93)",
+          "oklch(0.836 0.1298 302.93)",
+          "oklch(0.950 0.1298 302.93)"
+        ]
+      },
+      "category-purple-soft": {
+        "role": "neutral",
+        "displayName": "Category Purple Soft",
+        "tonalRamp": [
+          "oklch(0.150 0.0155 306.41)",
+          "oklch(0.264 0.0155 306.41)",
+          "oklch(0.379 0.0155 306.41)",
+          "oklch(0.493 0.0155 306.41)",
+          "oklch(0.607 0.0155 306.41)",
+          "oklch(0.721 0.0155 306.41)",
+          "oklch(0.836 0.0155 306.41)",
+          "oklch(0.950 0.0155 306.41)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "title",
+        "purpose": "Implemented title role; values are normative in DESIGN.md."
+      },
+      "title-mobile": {
+        "displayName": "title-mobile",
+        "purpose": "Implemented title-mobile role; values are normative in DESIGN.md."
+      },
+      "section": {
+        "displayName": "section",
+        "purpose": "Implemented section role; values are normative in DESIGN.md."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Implemented body role; values are normative in DESIGN.md."
+      },
+      "description": {
+        "displayName": "description",
+        "purpose": "Implemented description role; values are normative in DESIGN.md."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Implemented label role; values are normative in DESIGN.md."
+      },
+      "metadata": {
+        "displayName": "metadata",
+        "purpose": "Implemented metadata role; values are normative in DESIGN.md."
+      },
+      "metric": {
+        "displayName": "metric",
+        "purpose": "Implemented metric role; values are normative in DESIGN.md."
+      },
+      "code": {
+        "displayName": "code",
+        "purpose": "Provider payload/code data only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "native-dialog",
+        "value": "0 18px 60px #18223126",
+        "purpose": "Native modal depth."
+      },
+      {
+        "name": "column-settings",
+        "value": "0 10px 30px #1822311a",
+        "purpose": "Column-settings overlay."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-state",
+        "value": "150ms",
+        "purpose": "Native controls and navigation color transitions."
+      },
+      {
+        "name": "workspace-entry",
+        "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Incoming content with signed 6px vertical displacement."
+      },
+      {
+        "name": "reduced-workspace-entry",
+        "value": "80ms",
+        "purpose": "Opacity-only incoming content."
+      },
+      {
+        "name": "reduced-css",
+        "value": ".01ms",
+        "purpose": "Global CSS animation/transition reduced-motion override."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "workspace-mobile",
+        "value": "760px"
+      },
+      {
+        "name": "workspace-intermediate",
+        "value": "1200px"
+      },
+      {
+        "name": "workspace-wide",
+        "value": "1800px"
+      },
+      {
+        "name": "login-mobile",
+        "value": "660px"
+      },
+      {
+        "name": "login-intermediate",
+        "value": "900px"
+      },
+      {
+        "name": "login-wide",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Command",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Native indigo command, hover and visible keyboard focus.",
+      "html": "<button class=\"ds-primary\">保存更改</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 13px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-control,7px);font:500 13px/1.4 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms;min-height:38px;background:var(--accent,#4f46e5);border-color:var(--accent,#4f46e5);color:#fff;font-weight:550;}.ds-primary:hover:not(:disabled){background:#4338ca;border-color:#4338ca;}.ds-primary:disabled{opacity:.48;cursor:not-allowed;}.ds-primary:focus-visible,.ds-secondary:focus-visible,.ds-text:focus-visible,.ds-filter:focus-visible{outline:2px solid var(--accent,#4f46e5);outline-offset:3px;}"
+    },
+    {
+      "name": "Secondary Command",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet bordered native control.",
+      "html": "<button class=\"ds-secondary\">重置筛选</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 13px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-control,7px);font:500 13px/1.4 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms;min-height:36px;background:#fff;color:#465269;}.ds-secondary:hover:not(:disabled){background:#f8f9fc;border-color:#bdc5d2;}.ds-secondary:disabled{opacity:.48;cursor:not-allowed;}.ds-primary:focus-visible,.ds-secondary:focus-visible,.ds-text:focus-visible,.ds-filter:focus-visible{outline:2px solid var(--accent,#4f46e5);outline-offset:3px;}"
+    },
+    {
+      "name": "Text Action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Compact indigo action alongside records.",
+      "html": "<button class=\"ds-text\">查看详情</button>",
+      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 13px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-control,7px);font:500 13px/1.4 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms;min-height:28px;padding:3px 6px;border:0;background:transparent;color:var(--accent,#4f46e5);}.ds-text:hover:not(:disabled){background:#f8f9fc;}.ds-primary:focus-visible,.ds-secondary:focus-visible,.ds-text:focus-visible,.ds-filter:focus-visible{outline:2px solid var(--accent,#4f46e5);outline-offset:3px;}"
+    },
+    {
+      "name": "Native Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Native field with source placeholder, hover and focus states.",
+      "html": "<label class=\"ds-field-label\">用户名称<input class=\"ds-input\" placeholder=\"搜索用户\" /></label>",
+      "css": ".ds-field-label{display:grid;gap:7px;color:var(--muted,#657187);font:11px \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;}.ds-input{min-height:38px;max-width:100%;padding:8px 11px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-control,7px);color:var(--ink,#202d43);background:#fff;font:13px/1.5 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;caret-color:var(--accent,#4f46e5);}.ds-input::placeholder{color:#6b7589;opacity:1;}.ds-input:hover:not(:disabled){border-color:#bdc5d2;}.ds-input:focus-visible{outline:2px solid #a5a0ef;outline-offset:1px;border-color:var(--accent,#4f46e5);}.ds-input:disabled,.ds-input[readonly]{background:#f8f9fc;color:var(--muted,#657187);}"
+    },
+    {
+      "name": "Grouped Navy Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-current",
+      "description": "Dark map with hover, current and keyboard focus.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"工作区\"><div class=\"ds-nav-label\">工作台</div><a href=\"#overview\" aria-current=\"page\">概览</a><a href=\"#users\">用户管理</a></nav>",
+      "css": ".ds-nav{display:grid;gap:3px;padding:14px;background:#182231;font:13px \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;}.ds-nav-label{margin:0 12px 7px;color:#9baac0;font-size:11px;font-weight:500;}.ds-nav a{display:flex;align-items:center;gap:11px;min-height:40px;padding:9px 12px;border-radius:7px;color:#c1ccdc;background:transparent;font-weight:400;text-decoration:none;transition:background-color 150ms,color 150ms;}.ds-nav a:hover{background:#263246;color:#fff;}.ds-nav a[aria-current=page]{background:#37345c;color:#fff;font-weight:550;}.ds-nav a:focus-visible{outline:2px solid #b6afff;outline-offset:-2px;}"
+    },
+    {
+      "name": "Selected Filter",
+      "kind": "button",
+      "refersTo": "filter-selected",
+      "description": "Pressed filter state expressed by indigo wash and border.",
+      "html": "<button class=\"ds-filter\" aria-pressed=\"true\">最近 7 天</button>",
+      "css": ".ds-filter{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 13px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-control,7px);font:500 13px/1.4 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms;min-height:36px;color:var(--accent,#4f46e5);background:var(--accent-soft,#eeedfc);border-color:#d4d0fa;}.ds-filter:hover:not(:disabled){background:#f8f9fc;border-color:#bdc5d2;}.ds-primary:focus-visible,.ds-secondary:focus-visible,.ds-text:focus-visible,.ds-filter:focus-visible{outline:2px solid var(--accent,#4f46e5);outline-offset:3px;}"
+    },
+    {
+      "name": "Semantic Status Tags",
+      "kind": "chip",
+      "refersTo": "tag-success",
+      "description": "Source positive/error/caution states with explicit text.",
+      "html": "<span class=\"ds-tag ds-positive\">已支付</span> <span class=\"ds-tag ds-error\">失败</span> <span class=\"ds-tag ds-warning\">待审核</span>",
+      "css": ".ds-tag{display:inline-block;padding:3px 8px;border-radius:5px;font:500 11px/1.6 \"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;}.ds-positive{color:#15805e;background:#edf8f2;}.ds-error{color:#c43d52;background:#fff0f3;}.ds-warning{color:#956014;background:#fcf4e8;}"
+    },
+    {
+      "name": "Working Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat operational container with compact section hierarchy.",
+      "html": "<section class=\"ds-panel\"><h2>记录筛选</h2><p>条件应用后查看当前记录。</p></section>",
+      "css": ".ds-panel{min-width:0;padding:24px;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-panel,12px);background:#fff;color:var(--ink,#202d43);box-shadow:none;font-family:\"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;}.ds-panel h2{margin:0;font-size:16px;font-weight:600;line-height:1.5;}.ds-panel p{color:var(--muted,#657187);font-size:12px;line-height:1.65;}"
+    },
+    {
+      "name": "Joined Ledger Band",
+      "kind": "custom",
+      "refersTo": "ledger-band",
+      "description": "Joined financial summaries without independent tile shadows; sample values are unknown.",
+      "html": "<section class=\"ds-ledger\"><article><h2>累计充值</h2><strong>未知</strong><small>等待数据</small></article><article><h2>累计消费</h2><strong>未知</strong><small>等待数据</small></article></section>",
+      "css": ".ds-ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line,#e3e7ee);border-radius:var(--radius-panel,12px);background:#fff;overflow:hidden;font-family:\"Segoe UI\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif;}.ds-ledger article{display:grid;align-content:start;min-width:0;min-height:136px;gap:10px;padding:23px 24px;background:#fff;}.ds-ledger article+article{border-left:1px solid var(--line-subtle,#edf0f4);}.ds-ledger h2{margin:0;color:var(--muted,#657187);font-size:12px;font-weight:500;line-height:1.5;}.ds-ledger strong{color:var(--ink,#202d43);font-size:28px;font-weight:650;line-height:1.35;letter-spacing:-.025em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}.ds-ledger small{color:var(--muted,#657187);font-size:11px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "YOMIO Operational Map",
+    "overview": "YOMIO is a restrained workspace for extended daily administration. A navy navigation spine keeps the operational map stable while pale working surfaces organize dense records, totals and deliberate commands. Indigo connects actions and selection across directories, detail drawers and configuration forms.\n\nThe system is code-led and data-first. Joined ledger bands and continuous filter-to-record surfaces create hierarchy through grouping rather than ornament. Naive UI supplies interactive primitives, Lucide supplies consistent outline icons, and ECharts supplies genuine chart rendering. Loading, unknown, empty and failure states keep their business meaning.",
+    "keyCharacteristics": [
+      "Navy navigation, cool workspace, white working surfaces and indigo commands.",
+      "Joined totals and continuous filter-to-record containers.",
+      "Compact Chinese interface typography with tabular operational numbers.",
+      "Grouped navigation, focused drawers and local mobile table scrolling.",
+      "Accessible control states and honest data states."
+    ],
+    "rules": [
+      {
+        "name": "The One Command Color Rule",
+        "body": "Use shared indigo for commands and selection; preserve status colors for their actual meaning.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legible Number Rule",
+        "body": "Use tabular numerals for operational values; preserve exact meaning when values wrap.",
+        "section": "typography"
+      },
+      {
+        "name": "The Stable Workspace Rule",
+        "body": "Keep identity and grouped navigation steady while records and filters adapt inside the content column.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Working Surface Rule",
+        "body": "Use boundaries and tonal grouping for working panels; reserve lifted depth for overlays.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** reuse the navy rail, indigo commands, shared title scale and flat white working surfaces.",
+      "**Do** join related totals and keep filters with their records.",
+      "**Do** preserve visible focus, accessible names and textual status alongside color.",
+      "**Do** keep mobile overflow local and use drawer navigation.",
+      "**Do** use Lucide outline icons and the intentional interface font stack.",
+      "**Do** preserve unknown, loading, empty and retry states and server-confirmed business authority."
+    ],
+    "donts": [
+      "**Don't** reintroduce the superseded bright-blue command palette from lazy legacy declarations.",
+      "**Don't** add title eyebrows, decorative metric icons or glyph substitutes for icons.",
+      "**Don't** add working-panel shadows or imagery that competes with records.",
+      "**Don't** use the provider code face for ordinary interface headings or labels.",
+      "**Don't** turn unknown amounts into zero or use plotted numbers for financial operations."
+    ]
+  }
+}

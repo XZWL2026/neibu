@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${IAM_DB_URL}
+    username: ${IAM_DB_USERNAME:root}
+    password: ${IAM_DB_PASSWORD}
+server:
+  address: 127.0.0.1
+  servlet:
+    session:
+      cookie:
+        secure: false

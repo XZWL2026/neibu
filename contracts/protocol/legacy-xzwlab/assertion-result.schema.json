@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xzwlab.local/contracts/assertion-result.schema.json",
+  "$defs": {
+    "bindingKey": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "runtimeObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executionId",
+        "method",
+        "path",
+        "bindingKeys",
+        "mechanismIds",
+        "mechanismSources",
+        "principalSource",
+        "roles",
+        "predicates",
+        "predicateSources",
+        "responseStatus"
+      ],
+      "properties": {
+        "executionId": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "method": { "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+        "path": { "type": "string", "pattern": "^/" },
+        "bindingKeys": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/bindingKey" }
+        },
+        "mechanismIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "mechanismSources": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/bindingKey" }
+        },
+        "principalSource": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/bindingKey" }
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "predicates": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "predicateSources": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/bindingKey" }
+        },
+        "responseStatus": { "type": "integer", "minimum": 100, "maximum": 599 }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "assertionId",
+    "fixtureId",
+    "sourceCommit",
+    "protocolManifestCommit",
+    "runner",
+    "caseRole",
+    "claimPointer",
+    "projection",
+    "comparison",
+    "coverage",
+    "dependencyProfileId",
+    "clockInstant",
+    "clockCanaryPassed",
+    "runtimeObservation",
+    "expected",
+    "actual",
+    "passed"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "assertionId": { "type": "string", "minLength": 1 },
+    "fixtureId": { "type": "string", "minLength": 1 },
+    "sourceCommit": { "const": "d1f9c5afec8aa13d30b153d055c96a24e4c69cf2" },
+    "protocolManifestCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "runner": { "enum": ["runtime-inject", "route-schema", "source-ast"] },
+    "caseRole": { "enum": ["claim-proof", "auth-positive", "auth-negative", "response-trigger", "clock-canary"] },
+    "claimPointer": { "type": "string", "pattern": "^/" },
+    "projection": { "enum": ["identity-v1", "sorted-set-v1", "path-map-v1", "global-protocol-v1", "auth-contract-v1", "request-contract-v1", "response-contract-v1"] },
+    "comparison": { "enum": ["exact-json", "set-equal", "matches-rule"] },
+    "coverage": { "enum": ["atomic", "exhaustive"] },
+    "dependencyProfileId": { "type": ["string", "null"], "minLength": 1 },
+    "clockInstant": { "type": ["string", "null"], "format": "date-time" },
+    "clockCanaryPassed": { "type": ["boolean", "null"] },
+    "runtimeObservation": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/runtimeObservation" }
+      ]
+    },
+    "expected": true,
+    "actual": true,
+    "passed": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": { "runner": { "const": "runtime-inject" } },
+        "required": ["runner"]
+      },
+      "then": {
+        "type": "object",
+        "properties": { "runtimeObservation": { "$ref": "#/$defs/runtimeObservation" } }
+      },
+      "else": {
+        "type": "object",
+        "properties": { "runtimeObservation": { "const": null } }
+      }
+    }
+  ]
+}

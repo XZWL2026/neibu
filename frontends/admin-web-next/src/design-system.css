@@ -1,0 +1,114 @@
+/* YOMIO workspace foundations. Lazy page styles inherit these tokens. */
+:root {
+  color-scheme: light; font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #202d43; background: #f6f7fa;
+  --ink: #202d43; --text: #202d43; --muted: #657187; --accent: #4f46e5; --cyan: #4f46e5;
+  --accent-soft: #eeedfc; --panel: #fff; --surface: #f6f7fa; --surface-inset: #f8f9fc;
+  --line: #e3e7ee; --line-subtle: #edf0f4; --success: #15805e; --error: #c43d52; --warning: #956014;
+  --radius-panel: 12px; --radius-control: 7px;
+}
+html, body { background: var(--surface); }
+body { font-size: 14px; line-height: 1.6; }
+::selection { background: #e0ddfc; color: #3730a3; }
+* { scrollbar-width: thin; scrollbar-color: #bdc5d2 transparent; }
+a { text-underline-offset: 3px; }
+input, textarea { caret-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.promoter-icon { flex-shrink: 0; width: 18px; height: 18px; vertical-align: middle; }
+
+/* Stable navigation map, with independent scroll and a pinned workspace identity. */
+#app .admin-frame.admin-frame { display: grid; grid-template-columns: 232px minmax(0,1fr); min-height: 100dvh; padding: 0; color: var(--ink); background: var(--surface); --panel: #fff; --line: #e3e7ee; --muted: #657187; --cyan: #4f46e5; }
+#app .admin-frame.sidebar-collapsed { grid-template-columns: 76px minmax(0,1fr); }
+#app .admin-frame .admin-sidebar { position: sticky; top: 0; display: flex; flex-direction: column; height: 100dvh; padding: 0 14px; border-right: 1px solid #263245; background: #182231; overflow: hidden; }
+#app .admin-frame .brand-block { display: flex; align-items: center; flex-shrink: 0; gap: 12px; min-height: 94px; padding: 20px 10px; text-decoration: none; white-space: nowrap; }
+.brand-symbol { display: grid; place-items: center; width: 34px; height: 38px; color: #c8c3ff; }
+.brand-lockup { display: grid; gap: 1px; }
+.brand-word { color: var(--ink); font-size: 24px; font-weight: 750; letter-spacing: -.035em; line-height: 1.2; }
+.brand-dot { color: var(--accent); }
+#app .admin-frame .brand-word { color: #f5f7ff; }
+#app .admin-frame .brand-dot { color: #a9a1ff; }
+.brand-subtitle { color: #acb8cb; font-size: 11px; letter-spacing: .04em; }
+#app .admin-frame .primary-nav { display: grid; align-content: start; gap: 22px; overflow-y: auto; overscroll-behavior: contain; padding: 2px 0 22px; flex: 1; scrollbar-color: #40506a transparent; }
+.nav-group { display: grid; gap: 3px; }
+.nav-group-label { margin: 0 12px 7px; color: #9baac0; font-size: 11px; font-weight: 500; }
+#app .admin-frame .primary-nav a { display: flex; align-items: center; gap: 11px; min-height: 40px; padding: 9px 12px; border: 0; border-radius: 7px; color: #c1ccdc; background: transparent; font-size: 13px; font-weight: 400; text-decoration: none; transition: background-color 150ms, color 150ms; }
+#app .admin-frame .primary-nav a:hover { background: #263246; color: #fff; }
+#app .admin-frame .primary-nav a[aria-current=page] { color: #fff; background: #37345c; font-weight: 550; }
+#app .admin-frame .primary-nav a[aria-current=page] > .promoter-icon:first-child { color: #c1baff; }
+.nav-current-indicator { margin-left: auto; width: 14px; height: 14px; color: #c1baff; }
+#app .admin-frame .primary-nav a:focus-visible { outline-color: #b6afff; outline-offset: -2px; }
+.sidebar-footer { display: flex; align-items: center; flex-shrink: 0; gap: 10px; padding: 18px 10px; border-top: 1px solid #344054; color: #bac6d8; }
+.sidebar-footer > span { display: grid; gap: 3px; }
+.sidebar-footer strong { color: #dbe3f0; font-size: 11px; font-weight: 500; }
+.sidebar-footer small { color: #9baac0; font-size: 10px; }
+.sidebar-collapsed .brand-block, .sidebar-collapsed .sidebar-footer { justify-content: center; padding-inline: 0; }
+#app .admin-frame.sidebar-collapsed .primary-nav a { justify-content: center; padding: 11px; }
+.sidebar-collapsed .nav-group + .nav-group { border-top: 1px solid #344054; padding-top: 14px; }
+
+/* Header and page hierarchy */
+#app .admin-frame .admin-workspace, #app .admin-frame [data-testid=protected-content] { min-width: 0; }
+#app .admin-frame .workspace-header { position: sticky; top: 0; z-index: 30; height: 68px; padding: 0 32px; background: #fff; border-bottom: 1px solid var(--line); backdrop-filter: none; }
+.header-location { display: flex; align-items: center; gap: 12px; min-width: 0; font-size: 12px; }
+.header-location a, .breadcrumb-group { color: var(--muted); text-decoration: none; }
+.header-location a:hover { color: var(--accent); }
+.header-location strong { font-size: 12px; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.breadcrumb-divider { flex-shrink: 0; color: #8d98a9; }
+#app .admin-frame .header-tools { gap: 14px; }
+.header-date { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+.header-separator { height: 25px; border-left: 1px solid var(--line); }
+#app .admin-frame .header-tools > .n-button { width: auto; height: 36px; padding: 0 9px; border: 0; border-radius: 7px; color: var(--muted); background: transparent; font-weight: 500; }
+#app .admin-frame .header-tools > .n-button:hover { background: var(--surface-inset); color: var(--ink); }
+#app .admin-frame .header-tools .account-trigger { height: 44px; padding: 3px 4px; border: 0; background: transparent; color: var(--ink); }
+.account-trigger .n-button__content { gap: 10px; }
+.account-avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: #4f46e5; background: #eeedfc; font-size: 13px; font-weight: 650; }
+.account-text { display: grid; text-align: left; max-width: 150px; }
+.account-text strong { font-size: 12px; overflow: hidden; text-overflow: ellipsis; font-weight: 550; }
+.account-text small { color: var(--muted); font-size: 10px; line-height: 1.4; }
+#app .admin-frame .main-content { min-height: calc(100dvh - 120px); padding: 32px 32px 24px; outline: none; }
+#app .admin-frame :is(.page-panel, .finance-page, .consumption-page, .provider-logs, .pricing-editor, .provider-infrastructure, .corporate-transfers, .recharge-management) { max-width: 1720px; width: 100%; min-width: 0; margin: 0 auto; color: var(--ink); }
+#app .admin-frame .page-panel { display: grid; gap: 24px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.workspace-footer { display: flex; justify-content: space-between; gap: 16px; padding: 12px 32px 18px; color: var(--muted); font-size: 10px; }
+#app .admin-frame :is(.page-heading, .directory-heading, .finance-heading, .consumption-heading, .pricing-heading, .infra-heading) { position: relative; margin: 0; padding: 0; min-height: 64px; gap: 16px; align-items: center; }
+#app .admin-frame :is(.page-heading, .directory-heading, .finance-heading, .consumption-heading, .pricing-heading, .infra-heading) h1 { margin: 0 0 6px; color: var(--ink); font-size: 28px; font-weight: 650; letter-spacing: -.025em; line-height: 1.4; }
+#app .admin-frame :is(.page-description, .directory-heading > p, .finance-heading > p, .consumption-heading p, .pricing-heading p, .infra-heading p, .page-heading p) { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+#app .admin-frame :is(.page-eyebrow, .directory-breadcrumb, .finance-breadcrumb, .consumption-breadcrumb, .provider-breadcrumb, .agent-breadcrumb, .api-breadcrumb) { display: none; }
+#app .admin-frame .directory-heading { padding-right: 185px; }
+#app .admin-frame .new-user { position: absolute; top: 12px; right: 0; bottom: auto; }
+.blocking-state { display: flex; min-height: 60vh; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--muted); }
+.blocking-state h1 { color: var(--ink); font-size: 24px; }
+.loading-spinner { width: 24px; height: 24px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: workspace-spin .8s linear infinite; }
+@keyframes workspace-spin { to { transform: rotate(360deg); } }
+.mobile-toggle.mobile-toggle { display: none; }
+
+.n-drawer .primary-nav { display: grid; gap: 20px; }
+.n-drawer .nav-group-label { color: var(--muted); }
+.n-drawer .primary-nav a { display: flex; align-items: center; gap: 12px; min-height: 44px; border: 0; color: var(--ink); border-radius: 7px; background: transparent; }
+.n-drawer .primary-nav a[aria-current=page] { color: var(--accent); background: var(--accent-soft); }
+.n-drawer .nav-current-indicator { color: var(--accent); }
+@media (min-width: 1800px) { #app .admin-frame .main-content { padding-inline: 48px; } }
+@media (max-width: 1200px) {
+  #app .admin-frame.admin-frame { grid-template-columns: 212px minmax(0,1fr); }
+  #app .admin-frame.sidebar-collapsed { grid-template-columns: 76px minmax(0,1fr); }
+  #app .admin-frame .main-content { padding: 28px 24px; }
+  #app .admin-frame .workspace-header { padding-inline: 24px; }
+  .header-date, .breadcrumb-group { display: none; }
+}
+@media (max-width: 760px) {
+  #app .admin-frame.admin-frame { grid-template-columns: minmax(0,1fr); }
+  #app .admin-frame .admin-sidebar { display: none; }
+  #app .admin-frame .workspace-header { height: 60px; padding-inline: 12px; }
+  #app .admin-frame .main-content { padding: 24px 16px 20px; }
+  .desktop-toggle.desktop-toggle { display: none; }
+  .mobile-toggle.mobile-toggle { display: inline-flex; }
+  .header-location { gap: 8px; }
+  .header-location > a, .breadcrumb-divider, .account-text, .header-separator { display: none; }
+  #app .admin-frame .header-tools { gap: 5px; }
+  #app .admin-frame .header-tools .account-trigger { padding: 3px; }
+  #app .admin-frame .page-panel { gap: 20px; }
+  #app .admin-frame :is(.page-heading, .directory-heading, .finance-heading, .consumption-heading, .pricing-heading, .infra-heading) { min-height: auto; flex-wrap: wrap; align-items: flex-start; }
+  #app .admin-frame :is(.page-heading, .directory-heading, .finance-heading, .consumption-heading, .pricing-heading, .infra-heading) h1 { font-size: 24px; }
+  #app .admin-frame .directory-heading { padding-right: 0; padding-bottom: 52px; }
+  #app .admin-frame .new-user { top: auto; bottom: 0; left: 0; right: auto; }
+  .workspace-footer { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }

@@ -1,0 +1,110 @@
+@import './reference/glass-buttons.css';
+
+/* Visual source: 新首页参考/index.html. Navigation and composer state stay in React. */
+.yomio-home { isolation: isolate; background: #020d13; --page: #020d13; --commerce: #080e10; --ink: #eef1f8; --muted: #c3cbd6; --line: #cbe4fb3b; }
+.yomio-home .page-pixel-background { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict; }
+.yomio-home .page-pixel-background canvas { display: block; width: 100%; height: 100%; }
+.yomio-home .ym-stage { height: 51.3vw; min-height: 600px; max-height: 1000px; background: #08090c; }
+.yomio-home .ym-backdrop.hero-waves { background: #08090c; overflow: hidden; pointer-events: none; }
+.yomio-home .hero-waves-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: .9; }
+.yomio-home .hero-line-logo { position: absolute; z-index: 1; left: 50%; top: 32.5%; width: 89%; height: auto; transform: translate(-50%, -50%); pointer-events: none; filter: drop-shadow(0 14px 15px #0009); }
+.yomio-home .hero-waves[data-logo-renderer=shared-field] .hero-line-logo,
+.yomio-home .hero-waves[data-logo-renderer=canvas-field] .hero-line-logo { visibility: hidden; }
+.yomio-home .ym-shade { background: linear-gradient(180deg,#07090c99,transparent 19%,transparent 48%,#050b1226 69%,#000811f0 100%); }
+/* Keep header dropdowns above the composer's stacking context. */
+.yomio-home .ym-header { top: .65vw; left: 4.8%; right: 4.4%; height: 3.4vw; min-height: 44px; gap: 3.3vw; z-index: 10; }
+.yomio-home .ym-brand { width: 6.65vw; min-width: 86px; }
+.yomio-home .ym-primary-nav { gap: 3vw; }
+.yomio-home .ym-nav-link { display: flex; align-items: center; font-size: clamp(14px,1.26vw,21px); }
+.yomio-home .ym-account-nav { gap: 1.05vw; }
+.yomio-home .ym-balance, .yomio-home .ym-recharge { font-size: clamp(14px,1.26vw,21px); }
+.yomio-home .ym-creation { top: 58%; width: 44.85%; z-index: 5; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar { background: linear-gradient(110deg,#2c303a7d,#43414b73); border-color: #ecf0ff52; box-shadow: 0 10px 32px #0005; }
+.yomio-home .ym-prompt-shell .ym-prompt-bar:not([data-expanded=true]) { min-height: 0; height: clamp(48px,3.85vw,68px); padding: 0 clamp(12px,1.25vw,24px); }
+.yomio-home .ym-prompt-shell .ym-prompt-bar:not([data-expanded=true]) .ym-prompt-input-row { min-height: 0; height: 100%; }
+.yomio-home .ym-prompt-bar:not([data-expanded=true]) #ym-prompt { font-size: clamp(12px,.95vw,16px); }
+.yomio-home .ym-categories { width: 85%; margin-top: 1.2vw; gap: 1vw; }
+.yomio-home .ym-prompt-shell { height: clamp(48px,3.85vw,68px); }
+.yomio-home .ym-categories button { height: clamp(38px,3vw,53px); font-size: clamp(13px,1.08vw,18px); padding: 0 12px; }
+.yomio-home .ym-categories svg { width: 18px; height: 18px; }
+.yomio-home .ym-models::before { background: linear-gradient(180deg,transparent,#06101ac7 52%,#000811 100%); }
+.yomio-home .ym-model-name { font-size: clamp(25px,2.15vw,40px); }
+.yomio-home .ym-model-version { font-size: 1em; top: auto; vertical-align: baseline; margin-left: .2em; }
+.yomio-home .ym-below-fold { background: transparent; }
+.yomio-home .ym-commerce-section.ym-commerce-carousel { padding: 14px 1.5% 26px; gap: 0; background: transparent; }
+.yomio-home .ym-commerce-grid { --commerce-height: clamp(450px,37vw,650px); }
+.yomio-home .ym-commerce-grid:not(.circular-carousel) :is(.circular-carousel__view,.circular-carousel__stage,.circular-carousel__camera,.circular-carousel__ring,.circular-carousel__card) { display: contents; }
+.yomio-home .ym-commerce-grid:not(.circular-carousel) .circular-carousel__caption { display: none; }
+.yomio-home .ym-commerce-grid.circular-carousel { height: clamp(450px,37vw,650px); }
+.yomio-home .ym-commerce-grid .circular-carousel__stage { opacity: 1; }
+.yomio-home .ym-commerce-grid.circular-carousel .ym-commerce-card { top: auto; left: auto; width: auto; height: auto; transform: none; transition: none; border-radius: 18px; }
+.yomio-home .ym-commerce-grid.circular-carousel .ym-commerce-card:hover { transform: none; }
+.yomio-home .ym-commerce-grid.circular-carousel .ym-commerce-card.reflective-feature,
+.yomio-home .ym-commerce-grid.circular-carousel .ym-commerce-card.reflective-feature:hover { transform: perspective(900px) rotateX(var(--rf-rotate-x,0deg)) rotateY(var(--rf-rotate-y,0deg)); }
+.yomio-home .ym-commerce-card .commerce-art { object-fit: cover; }
+.yomio-home .ym-commerce-card .ym-commerce-copy { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); padding: 0; }
+.yomio-home .ym-commerce-grid .circular-carousel__caption { bottom: 14px; }
+.yomio-home .ym-commerce-controls { margin-top: 0; gap: 14px; }
+.yomio-home .ym-commerce-controls > button { width: 32px; height: 32px; }
+.yomio-home .ym-gallery-section { background: transparent; padding: 1.55vw 1.953125% 1.45vw; }
+.yomio-home .ym-gallery-header h2 { font-size: clamp(26px,2.05vw,36px); }
+.yomio-home .ym-artwork-grid { gap: .78125vw 1.171875vw; }
+.yomio-home .ym-artwork-card { border-radius: 1.3vw; }
+.yomio-home .ym-artwork-card:hover { transform: scale(.95); }
+.yomio-home .ym-artwork-card:hover .ym-artwork-cover { transform: none; }
+.yomio-home [data-work-id="02"] .ym-artwork-cover { object-position: 50% 40%; }
+.yomio-home :is([data-work-id="03"],[data-work-id="07"],[data-work-id="09"]) .ym-artwork-cover { object-position: 50% 42%; }
+.yomio-home [data-work-id="05"] .ym-artwork-cover { object-position: 50% 37%; }
+.yomio-home [data-work-id="11"] .ym-artwork-cover { object-position: 50% 59%; }
+.yomio-home [data-work-id="12"] .ym-artwork-cover { object-position: 50% 30%; }
+.yomio-home .ym-footer { background: transparent; }
+:root[data-theme=light] .yomio-home { background: #f4f6f8; --page: #f4f6f8; --ink: #172832; --muted: #536874; --line: #27495940; }
+:root[data-theme=light] .yomio-home .ym-stage,
+:root[data-theme=light] .yomio-home .ym-backdrop.hero-waves { background: #f4f6f8; }
+:root[data-theme=light] .yomio-home .ym-header,
+:root[data-theme=light] .yomio-home .ym-models { color: #172832; text-shadow: none; }
+:root[data-theme=light] .yomio-home .ym-header :is(.header-actions,.header-icon-button,.header-points,.recharge-link) { color: #172832; }
+:root[data-theme=light] .yomio-home .ym-header .header-icon-button:hover { color: #172832; background: #1c394b0d; }
+:root[data-theme=light] .yomio-home .ym-header .header-divider { background: #28465940; }
+:root[data-theme=light] .yomio-home .ym-shade::after { display: none; }
+:root[data-theme=light] .yomio-home .ym-brand img { filter: invert(1); }
+:root[data-theme=light] .yomio-home .ym-nav-link::after { background: currentColor; }
+:root[data-theme=light] .yomio-home .ym-model-card { color: #354852; }
+:root[data-theme=light] .yomio-home .ym-model-card.ym-highlighted { color: #102733; }
+:root[data-theme=light] .yomio-home .ym-models-tagline { color: #4b626f; }
+:root[data-theme=light] .yomio-home .ym-model-card::after { background: #3b596d66; }
+:root[data-theme=light] .yomio-home .ym-model-grid::before { background: linear-gradient(90deg,#315e7e,#497b9e 68%,transparent); box-shadow: none; }
+:root[data-theme=light] .yomio-home .ym-commerce-section.ym-commerce-carousel,
+:root[data-theme=light] .yomio-home .ym-below-fold,
+:root[data-theme=light] .yomio-home .ym-gallery-section,
+:root[data-theme=light] .yomio-home .ym-footer { background: transparent; }
+:root[data-theme=light] .yomio-home .hero-waves-canvas { filter: invert(1); }
+:root[data-theme=light] .yomio-home .hero-line-logo { filter: invert(1) drop-shadow(0 14px 15px #cad4dc80); }
+:root[data-theme=light] .yomio-home .ym-shade { background: linear-gradient(180deg,#f4f6f84d,transparent 19%,transparent 48%,#f4f6f826 69%,#f4f6f8f5 100%); }
+:root[data-theme=light] .yomio-home .ym-models::before { background: linear-gradient(180deg,transparent,#f4f6f8b3 52%,#f4f6f8 100%); }
+:root[data-theme=light] .yomio-home .ym-prompt-shell .ym-prompt-bar { background: linear-gradient(110deg,#ffffffb8,#ffffff80); border-color: #405b724d; box-shadow: 0 8px 26px #203a4f12; }
+:root[data-theme=light] .yomio-home .ym-categories button { color: #172832; border-color: #304b6047; background: linear-gradient(145deg,#ffffffa8,#ffffff38 48%,#ffffff80); text-shadow: none; }
+:root[data-theme=light] .yomio-home .ym-categories button[aria-pressed=true] { border-color: #5d94c4b3; background: #e8f3ffd9; }
+@media (max-width: 760px) {
+  .yomio-home .ym-stage { height: 700px; min-height: 88svh; max-height: none; padding: 16px 20px 28px; }
+  .yomio-home .ym-header { position: relative; inset: auto; width: 100%; height: auto; gap: 22px 10px; }
+  .yomio-home .ym-brand { width: 100px; }
+  .yomio-home .ym-primary-nav { gap: 30px; height: 36px; }
+  .yomio-home .ym-nav-link { font-size: 15px; }
+  .yomio-home .ym-account-nav { gap: 10px; }
+  .yomio-home .hero-line-logo { top: 29%; width: 104%; }
+  .yomio-home .ym-creation { position: absolute; left: 20px; top: 48%; width: calc(100% - 40px); margin: 0; transform: none; }
+  .yomio-home .ym-categories { width: 100%; gap: 8px; margin-top: 15px; }
+  .yomio-home .ym-categories button { flex: 1; width: auto; height: 40px; padding: 0 7px; gap: 6px; font-size: 13px; }
+  .yomio-home .ym-models { position: absolute; left: 20px; right: 20px; bottom: 28px; }
+  .yomio-home .ym-model-name { font-size: 23px; }
+  .yomio-home .ym-commerce-section.ym-commerce-carousel { padding: 14px 0 24px; }
+  .yomio-home .ym-commerce-grid.circular-carousel { height: 420px; }
+  .yomio-home .ym-commerce-grid.circular-carousel .ym-commerce-card[data-distance="2"] { visibility: visible; pointer-events: auto; }
+  .yomio-home .ym-gallery-section { padding: 24px 20px 30px; }
+  .yomio-home .ym-artwork-grid { gap: 12px; }
+  .yomio-home .ym-artwork-card { border-radius: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .yomio-home .ym-artwork-card:hover { transform: none; }
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T00:00:00+08:00",
+  "title": "Design System: YOMIO 首页参考模块",
+  "extensions": {
+    "shadows": [
+      { "name": "prompt-dark", "value": "0 10px 32px #0005", "purpose": "暗色首页输入玻璃面板" },
+      { "name": "prompt-light", "value": "0 8px 26px #203a4f12", "purpose": "浅色首页输入玻璃面板" },
+      { "name": "carousel-card", "value": "0 12px 30px #0005", "purpose": "增强轨道普通卡片" },
+      { "name": "carousel-active", "value": "0 15px 40px #0007", "purpose": "增强轨道活动卡片" }
+    ],
+    "motion": [
+      { "name": "home-easing", "value": "cubic-bezier(.16,1,.3,1)", "purpose": "首页既有 --easing" },
+      { "name": "model-indicator", "value": "380ms", "purpose": "模型导航横线位移和宽度变化" },
+      { "name": "orbit-cruise", "value": "9deg/s", "purpose": "增强轨道未暂停时的目标巡航角速度，受惯性影响" },
+      { "name": "orbit-selection-hold", "value": "3200ms", "purpose": "手动定位后的巡航暂缓" },
+      { "name": "fallback-autoplay", "value": "5000ms", "purpose": "仅无增强引擎时的 React 自动切换间隔" }
+    ],
+    "breakpoints": [
+      { "name": "compact-header", "value": "1200px" },
+      { "name": "home-mobile", "value": "760px" },
+      { "name": "carousel-internal", "value": "650px" },
+      { "name": "gallery-single-column", "value": "430px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "暗色轮播控制",
+      "kind": "button",
+      "refersTo": "carousel-control-dark",
+      "description": "首页前后按钮的局部样式；真实业务组件由 React 提供行为。",
+      "html": "<button class=\"ds-control\" aria-label=\"下一个工具\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"m10 6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-control{display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid #cbe4fb3b;border-radius:50%;color:#eef1f8;background:transparent;cursor:pointer;transition:background-color 160ms ease-out}.ds-control svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.ds-control:hover{background:#ffffff16}.ds-control:focus-visible{outline:2px solid #c2afff;outline-offset:5px}"
+    },
+    {
+      "name": "玻璃灵感按钮",
+      "kind": "chip",
+      "description": "暗色首页灵感类别；预览保留实际悬停、焦点和按下反馈。",
+      "html": "<button class=\"ds-inspiration\" aria-pressed=\"false\">自然</button>",
+      "css": ".ds-inspiration{height:clamp(38px,3vw,53px);padding:0 12px;border:1px solid #ffffff68;border-radius:30px;color:#fff;background:linear-gradient(145deg,#ffffff25,#edf5ff09 48%,#ffffff13);backdrop-filter:blur(18px) saturate(165%) brightness(1.08);box-shadow:inset 0 1px 0 #ffffff5c,inset 0 -1px 0 #ffffff0f,0 4px 18px #0000001f;font:clamp(13px,1.08vw,18px) Arial,sans-serif;cursor:pointer}.ds-inspiration:hover{border-color:#ffffffa6;background:linear-gradient(145deg,#ffffff31,#edf5ff0d 48%,#ffffff1a);transform:translateY(-2px)}.ds-inspiration:active{transform:translateY(0) scale(.97)}.ds-inspiration:focus-visible{outline:2px solid #c2afff;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-inspiration:hover,.ds-inspiration:active{transform:none}}"
+    },
+    {
+      "name": "输入面板材质",
+      "kind": "input",
+      "description": "仅展示暗色输入面板外壳；参数、素材与提交逻辑参见 HomePromptComposer。",
+      "html": "<div class=\"ds-prompt\"><textarea aria-label=\"描述你的想法\" placeholder=\"描述你的想法\" rows=\"1\"></textarea></div>",
+      "css": ".ds-prompt{display:flex;align-items:center;min-height:48px;padding:0 clamp(12px,1.25vw,24px);border:1px solid #ecf0ff52;border-radius:40px;background:linear-gradient(110deg,#2c303a7d,#43414b73);backdrop-filter:blur(22px);box-shadow:0 10px 32px #0005}.ds-prompt:focus-within{border-color:#d9cdff}.ds-prompt textarea{width:100%;border:0;background:transparent;color:#eef1f8;font:clamp(12px,.95vw,16px) Arial,sans-serif;resize:none}.ds-prompt textarea::placeholder{color:#c3cbd6}.ds-prompt textarea:focus-visible{outline:none}"
+    },
+    {
+      "name": "首页文字导航",
+      "kind": "nav",
+      "description": "轻量文字链接与底部指示线，预览使用已有首页路由。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><a href=\"/home\" aria-current=\"page\">创作</a><a href=\"/create/image?tab=history\">我的作品</a></nav>",
+      "css": ".ds-nav{display:flex;gap:3vw;color:#eef1f8}.ds-nav a{position:relative;padding:10px 0;color:inherit;text-decoration:none;font:clamp(14px,1.26vw,21px) Arial,sans-serif}.ds-nav a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:currentColor;transform:scaleX(0);transition:transform .25s cubic-bezier(.16,1,.3,1)}.ds-nav a:hover::after,.ds-nav a[aria-current=page]::after{transform:scaleX(1)}.ds-nav a:focus-visible{outline:2px solid #c2afff;outline-offset:5px}"
+    },
+    {
+      "name": "工具卡片边框",
+      "kind": "card",
+      "description": "增强轮播卡片外壳。预览不复制图片或模拟 WebGL；实际画作、投影、反射由首页组件渲染。",
+      "html": "<a class=\"ds-tool-card\" href=\"/commerce/product-retouch\">产品精修</a>",
+      "css": ".ds-tool-card{display:flex;align-items:flex-end;width:180px;height:240px;padding:16px;overflow:hidden;border:1px solid #ffffff26;border-radius:18px;background:#172229;color:#fff;text-decoration:none;font:19px Arial,sans-serif;box-shadow:0 12px 30px #0005}.ds-tool-card:focus-visible{outline:2px solid #c2afff;outline-offset:-3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "新首页参考",
+    "overview": "采用用户提供参考中的波纹线条标志、透明玻璃输入区与环形商品卡片，导航球和提交箭头沿用重构前效果。图像承担主体表达，文字导航保持轻量；本文记录已实现状态，不新增品牌方向，也不扩展到创作页或其他模块。",
+    "keyCharacteristics": [
+      "深浅主题共享结构，分别适配背景、文字与玻璃材质。",
+      "首屏动效增强静态图像，交互和路由由 React 保持。",
+      "环形工具入口后接精选作品网格。"
+    ],
+    "rules": [],
+    "dos": [
+      "Do 将视觉约定限定在首页模块，按现有主题和媒体查询适配。",
+      "Do 保留真实链接、焦点反馈、暂停控制及静态降级路径。",
+      "Do 在 React 卸载时释放每次挂载拥有的动效资源。"
+    ],
+    "donts": [
+      "Don't 修改用户提供的原参考目录或把本文提升为全项目设计规范。",
+      "Don't 让装饰脚本接管创作草稿、账户状态或业务路由。"
+    ]
+  }
+}

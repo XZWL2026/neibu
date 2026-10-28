@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: template-service
+server:
+  port: __SERVICE_PORT__

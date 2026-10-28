@@ -1,0 +1,32 @@
+import '@testing-library/jest-dom/vitest';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, expect, it, vi } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
+import { LightCanvasFeature } from './LightCanvasFeature';
+
+afterEach(cleanup);
+it('uses the light prism and keeps routes with guarded creation controls', () => {
+  const create = vi.fn();
+  const view = render(<MemoryRouter><LightCanvasFeature unavailable={false} creating={false} onCreate={create} /></MemoryRouter>);
+  expect(view.container.querySelector('.canvas-feature-backdrop')).toHaveAttribute('data-prism-theme', 'light');
+  expect(view.container.querySelector('.canvas-prism-viewport')).toHaveAttribute('aria-hidden', 'true');
+  expect(view.container.querySelector('video')).toBeNull();
+  expect(screen.queryByText('让灵感，在画布上发生。')).not.toBeInTheDocument();
+  expect(screen.queryByText('YOMIO CANVAS')).not.toBeInTheDocument();
+  const backdrop = view.container.querySelector('.canvas-feature-backdrop');
+  expect(backdrop).toContainElement(screen.getByRole('button', { name: '开始创作' }));
+  expect(screen.getByRole('heading', { level: 1, name: '画布创作' })).toBeVisible();
+  const shortcuts = within(screen.getByRole('region', { name: '快速开始' }));
+  expect(shortcuts.getByRole('link', { name: /图片生成/ })).toHaveAttribute('href', '/create/image');
+  expect(shortcuts.getByRole('link', { name: /视频生成/ })).toHaveAttribute('href', '/create/video');
+  expect(shortcuts.getByRole('link', { name: /电商创作/ })).toHaveAttribute('href', '/commerce');
+  fireEvent.click(screen.getByRole('button', { name: '开始创作' }));
+  fireEvent.click(shortcuts.getByRole('button', { name: /空白画布/ }));
+  expect(create).toHaveBeenCalledTimes(2);
+  view.rerender(<MemoryRouter><LightCanvasFeature unavailable creating onCreate={create} /></MemoryRouter>);
+  expect(screen.getByRole('button', { name: '正在创建…' })).toBeDisabled();
+  const blank = shortcuts.getByRole('button', { name: /空白画布/ });
+  expect(blank).toBeDisabled();
+  fireEvent.click(blank);
+  expect(create).toHaveBeenCalledTimes(2);
+});

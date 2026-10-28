@@ -1,0 +1,17 @@
+/* Keep the supplied artwork intact; real links align with its visible controls. */
+.dark-home-feature { position: relative; margin-top: -66px; width: 100%; isolation: isolate; }
+.dark-home-artwork { display: block; width: 100%; height: auto; }
+.dark-home-feature a { position: absolute; display: block; border-radius: 16px; }
+.dark-home-feature a:focus-visible { outline: 3px solid #fff; outline-offset: 4px; box-shadow: 0 0 0 6px #17202b; }
+.dark-home-start { left: 3.491272%; top: 47.571429%; width: 11.097257%; height: 8.285714%; }
+.dark-home-feature .dark-home-start { border-radius: 999px; }
+.dark-home-models { position: absolute; inset: 0; pointer-events: none; }
+.dark-home-models a { pointer-events: auto; }
+.dark-home-cards { position: absolute; left: 3.491272%; right: 4.862843%; top: 68.428571%; height: 28.571429%; display: grid; grid-template-columns: 341fr 19fr 351fr 19fr 351fr 19fr 370fr; }
+.dark-home-feature .dark-home-cards a { position: relative; width: 100%; height: 100%; }
+@media (max-width: 760px) {
+  .dark-home-feature { margin-top: 0; }
+  .dark-home-start { min-height: 32px; }
+}
+
+.dark-home-feature { container-type: inline-size; }

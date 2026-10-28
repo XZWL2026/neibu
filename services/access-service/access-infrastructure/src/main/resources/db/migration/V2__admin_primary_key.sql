@@ -1,0 +1,6 @@
+ALTER TABLE access_key MODIFY paid_order_id VARCHAR(128) NULL;
+CREATE TABLE access_admin_change (
+ request_id VARCHAR(128) PRIMARY KEY, owner_id VARCHAR(128) NOT NULL, account_type VARCHAR(16) NOT NULL,
+ create_key BOOLEAN NOT NULL, operator_id VARCHAR(128) NOT NULL,
+ recorded_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin;

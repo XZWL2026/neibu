@@ -1,0 +1,32 @@
+.canvas-reference-edge .canvas-edge-delete {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border: 1px solid #989ea9;
+  border-radius: 50%;
+  background: #25292f;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+.canvas-reference-edge:hover .canvas-edge-delete,
+.canvas-reference-edge:focus-within .canvas-edge-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+.canvas-reference-edge .canvas-edge-delete:focus-visible {
+  outline: 2px solid #b1e0e6;
+  outline-offset: -3px;
+}
+@media (hover: none) {
+  .canvas-reference-edge .canvas-edge-delete { opacity: 1; pointer-events: auto; }
+}
+
+.canvas-stage .react-flow__edge.animated path { animation: none; stroke-dasharray: none; }
+.canvas-reference-edge > .react-flow__edge-path { stroke: #8c8c8c; }
+@media (prefers-reduced-motion: reduce) {
+  .canvas-edge-flow { display: none; }
+}

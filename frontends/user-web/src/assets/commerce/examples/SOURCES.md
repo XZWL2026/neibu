@@ -1,0 +1,94 @@
+# 电商工具效果示例来源
+
+下载日期：2026-09-24。素材来自用户指定的 PixPix 工具参考页公开示例；以下 URL 已由参考页 DOM 观察确认。保留原始 WebP 字节，未裁切、重绘或将上传商品原图伪装成生成结果。
+
+素材仅用于标注为“效果示例”的轮播，与用户上传图片及生成结果分开。
+
+| 本地文件 | 原始地址 | 字节 |
+| --- | --- | ---: |
+| product-set-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-1-1.webp | 19966 |
+| product-set-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-1-2.webp | 11570 |
+| product-set-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-1-3.webp | 12544 |
+| product-set-1-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-1-4.webp | 21272 |
+| product-set-1-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-1-5.webp | 12728 |
+| product-set-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-2-1.webp | 42760 |
+| product-set-2-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-2-2.webp | 14238 |
+| product-set-2-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-2-3.webp | 18294 |
+| product-set-2-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-2-4.webp | 21122 |
+| product-set-2-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-2-5.webp | 17784 |
+| product-set-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-3-1.webp | 37504 |
+| product-set-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-3-2.webp | 27036 |
+| product-set-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-3-3.webp | 28052 |
+| product-set-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-3-4.webp | 37152 |
+| product-set-3-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-set-3-5.webp | 20578 |
+| product-retouch-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-1-1.webp | 98238 |
+| product-retouch-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-1-2.webp | 74774 |
+| product-retouch-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-2-1.webp | 26144 |
+| product-retouch-2-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-2-2.webp | 47326 |
+| product-retouch-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-3-1.webp | 45902 |
+| product-retouch-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/product-retouch-3-2.webp | 43264 |
+| hot-seller-replicate-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-1-1.webp | 13598 |
+| hot-seller-replicate-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-1-2.webp | 11670 |
+| hot-seller-replicate-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-1-3.webp | 12264 |
+| hot-seller-replicate-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-2-1.webp | 96154 |
+| hot-seller-replicate-2-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-2-2.webp | 82978 |
+| hot-seller-replicate-2-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-2-3.webp | 66760 |
+| hot-seller-replicate-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-3-1.webp | 150832 |
+| hot-seller-replicate-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-3-2.webp | 140960 |
+| hot-seller-replicate-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/hot-seller-replicate-3-3.webp | 166330 |
+| apparel-group-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-1-1.webp | 17838 |
+| apparel-group-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-1-2.webp | 22002 |
+| apparel-group-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-1-3.webp | 20864 |
+| apparel-group-1-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-1-4.webp | 26448 |
+| apparel-group-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-2-1.webp | 40190 |
+| apparel-group-2-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-2-2.webp | 86040 |
+| apparel-group-2-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-2-3.webp | 76282 |
+| apparel-group-2-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-2-4.webp | 75630 |
+| apparel-group-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-3-1.webp | 29136 |
+| apparel-group-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-3-2.webp | 61366 |
+| apparel-group-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-3-3.webp | 96478 |
+| apparel-group-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-group-3-4.webp | 101704 |
+| apparel-set-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-1-1.webp | 25622 |
+| apparel-set-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-1-2.webp | 13424 |
+| apparel-set-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-1-3.webp | 45744 |
+| apparel-set-1-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-1-4.webp | 40066 |
+| apparel-set-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-2-1.webp | 16334 |
+| apparel-set-2-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-2-2.webp | 10756 |
+| apparel-set-2-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-2-3.webp | 44596 |
+| apparel-set-2-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-2-4.webp | 31390 |
+| apparel-set-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-3-1.webp | 61662 |
+| apparel-set-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-3-2.webp | 25544 |
+| apparel-set-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-3-3.webp | 141296 |
+| apparel-set-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/apparel-set-3-4.webp | 60756 |
+| detail-page-1-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-1-1.webp | 13210 |
+| detail-page-1-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-1-2.webp | 11248 |
+| detail-page-1-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-1-3.webp | 13746 |
+| detail-page-1-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-2-1.webp | 54116 |
+| detail-page-1-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-1.webp | 16742 |
+| detail-page-1-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-2.webp | 24050 |
+| detail-page-1-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-3.webp | 24640 |
+| detail-page-1-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-4.webp | 18630 |
+| detail-page-1-3-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-5.webp | 17556 |
+| detail-page-1-3-6.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-1-3-6.webp | 22630 |
+| detail-page-2-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-1-1.webp | 13700 |
+| detail-page-2-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-1-2.webp | 10668 |
+| detail-page-2-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-1-3.webp | 11420 |
+| detail-page-2-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-2-1.webp | 64576 |
+| detail-page-2-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-1.webp | 18884 |
+| detail-page-2-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-2.webp | 24326 |
+| detail-page-2-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-3.webp | 35672 |
+| detail-page-2-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-4.webp | 26194 |
+| detail-page-2-3-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-5.webp | 23170 |
+| detail-page-2-3-6.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-2-3-6.webp | 21716 |
+| detail-page-3-1-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-1-1.webp | 9462 |
+| detail-page-3-1-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-1-2.webp | 12382 |
+| detail-page-3-1-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-1-3.webp | 11240 |
+| detail-page-3-2-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-2-1.webp | 42872 |
+| detail-page-3-3-1.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-1.webp | 13520 |
+| detail-page-3-3-2.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-2.webp | 10122 |
+| detail-page-3-3-3.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-3.webp | 12024 |
+| detail-page-3-3-4.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-4.webp | 32280 |
+| detail-page-3-3-5.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-5.webp | 20538 |
+| detail-page-3-3-6.webp | https://storage.pixpix.media/pixpix/frontend/images/tools/detail-page-3-3-6.webp | 14758 |
+
+总计：84 张，3,237,054 字节。

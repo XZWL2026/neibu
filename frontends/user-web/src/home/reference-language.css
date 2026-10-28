@@ -1,0 +1,38 @@
+/* The same artwork, crop and controls are shared by every language.
+   Live translated text covers only the lettering baked into the reference art. */
+[data-translated] { --copy-bg: #e8eff7; --copy-color: #111c35; }
+.dark-home-feature[data-translated], .dark-canvas-feature[data-translated] { --copy-bg: #18212a; --copy-color: #fff; }
+.reference-title, .reference-subtitle, .reference-models-title, .reference-label, .reference-note { position: absolute; margin: 0; color: var(--copy-color); line-height: 1.2; }
+.reference-title, .reference-subtitle, .reference-models-title { display: flex; align-items: center; background: var(--copy-bg); box-shadow: 0 0 1.5cqw 1cqw var(--copy-bg); border-radius: .6cqw; }
+.reference-title { font-size: 3.5cqw; font-weight: 650; text-wrap: balance; }
+.reference-subtitle { font-size: 1.25cqw; }
+.light-home-feature .reference-title { left: 4.4%; top: 21.5%; width: 31%; height: 9%; }
+.light-home-feature .reference-subtitle { left: 4.4%; top: 32%; width: 31%; height: 3%; }
+.light-home-feature .reference-models-title { left: 4.4%; top: 60.6%; width: 26%; height: 5%; font-size: 2.1cqw; --copy-bg: #f5f7fb; }
+.dark-home-feature .reference-title { left: 3.5%; top: 10.5%; width: 25%; height: 25%; }
+.dark-home-feature .reference-subtitle { left: 3.5%; top: 39%; width: 26%; height: 4%; }
+.light-canvas-feature .reference-title { left: 3.5%; top: 29%; width: 25%; height: 15%; font-size: 2.5cqw; --copy-bg: #e8f0fb; }
+.dark-canvas-feature .reference-title { left: 7%; top: 32.5%; width: 30%; height: 14%; }
+/* Keep the original pill and arrow; replace only its painted caption. */
+.reference-start .reference-label { inset: 0; padding: 0 8%; gap: .5em; display: flex; align-items: center; justify-content: center; font-size: 1.2cqw; color: #111; background: #fff; border-radius: 999px; }
+.reference-start .reference-label::after { content: '→'; }
+.light-home-start .reference-label { color: #fff; background: #1b61e7; }
+.light-canvas-start .reference-label { color: #fff; background: #0b111b; font-size: 1.05cqw; }
+.reference-note { left: 5.5%; bottom: 4%; width: 73%; height: 9%; display: flex; align-items: center; font-size: .94cqw; background: #f3f6fc; }
+.dark-home-feature .reference-note { bottom: 7%; height: 14%; background: #292c2e; color: #fff; box-shadow: 0 0 .35cqw .2cqw #292c2e; }
+.light-canvas-shortcuts .reference-label { left: 24%; right: 34%; top: 30%; bottom: 29%; display: flex; align-items: center; background: #edf2fa; box-shadow: 0 0 .35cqw .2cqw #edf2fa; font-size: 1cqw; color: #0b1220; }
+.dark-canvas-shortcuts .reference-label { left: 31%; right: 13%; top: 24%; bottom: 24%; display: flex; align-items: center; background: #292c2f; box-shadow: 0 0 .35cqw .2cqw #292c2f; font-size: 1.05cqw; color: #fff; }
+/* Caption overlays follow the same hover/focus transform as their artwork. */
+.reference-label, .reference-note { pointer-events: none; transition: transform .22s ease; }
+.reference-card:is(:hover, :focus-visible):not(:disabled) :is(.reference-label, .reference-note) { transform: scale(1.04); }
+@media (prefers-reduced-motion: reduce) { .reference-label, .reference-note { transition: none; } .reference-card:is(:hover, :focus-visible):not(:disabled) :is(.reference-label, .reference-note) { transform: none; } }
+@media (min-width: 761px) {
+html:not([lang="zh-CN"]) .primary-nav a { height: auto; min-height: 48px; white-space: normal; }
+html:not([lang="zh-CN"]) .primary-nav a > span:last-of-type { min-width: 0; overflow-wrap: anywhere; }
+}
+@media (max-width: 760px) {
+  html:not([lang="zh-CN"]) .primary-nav a { flex: 0 0 auto; min-height: 44px; height: 44px; white-space: nowrap; }
+}
+/* Keep painted Chinese covered even when creation controls are disabled. */
+.canvas-home [data-translated] .reference-card:disabled { opacity: 1; }
+.canvas-home [data-translated] .reference-card:disabled .reference-label { color: #7b8795; }

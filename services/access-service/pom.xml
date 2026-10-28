@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.xzwl.cloud</groupId>
+    <artifactId>xzwl-cloud</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../..</relativePath>
+  </parent>
+  <artifactId>access-service</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>access-api</module>
+    <module>access-domain</module>
+    <module>access-application</module>
+    <module>access-infrastructure</module>
+    <module>access-interfaces</module>
+    <module>access-bootstrap</module>
+  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>com.xzwl.cloud</groupId>
+      <artifactId>access-bootstrap</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>

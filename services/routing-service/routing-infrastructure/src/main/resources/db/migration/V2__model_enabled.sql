@@ -1,0 +1,1 @@
+ALTER TABLE routing_model_config ADD COLUMN enabled BOOLEAN NOT NULL DEFAULT TRUE;
