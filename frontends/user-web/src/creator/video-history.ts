@@ -1,6 +1,17 @@
 import { mediaListGetApiV1MediaTasks } from '../api';
 import type { VideoSubmission } from './VideoTaskResults';
 
+// Parse instants: ISO strings can differ in precision or timezone, and request keys
+// are temporary until admission. Server task IDs only break identical-time ties.
+export function compareMediaHistory(a: VideoSubmission, b: VideoSubmission) {
+  const timestamp = (entry: VideoSubmission) => {
+    const value = Date.parse(entry.snapshot.createdAt ?? '');
+    return Number.isFinite(value) ? value : 0;
+  };
+  const identity = (entry: VideoSubmission) => entry.taskRef ?? entry.snapshot.id ?? entry.key;
+  return timestamp(a) - timestamp(b) || identity(a).localeCompare(identity(b));
+}
+
 // Cursors belong to the unfiltered feed: an entire page may contain images.
 export async function readMediaHistory({ before, commerceOnly, known, isCurrent, mediaType = 'VIDEO' }: {
   before?: string; commerceOnly?: boolean; known?: Set<string>; isCurrent(): boolean; mediaType?: 'IMAGE' | 'VIDEO';

@@ -528,6 +528,19 @@ it('loads older real videos after a page of image tasks and shows the genuine em
   expect(submit).not.toHaveBeenCalled();
 });
 
+it('orders history by actual creation time across timestamp precision and timezone formats, with newest at the bottom', async () => {
+  const videos = [
+    { id: 'latest', prompt: '最新视频', createdAt: '2026-10-29T08:00:00.100Z' },
+    { id: 'middle', prompt: '整秒视频', createdAt: '2026-10-29T08:00:00Z' },
+    { id: 'earliest', prompt: '时区视频', createdAt: '2026-10-29T15:59:59+08:00' },
+  ].map(item => ({ ...item, type: 'VIDEO', status: 'FAILED', results: [] }));
+  vi.mocked(api.mediaListGetApiV1MediaTasks).mockResolvedValue(reply(videos));
+  render(<App router={createMemoryRouter(userRoutes, { initialEntries: ['/create/video?tab=history'] })} />);
+  await screen.findByRole('article', { name: '视频任务：最新视频' });
+  expect(screen.getAllByRole('article').map(item => item.getAttribute('aria-label')))
+    .toEqual(['视频任务：时区视频', '视频任务：整秒视频', '视频任务：最新视频']);
+});
+
 it('refreshes the newest videos without losing the older cursor and coalesces repeated boundary events', async () => {
   const firstPage = Array.from({ length: 20 }, (_, i) => ({ id: `v-${40 - i}`, type: 'VIDEO', status: 'FAILED', prompt: `视频${40 - i}`, createdAt: new Date(2026, 0, 40 - i).toISOString() }));
   let releaseOlder!: (value: ReturnType<typeof reply>) => void;

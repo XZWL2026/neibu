@@ -77,7 +77,8 @@ public class MyBatisMediaTaskStore implements MediaTaskStore {
       if(!original.data().request().equals(candidate.data().request())) throw new TaskConflictException("regeneration request differs from source");
       preventHidingActiveEnhancements(candidate.ownerId(),sourceId);
       MediaTask replacement=create(candidate,sourceId);
-      tasks.deleteHistory(candidate.ownerId(),sourceId);
+      if(candidate.data().request().type()!=com.xzwl.cloud.media.domain.generation.MediaType.VIDEO)
+        tasks.deleteHistory(candidate.ownerId(),sourceId);
       return replacement;
     });
   }

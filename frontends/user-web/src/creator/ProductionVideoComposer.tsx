@@ -12,7 +12,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { creationTaskDraft, regenerationEntry, restoreMaterialPreviews } from './creation-task-draft';
 import { CreationWorkspace } from './CreationWorkspace';
 import { VideoResultsGallery } from './VideoResultsGallery';
-import { readVideoHistory } from './video-history';
+import { compareMediaHistory, readVideoHistory } from './video-history';
 import { ExpandableComposer } from './ExpandableComposer';
 import { submitCreation, CreationRejection } from './creation-submission';
 import {
@@ -325,8 +325,8 @@ export function ProductionVideoComposer({ className = 'floating-composer', testI
   const historyHead = useRef<string | null>(null);
   const historyRetry = useRef<{ before?: string; refresh: boolean }>({ refresh: false });
   const addEntry = (entry: VideoSubmission) => setEntries(current => {
-    const match = current.find(item => item.key === entry.key) ?? current.find(item => entry.taskRef && item.taskRef === entry.taskRef) ?? current.find(item => entry.replacesTaskId && item.taskRef === entry.replacesTaskId);
-    return [{ ...entry, key: match?.key ?? entry.key }, ...current.filter(item => item.key !== entry.key && (!entry.taskRef || item.taskRef !== entry.taskRef) && (!entry.replacesTaskId || item.taskRef !== entry.replacesTaskId))];
+    const match = current.find(item => item.key === entry.key) ?? current.find(item => entry.taskRef && item.taskRef === entry.taskRef);
+    return [{ ...entry, key: match?.key ?? entry.key }, ...current.filter(item => item.key !== entry.key && (!entry.taskRef || item.taskRef !== entry.taskRef))];
   });
   useEffect(() => {
     ownerEpoch.current++;
@@ -411,7 +411,7 @@ export function ProductionVideoComposer({ className = 'floating-composer', testI
         const updated = history.find(next => next.taskRef === item.taskRef);
         return updated ? { ...item, snapshot: updated.snapshot } : item;
       }), ...history.filter(item => !current.some(existing => existing.taskRef === item.taskRef))]
-        .sort((a, b) => (b.snapshot.createdAt || '').localeCompare(a.snapshot.createdAt || '')));
+        .sort(compareMediaHistory));
       setHistoryReady(true);
       if (!refresh || !historyReady || !historyHead.current) setHistoryCursor(page ? page.cursor : legacy!.length === 20 ? legacy!.at(-1)?.id || null : null);
       if (!before && page) historyHead.current = page.head;
@@ -598,11 +598,11 @@ export function ProductionVideoComposer({ className = 'floating-composer', testI
         error={historyError} errorAtTop={Boolean(historyRetry.current.before)} hasMore={Boolean(historyCursor)} empty={!entries.length} submission={submissionKey}
         onLatest={() => void loadHistory(undefined, true)} onOlder={() => { if (historyCursor) void loadHistory(historyCursor); }}
         onRetry={() => void loadHistory(historyRetry.current.before, historyRetry.current.refresh)}>
-        {compact => (entriesOwner === owner ? [...entries].sort((a, b) => (a.snapshot.createdAt || '').localeCompare(b.snapshot.createdAt || '') || a.key.localeCompare(b.key)) : []).map(entry => <VideoTaskCard key={entry.key} entry={entry} enableEnhancement={!commerceTool && draftScope === 'create'} enhancementOwnerId={owner} compact={compact}
+        {compact => (entriesOwner === owner ? [...entries].sort(compareMediaHistory) : []).map(entry => <VideoTaskCard key={entry.key} entry={entry} enableEnhancement={!commerceTool && draftScope === 'create'} enhancementOwnerId={owner} compact={compact}
           actionNotice={historyActionNotice && historyActionNotice.taskId === entry.taskRef ? historyActionNotice.message : undefined} actionsDisabled={!identityReady || locked || uploading} onEdit={entry => void editTask(entry)} onRegenerate={apiNotice ? undefined : entry => void submit(undefined, false, entry)} onDelete={entry => void deleteTask(entry)} />)}
       </VideoResultsGallery> : <>
       {!historyOnly && historyCursor && <button type="button" disabled={loadingHistory} onClick={() => void loadHistory(historyCursor)}>{t("加载更早任务")}</button>}
-      {(entriesOwner === owner ? [...entries].sort((a, b) => (historyOnly ? -1 : 1) * ((a.snapshot.createdAt || '').localeCompare(b.snapshot.createdAt || '') || a.key.localeCompare(b.key))) : []).map(entry => <VideoTaskCard key={entry.key} entry={entry} enableEnhancement={!commerceTool && draftScope === 'create'} enhancementOwnerId={owner} actionNotice={historyActionNotice && historyActionNotice.taskId === entry.taskRef ? historyActionNotice.message : undefined} actionsDisabled={!identityReady || locked || uploading} onEdit={entry => void editTask(entry)} onRegenerate={apiNotice ? undefined : entry => void submit(undefined, false, entry)} onDelete={entry => void deleteTask(entry)} />)}
+      {(entriesOwner === owner ? [...entries].sort(compareMediaHistory) : []).map(entry => <VideoTaskCard key={entry.key} entry={entry} enableEnhancement={!commerceTool && draftScope === 'create'} enhancementOwnerId={owner} actionNotice={historyActionNotice && historyActionNotice.taskId === entry.taskRef ? historyActionNotice.message : undefined} actionsDisabled={!identityReady || locked || uploading} onEdit={entry => void editTask(entry)} onRegenerate={apiNotice ? undefined : entry => void submit(undefined, false, entry)} onDelete={entry => void deleteTask(entry)} />)}
       {historyOnly && historyCursor && <button type="button" disabled={loadingHistory} onClick={() => void loadHistory(historyCursor)}>{t("加载更早任务")}</button>}
       {historyError && <p role="status">{t(historyError)}<button type="button" onClick={() => void loadHistory()}>{t("重新读取任务")}</button></p>}
       </>}

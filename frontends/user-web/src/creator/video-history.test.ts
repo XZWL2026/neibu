@@ -1,11 +1,18 @@
 import { beforeEach, expect, it, vi } from 'vitest';
 import { mediaListGetApiV1MediaTasks } from '../api';
-import { readVideoHistory, readMediaHistory } from './video-history';
+import { compareMediaHistory, readVideoHistory, readMediaHistory } from './video-history';
 vi.mock('../api', () => ({ mediaListGetApiV1MediaTasks: vi.fn() }));
 const list = vi.mocked(mediaListGetApiV1MediaTasks);
 const reply = (data: unknown) => ({ data }) as never;
 const page = (prefix: string, type = 'VIDEO') => Array.from({ length: 20 }, (_, i) => ({ id: `${prefix}-${i}`, type }));
 beforeEach(() => list.mockReset());
+it('uses the durable task ID to break time ties before and after a page reload', () => {
+  const createdAt = '2026-10-29T08:00:00Z';
+  const admitted = { key: 'request-z', taskRef: 'task-a', snapshot: { createdAt } };
+  const history = { key: 'task-b', taskRef: 'task-b', snapshot: { createdAt } };
+  expect(compareMediaHistory(admitted, history)).toBeLessThan(0);
+  expect(compareMediaHistory({ ...admitted, key: 'task-a' }, history)).toBeLessThan(0);
+});
 it('skips video-only pages for image history and keeps the raw head for refresh', async () => {
   list.mockResolvedValueOnce(reply(page('video'))).mockResolvedValueOnce(reply([{ id: 'image', type: 'IMAGE' }]));
   const result = await readMediaHistory({ mediaType: 'IMAGE', isCurrent: () => true });

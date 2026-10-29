@@ -40,6 +40,16 @@ it('keeps image preferences separate from video and uses image boundary labels',
   expect(screen.getByText('完整卡片')).toBeVisible();
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+it('provides an explicit older-page action in addition to automatic scrolling', () => {
+  const view = render(<View />);
+  fireEvent.click(screen.getByRole('button', { name: '加载更早视频' }));
+  expect(older).toHaveBeenCalledOnce();
+  view.rerender(<View loading />);
+  expect(screen.getByRole('button', { name: '加载更早视频' })).toBeDisabled();
+  view.rerender(<View hasMore={false} />);
+  expect(screen.queryByRole('button', { name: '加载更早视频' })).not.toBeInTheDocument();
+});
+
 it('uses icon-only controls, preserves full result cards and remembers desktop columns across mobile', () => {
   const view = render(<View />);
   expect(screen.getByRole('button', { name: '四宫格' })).toHaveAttribute('aria-pressed', 'true');

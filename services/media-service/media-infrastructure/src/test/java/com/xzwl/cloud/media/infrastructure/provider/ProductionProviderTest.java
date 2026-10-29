@@ -377,6 +377,24 @@ class ProductionProviderTest {
     int sent=posts.get();adapter().requireAvailable(request(MediaType.VIDEO,1,"480p"),scheduleRoute("native"));assertEquals(sent,posts.get());
     assertTrue(json.valueToTree(journal.executionPlan("native")).path("schedule").isNull());
   }
+  @Test void originalAdaptiveTwoKTemplatePreflightsEveryAspectWithoutSubmittingMedia() throws Exception {
+    var template=new com.xzwl.cloud.media.application.provider.MpsConfigurationStore.EnhancementTemplate(
+        "original-2k","2K",List.of("480p","720p","1080p"),true,null,1781930L,Map.of());
+    actionAnswers.put("DescribeTranscodeTemplates",json.writeValueAsString(Map.of("Response",Map.of("TranscodeTemplateSet",List.of(
+        Map.of("Definition",1781930L,"VideoTemplate",Map.of("Width",0,"Height",1440,"ResolutionAdaptive","open"),
+            "StdExtInfo","{\"video_info\":{\"short\":1440}}"))))));
+    var mps=new TencentMpsAdapter(new ProviderHttp(HttpClient.newHttpClient(),json,Duration.ofSeconds(2)),clock);
+    String[] ratios={"16:9","9:16","1:1","4:3","3:4","21:9"};
+    int[][] dimensions={{2560,1440},{1440,2560},{1440,1440},{1920,1440},{1440,1920},{3360,1440}};
+    for(int i=0;i<ratios.length;i++) {
+      var plan=mps.prepare(settings.enhancementPlan(template,ratios[i]),settings);
+      assertEquals(dimensions[i][0],plan.enhancement().width());
+      assertEquals(dimensions[i][1],plan.enhancement().height());
+      assertEquals(List.of(1781930L),plan.enhancement().definitions());
+    }
+    assertTrue(headers.stream().noneMatch(h->h.getOrDefault("X-tc-action",List.of()).contains("ProcessMedia")));
+  }
+
   @Test void twoKEnhancementPreflightsEveryRatioAndRejectsWrongDimensions() throws Exception {
     var template=new com.xzwl.cloud.media.application.provider.MpsConfigurationStore.EnhancementTemplate("2k","2K",List.of("480p","720p","1080p"),true,null,null,
         Map.of("WIDE",108307L,"SQUARE",108308L,"STANDARD",108309L,"ULTRAWIDE",108310L));
@@ -394,6 +412,31 @@ class ProductionProviderTest {
     scheduleMetadata(108307,1920,1080,true);
     assertThrows(DefinitiveRejectionException.class,()->mps.prepare(settings.enhancementPlan(template,"16:9"),settings));
     assertTrue(headers.stream().noneMatch(h->h.getOrDefault("X-tc-action",List.of()).contains("ProcessMedia")));
+  }
+  @Test void originalAdaptiveTwoKUsesActualSourcePixelsAndTheEnhanceDefinitionType() throws Exception {
+    var template=new com.xzwl.cloud.media.application.provider.MpsConfigurationStore.EnhancementTemplate(
+        "original-2k","2K",List.of("480p","720p","1080p"),true,null,1781930L,Map.of());
+    actionAnswers.put("DescribeTranscodeTemplates",json.writeValueAsString(Map.of("Response",Map.of("TranscodeTemplateSet",List.of(
+        Map.of("Definition",1781930L,"VideoTemplate",Map.of("Width",0,"Height",1440,"ResolutionAdaptive","open"),
+            "StdExtInfo","{\"video_info\":{\"short\":1440}}"))))));
+    var mps=new TencentMpsAdapter(new ProviderHttp(HttpClient.newHttpClient(),json,Duration.ofSeconds(2)),clock);
+    var prepared=mps.prepare(settings.enhancementPlan(template,"16:9"),settings);
+    int[][] sources={{854,480},{480,854},{2218,1664},{1664,2218},{2206,946}};
+    int[][] expected={{2562,1440},{1440,2562},{1918,1440},{1440,1918},{3356,1440}};
+    for(int i=0;i<sources.length;i++) {
+      var bound=mps.bindEnhancementSource(prepared,new StoragePort.VideoSource("https://assets.example/source.mp4","video/mp4",5.03,sources[i][0],sources[i][1]));
+      assertEquals(expected[i][0],bound.enhancement().width());
+      assertEquals(expected[i][1],bound.enhancement().height());
+      assertEquals(List.of(1781930L),bound.enhancement().definitions());
+    }
+    actionAnswers.put("ProcessMedia","{\"Response\":{\"TaskId\":\"original-2k-job\"}}");
+    assertEquals("original-2k-job",mps.submit("original-2k","https://assets.example/source.mp4",prepared,settings));
+    var submitted=bodies.getLast().path("MediaProcessTask").path("TranscodeTaskSet").get(0);
+    assertEquals(1781930L,submitted.path("Definition").asLong());
+    assertEquals("Enhance",submitted.path("DefinitionType").asText());
+    assertFalse(bodies.getLast().has("ScheduleId"));
+    actionAnswers.put("DescribeTranscodeTemplates",actionAnswers.get("DescribeTranscodeTemplates").replace("short\\\":1440", "short\\\":1080"));
+    assertThrows(DefinitiveRejectionException.class,()->mps.prepare(settings.enhancementPlan(template,"16:9"),settings));
   }
   @Test void schedulePreflightRejectsMissingMappingsAndInvalidMetadataWithoutCreatingOperation() throws Exception {
     var env=scheduleEnvironment();env.remove("TENCENTCLOUD_MPS_TRANSPARENT_SCHEDULE_ID_720P_WIDE");scheduledSettings(env);

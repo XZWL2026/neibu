@@ -36,7 +36,8 @@ public final class TencentMpsAdapter {
       }
       payload.put("Activities",activities);
     } else if(plan.schedule()!=null) payload.put("ScheduleId",plan.schedule().id());
-    else payload.put("MediaProcessTask",Map.of("TranscodeTaskSet",List.of(Map.of("Definition",plan.template()))));
+    else payload.put("MediaProcessTask",Map.of("TranscodeTaskSet",List.of(originalShortEdge2k(plan)
+        ? Map.of("Definition",plan.template(),"DefinitionType","Enhance") : Map.of("Definition",plan.template()))));
     JsonNode result=call("ProcessMedia",payload,plan,settings);
     return ArkMediaAdapter.taskId(result.path("TaskId"));
   }
@@ -125,11 +126,24 @@ public final class TencentMpsAdapter {
     if(!video.path("Width").isIntegralNumber() || !video.path("Width").canConvertToInt()
         || !video.path("Height").isIntegralNumber() || !video.path("Height").canConvertToInt()) throw invalidSchedule();
     int width=video.path("Width").asInt(),height=video.path("Height").asInt();
-    if(width<=0 || height<=0 || !"open".equals(video.path("ResolutionAdaptive").asText())) throw invalidSchedule();
+    if(!"open".equals(video.path("ResolutionAdaptive").asText())) throw invalidSchedule();
     boolean portrait=Set.of("9:16","3:4").contains(plan.aspectRatio());
     int longest=Math.max(width,height),shortest=Math.min(width,height);
     int finalWidth=portrait?shortest:longest,finalHeight=portrait?longest:shortest;
-    if(plan.enhancement()!=null) {
+    if(originalShortEdge2k(plan)) {
+      if(width!=0 || height!=1440 || plan.enhancement().videoBitrateKbps()!=null) throw invalidSchedule();
+      try {
+        var extension=new com.fasterxml.jackson.databind.ObjectMapper().readTree(templates.get(0).path("StdExtInfo").asText("{}"));
+        if(extension==null) throw invalidSchedule();
+        var geometry=extension.path("video_info");
+        if(geometry.path("short").asInt()!=1440 || geometry.has("long")) throw invalidSchedule();
+      } catch(java.io.IOException invalid) { throw invalidSchedule(); }
+      if(!Set.of("16:9","9:16","1:1","4:3","3:4","21:9").contains(plan.aspectRatio())) throw invalidSchedule();
+      var ratio=plan.aspectRatio().split(":");
+      int[] size=shortEdge2kDimensions(Integer.parseInt(ratio[0]),Integer.parseInt(ratio[1]));
+      finalWidth=size[0];finalHeight=size[1];
+    } else if(width<=0 || height<=0) throw invalidSchedule();
+    else if(plan.enhancement()!=null) {
       int[] expected=expectedDimensions(plan.targetResolution(),plan.aspectRatio());
       if(finalWidth!=expected[0] || finalHeight!=expected[1]) throw invalidSchedule();
     }
@@ -143,6 +157,25 @@ public final class TencentMpsAdapter {
       if(plan.schedule()==null) plan=plan.withSchedule(new ProviderSettings.Schedule(0,definitions,finalWidth,finalHeight));
     }
     return plan.withEnhancement(new ProviderSettings.Enhancement(policy.configurationVersion(),policy.templateId(),policy.videoBitrateKbps(),definitions,finalWidth,finalHeight,activities));
+  }
+  private static boolean originalShortEdge2k(ProviderSettings.Plan plan) {
+    return plan.template()==1781930L && plan.schedule()==null && plan.enhancement()!=null
+        && "2K".equals(plan.targetResolution());
+  }
+  /** Freeze source geometry after quote verification; actual ratios may include rounded pixels. */
+  ProviderSettings.Plan bindEnhancementSource(ProviderSettings.Plan plan,StoragePort.VideoSource source) {
+    if(!originalShortEdge2k(plan)) return plan;
+    if(source.width()==null || source.height()==null) throw invalidSchedule();
+    int[] size=shortEdge2kDimensions(source.width(),source.height());
+    var policy=plan.enhancement();
+    return plan.withEnhancement(new ProviderSettings.Enhancement(policy.configurationVersion(),policy.templateId(),policy.videoBitrateKbps(),
+        policy.definitions(),size[0],size[1],policy.activities()));
+  }
+  private static int[] shortEdge2kDimensions(int width,int height) {
+    if(width<=0 || height<=0) throw invalidSchedule();
+    long longest=(long)Math.max(width,height)*1440/Math.min(width,height)/2*2;
+    if(longest<1440 || longest>Integer.MAX_VALUE) throw invalidSchedule();
+    return width>=height?new int[]{(int)longest,1440}:new int[]{1440,(int)longest};
   }
   // Accepted dimensions from docs/business-control/mps-schedules/design.md, including non-short-edge tiers.
   private static int[] expectedDimensions(String target,String ratio) {

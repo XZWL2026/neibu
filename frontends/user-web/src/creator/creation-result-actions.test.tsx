@@ -37,6 +37,15 @@ function fixture(type: 'IMAGE' | 'VIDEO') {
 }
 const mount = (type: 'IMAGE' | 'VIDEO') => render(<App router={createMemoryRouter(userRoutes, { initialEntries: [`/create/${type.toLowerCase()}`] })} />);
 const output = (card: HTMLElement) => card.querySelector('img, video');
+async function regeneratedCard(type: 'IMAGE' | 'VIDEO', original: HTMLElement) {
+  return waitFor(() => {
+    const card = type === 'IMAGE' ? original : screen.getAllByRole('article')
+      .find(item => output(item)?.getAttribute('src') === 'https://assets.example/new-output');
+    expect(card).toBeDefined();
+    expect(output(card!)).toHaveAttribute('src', 'https://assets.example/new-output');
+    return card!;
+  });
+}
 async function originalCard(noun: string) {
   const card = await screen.findByRole('article', { name: `${noun}任务：原任务提示词` });
   await waitFor(() => expect(output(card)).toHaveAttribute('src', 'https://assets.example/old-output'));
@@ -95,11 +104,11 @@ it.each(kinds)('%s regeneration sends a stable UUID on public HTTP without rando
     fireEvent.click(within(card).getByRole('button', { name: '重新生成' }));
     await waitFor(() => expect(regenerate).toHaveBeenCalledOnce());
     expect(new Headers(regenerate.mock.calls[0][1]?.headers).get('Idempotency-Key')).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
-    await waitFor(() => expect(output(card)).toHaveAttribute('src', 'https://assets.example/new-output'));
+    await regeneratedCard(type, card);
   } finally { vi.unstubAllGlobals(); }
 });
 
-it.each(kinds)('%s requotes the original snapshot, replaces the same card on acceptance, and deletes its durable recovery', async (type, noun) => {
+it.each(kinds)('%s requotes saved parameters and deletes only the selected result, preserving original videos', async (type, noun) => {
   const { settings, snapshot, storageKey } = fixture(type);
   const view = mount(type), card = await originalCard(noun);
   fireEvent.change(screen.getByRole('textbox', { name: `${noun}提示词` }), { target: { value: '当前完全不同的编辑内容' } });
@@ -115,27 +124,31 @@ it.each(kinds)('%s requotes the original snapshot, replaces the same card on acc
   expect(new Headers(regenerate.mock.calls[0][1]?.headers).get('Idempotency-Key')).toBeTruthy();
   expect(output(card)).toHaveAttribute('src', 'https://assets.example/old-output');
   expect(screen.getAllByRole('article')).toEqual([card]);
-  vi.mocked(api.mediaListGetApiV1MediaTasks).mockResolvedValue(reply([]));
+  vi.mocked(api.mediaListGetApiV1MediaTasks).mockResolvedValue(reply(type === 'VIDEO' ? [snapshot] : []));
   await act(async () => accept(reply({ id: 'replacement-task' }, 202)));
-  await waitFor(() => expect(output(card)).toHaveAttribute('src', 'https://assets.example/new-output'));
-  expect(screen.getAllByRole('article')).toEqual([card]);
+  const nextCard = await regeneratedCard(type, card);
+  expect(screen.getAllByRole('article')).toHaveLength(type === 'VIDEO' ? 2 : 1);
+  if (type === 'VIDEO') expect(output(card)).toHaveAttribute('src', 'https://assets.example/old-output');
   expect(screen.getByRole('textbox', { name: `${noun}提示词` })).toHaveValue('当前完全不同的编辑内容');
   expect(JSON.parse(sessionStorage.getItem(storageKey)!)).toMatchObject({ taskRef: 'replacement-task' });
-  const deleteButton = within(card).getByRole('button', { name: `删除${noun}` });
+  const deleteButton = within(nextCard).getByRole('button', { name: `删除${noun}` });
   vi.mocked(window.confirm).mockReturnValueOnce(false);
   fireEvent.click(deleteButton);
   expect(window.confirm).toHaveBeenCalledWith(`确定删除这条${noun}生成记录吗？`);
   expect(remove).not.toHaveBeenCalled();
-  expect(card).toBeInTheDocument();
+  expect(nextCard).toBeInTheDocument();
   expect(deleteButton.parentElement).toHaveClass('video-result-media');
-  expect(card.querySelector('.result-card-actions')).not.toContainElement(deleteButton);
+  expect(nextCard.querySelector('.result-card-actions')).not.toContainElement(deleteButton);
   fireEvent.click(deleteButton);
-  await waitFor(() => expect(card).not.toBeInTheDocument());
+  await waitFor(() => expect(nextCard).not.toBeInTheDocument());
   expect(remove).toHaveBeenCalledWith('replacement-task');
   expect(sessionStorage.getItem(storageKey)).toBeNull();
   view.unmount(); mount(type);
   await screen.findByRole('button', { name: `选择${noun}模型：当前模型` });
-  expect(screen.queryByRole('article')).not.toBeInTheDocument();
+  if (type === 'VIDEO') {
+    await originalCard(noun);
+    expect(screen.getAllByRole('article')).toHaveLength(1);
+  } else expect(screen.queryByRole('article')).not.toBeInTheDocument();
   expect(submit).not.toHaveBeenCalled();
   expect(regenerate).toHaveBeenCalledOnce();
 });
@@ -155,7 +168,7 @@ it.each(kinds)('%s preserves the original result after DELETE failure and a firs
   expect(output(card)).toHaveAttribute('src', 'https://assets.example/old-output');
   expect(screen.queryByRole('button', { name: '使用原请求重试' })).not.toBeInTheDocument();
   fireEvent.click(within(card).getByRole('button', { name: '重新生成' }));
-  await waitFor(() => expect(output(card)).toHaveAttribute('src', 'https://assets.example/new-output'));
+  await regeneratedCard(type, card);
   expect(regenerate).toHaveBeenCalledTimes(2);
   expect(submit).not.toHaveBeenCalled();
 });
@@ -178,9 +191,9 @@ it.each(kinds)('%s retains an uncertain regeneration source and key through remo
   await waitFor(() => expect(screen.getByRole('button', { name: '使用原请求重试' })).toBeEnabled());
   regenerate.mockResolvedValue(reply({ id: 'replacement-task' }, 202));
   fireEvent.click(screen.getByRole('button', { name: '使用原请求重试' }));
-  await waitFor(() => expect(output(screen.getByRole('article'))).toHaveAttribute('src', 'https://assets.example/new-output'));
+  await waitFor(() => expect(screen.getAllByRole('article').some(item => output(item)?.getAttribute('src') === 'https://assets.example/new-output')).toBe(true));
   for (const call of regenerate.mock.calls) expect(call).toEqual(firstCall);
-  expect(screen.getAllByRole('article')).toHaveLength(1);
+  expect(screen.getAllByRole('article')).toHaveLength(type === 'VIDEO' ? 2 : 1);
   expect(JSON.parse(sessionStorage.getItem(storageKey)!)).toMatchObject({ taskRef: 'replacement-task', replacesTaskId: 'original-task' });
   expect(submit).not.toHaveBeenCalled();
 });

@@ -108,6 +108,9 @@ export function MediaResultsGallery({ children, ready, loading, error, hasMore, 
     <div ref={top} className="video-gallery-boundary" role={error && errorAtTop ? 'alert' : 'status'}>
       {loading && errorAtTop ? t(loadingLabel) : error && errorAtTop ? failure
         : ready ? t(empty && !hasMore ? image ? '暂无图片任务' : '暂无视频任务' : hasMore ? image ? '向上滚动加载更早图片' : '向上滚动加载更早视频' : '已加载全部') : null}
+      {ready && hasMore && !error && <button className="video-gallery-load-older" type="button" disabled={loading} onClick={onOlder}>
+        {t(image ? '加载更早图片' : '加载更早视频')}
+      </button>}
     </div>
     <div ref={grid} className="video-gallery-grid" data-columns={selected} aria-busy={loading}>{children(false)}</div>
     <div className="video-gallery-boundary" role={error && !errorAtTop ? 'alert' : 'status'}>

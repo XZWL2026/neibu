@@ -42,7 +42,7 @@ public final class IndependentEnhancementProvider implements EnhancementProvider
         || !Objects.equals(actual.videoBitrateKbps(), accepted.videoBitrateKbps())) {
       throw new TaskConflictException("enhancement template changed; obtain a new quote");
     }
-    journal.createEnhancement(id, plan);
+    journal.createEnhancement(id, mps.bindEnhancementSource(plan, quote.source().video()));
   }
 
   public String submit(MediaTask task, EnhancementQuoteStore.Quote quote) {

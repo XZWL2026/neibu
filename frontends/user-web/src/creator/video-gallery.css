@@ -27,6 +27,8 @@ html[data-theme] .video-gallery .video-layout-switch button[aria-pressed="true"]
 .video-compact-open:hover .video-compact-prompt { text-decoration: underline; text-underline-offset: 3px; }
 .video-gallery-boundary { min-height: 48px; padding: 24px 0; color: var(--gallery-muted); text-align: center; font-size: 13px; line-height: 1.6; }
 .video-gallery-boundary button { border: 1px solid var(--gallery-line); border-radius: 8px; background: var(--gallery-surface); color: var(--gallery-ink); padding: 10px 16px; min-height: 44px; cursor: pointer; }
+.video-gallery-boundary .video-gallery-load-older { display: block; margin: 12px auto 0; }
+.video-gallery-boundary .video-gallery-load-older:disabled { opacity: .55; cursor: wait; }
 dialog.video-preview-dialog { width: min(960px, calc(100vw - 32px)); }
 .video-preview-dialog .video-result-media { width: 100%; --result-height: min(55dvh, 540px); }
 .video-preview-dialog .result-card-actions { flex-wrap: wrap; }

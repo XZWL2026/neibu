@@ -150,6 +150,26 @@ class MediaApiTest {
         .header("Idempotency-Key","after-delete")).andExpect(status().isConflict());
   }
 
+  @Test void videoRegenerationPreservesTheOriginalInDurableHistory() throws Exception {
+    String owner=UUID.randomUUID().toString();
+    var request=new TaskRequest(com.xzwl.cloud.media.domain.generation.MediaType.VIDEO,
+        "video","keep the original video","16:9","standard",1,5,List.of(),ReferenceMode.FIRST_LAST_FRAME);
+    var source=historyTask(owner,UUID.randomUUID().toString(),"original",request,TaskStatus.SUCCEEDED);
+    String key=UUID.randomUUID().toString();
+    mvc.perform(post("/api/v1/media/tasks/"+source.id()+"/regenerations").principal(()->owner)
+        .header("Idempotency-Key",key)).andExpect(status().isAccepted());
+    assertTrue(store.isHistoryVisible(owner,source.id()),"Regeneration must not hide the original video");
+    mvc.perform(get("/api/v1/media/tasks").principal(()->owner)).andExpect(jsonPath("$.length()").value(2));
+    mvc.perform(get("/api/v1/media/tasks/"+source.id()+"/results").principal(()->owner))
+        .andExpect(jsonPath("$[0].fileId").value("retained-file"));
+    mvc.perform(post("/api/v1/media/tasks/"+source.id()+"/regenerations").principal(()->owner)
+        .header("Idempotency-Key",key)).andExpect(status().isAccepted());
+    mvc.perform(get("/api/v1/media/tasks").principal(()->owner)).andExpect(jsonPath("$.length()").value(2));
+    mvc.perform(post("/api/v1/media/tasks/"+source.id()+"/regenerations").principal(()->owner)
+        .header("Idempotency-Key",UUID.randomUUID().toString())).andExpect(status().isConflict());
+    mvc.perform(get("/api/v1/media/tasks").principal(()->owner)).andExpect(jsonPath("$.length()").value(2));
+  }
+
   @Test void regeneratesSavedImageAndVideoRequestsOnceAndRejectsOtherKeysOrSources() throws Exception {
     for(var request:List.of(imageRequest(),new TaskRequest(com.xzwl.cloud.media.domain.generation.MediaType.VIDEO,
         "video","saved video","16:9","standard",1,5,List.of(),ReferenceMode.FIRST_LAST_FRAME))) {
@@ -169,9 +189,10 @@ class MediaApiTest {
             .andExpect(status().isAccepted()).andExpect(jsonPath("id").value(replacement));
       } finally { Peers.unavailableOwners.remove(owner); }
       assertEquals(1,Peers.charges.get(replacement).intValue());
+      boolean video=request.type()==com.xzwl.cloud.media.domain.generation.MediaType.VIDEO;
       mvc.perform(post(path).principal(()->owner).header("Idempotency-Key","another-key")).andExpect(status().isConflict());
       mvc.perform(get("/api/v1/media/tasks").principal(()->owner))
-          .andExpect(jsonPath("$.length()").value(1)).andExpect(jsonPath("$[0].id").value(replacement));
+          .andExpect(jsonPath("$.length()").value(video?2:1));
       mvc.perform(get("/api/v1/media/tasks/"+source.id()+"/results").principal(()->owner))
           .andExpect(jsonPath("$[0].fileId").value("retained-file"));
       var other=historyTask(owner,UUID.randomUUID().toString(),"other-source",request,TaskStatus.SUCCEEDED);
