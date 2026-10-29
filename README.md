@@ -36,6 +36,8 @@ npm exec --workspace @xzwl/partner-web -- vite --host 127.0.0.1 --port 5174
 
 当前项目的本地正式配置副本（Docker MySQL / Nacos / Redis / Nginx、12 项 Java 服务和前端）见 [本地部署说明](deployment/local/README.md)。可用 `./scripts/local/runtime.ps1` 启动，`-Action Stop` 停止并保留数据。
 
+独立的全容器本地环境见 [neibu Docker 部署说明](deployment/docker/README.md)：运行 `./deployment/docker/run.ps1`，访问 `http://127.0.0.1:18390/`。入口容器名为 `neibu`，使用独立数据库与测试账号，不需要读取生产配置。
+
 ## 配置与目录
 
 - platform/、gateways/、services/：公共模块、网关、业务服务及现有测试。
