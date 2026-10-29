@@ -27,7 +27,7 @@ public final class CreateAccessUrlHandler {
   public CreateAccessUrlResult handle(String fileId, String ownerId, FilePurpose expectedPurpose) {
     StoredFile file = authorized(fileId, ownerId, expectedPurpose);
     return new CreateAccessUrlResult(
-        objects.signGet(file.objectKey(), EXPIRES_SECONDS),
+        signAccess(file),
         Instant.now(clock).plusSeconds(EXPIRES_SECONDS));
   }
   public record ImageContent(String mimeType, String base64) {}
@@ -174,9 +174,19 @@ public final class CreateAccessUrlHandler {
     StoredFile file=authorized(fileId,ownerId,null);
     var object=objects.head(file.objectKey());
     if(object==null || object.contentLength()<=0) throw new FileStorageException("File is missing or unreadable");
-    return new CreateAccessUrlResult(objects.signGet(file.objectKey(),EXPIRES_SECONDS),
+    return new CreateAccessUrlResult(signAccess(file),
         Instant.now(clock).plusSeconds(EXPIRES_SECONDS));
   }
+
+  private String signAccess(StoredFile file) {
+    // JFIF already contains JPEG data. Name the download without reencoding the original,
+    // including historical objects whose keys have no file extension.
+    if (file.purpose() == FilePurpose.MEDIA_RESULT && "image/jpeg".equals(file.mimeType())) {
+      return objects.signGet(file.objectKey(), EXPIRES_SECONDS, file.fileId() + ".jpg");
+    }
+    return objects.signGet(file.objectKey(), EXPIRES_SECONDS);
+  }
+
   private StoredFile authorized(String fileId,String ownerId,FilePurpose expectedPurpose) {
     StoredFile file = metadata.findById(fileId)
         .orElseThrow(() -> new StoredFileNotFoundException(fileId));

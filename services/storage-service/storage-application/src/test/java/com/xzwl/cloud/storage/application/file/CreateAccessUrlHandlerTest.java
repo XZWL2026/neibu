@@ -28,6 +28,40 @@ class CreateAccessUrlHandlerTest {
     assertEquals(NOW.plusSeconds(3600), result.expiresAt());
   }
 
+  @Test void generatedJpegDownloadsUseJpgWithoutReadingOrReencodingTheObject() {
+    var objects = new RecordingStorage();
+    var jpeg = new StoredFile("file-1", "owner-1", "objects/legacy-without-extension",
+        "image/jpeg", 9, "etag", FilePurpose.MEDIA_RESULT, NOW);
+    var access = handler(objects, jpeg);
+    assertThrows(FileAccessDeniedException.class, () -> access.handle("file-1", "other"));
+    assertEquals(null, objects.downloadFilename);
+
+    access.handle("file-1", "owner-1");
+    assertEquals("file-1.jpg", objects.downloadFilename);
+    assertEquals("objects/legacy-without-extension", objects.signedKey);
+    assertEquals(3600, objects.expiresSeconds);
+    objects.downloadFilename = null;
+    access.handleExisting("file-1", "owner-1");
+    assertEquals("file-1.jpg", objects.downloadFilename);
+    objects.downloadFilename = null;
+    access.handleReferenceMedia("file-1", "owner-1");
+    assertEquals(null, objects.downloadFilename);
+    assertEquals(0, objects.opens);
+    assertEquals(0, objects.puts);
+  }
+
+  @Test void pngResultsAndUploadedJpegReferencesKeepTheirOriginalAccessBehavior() {
+    for (var file : java.util.List.of(
+        new StoredFile("file-1", "owner-1", "objects/file-1", "image/png", 9, "etag", FilePurpose.MEDIA_RESULT, NOW),
+        new StoredFile("file-1", "owner-1", "objects/file-1", "video/mp4", 9, "etag", FilePurpose.MEDIA_RESULT, NOW),
+        new StoredFile("file-1", "owner-1", "objects/file-1", "image/jpeg", 9, "etag", FilePurpose.REFERENCE_IMAGE, NOW))) {
+      var objects = new RecordingStorage();
+      handler(objects, file).handle("file-1", "owner-1");
+      assertEquals(null, objects.downloadFilename);
+      assertEquals(3600, objects.expiresSeconds);
+    }
+  }
+
   @Test
   void anotherOwnerCannotReceiveASignedUrl() {
     RecordingStorage objects = new RecordingStorage();
@@ -164,7 +198,8 @@ class CreateAccessUrlHandlerTest {
 
   private static final class RecordingStorage implements PrivateObjectStorage {
     private long expiresSeconds;
-    private int opens, closes;
+    private int opens, closes, puts;
+    private String downloadFilename, signedKey;
     private String content = "reference";
     private boolean failRead;
     @Override public InputStream open(String key) {
@@ -177,12 +212,17 @@ class CreateAccessUrlHandlerTest {
         @Override public void close() { closes++; }
       };
     }
-    public String putPrivate(String key, String mime, long size, InputStream body) { return ""; }
-    public StoredObject head(String key) { throw new UnsupportedOperationException(); }
+    public String putPrivate(String key, String mime, long size, InputStream body) { puts++; return ""; }
+    public StoredObject head(String key) { return new StoredObject(key, "image/jpeg", 9, "etag"); }
     public void delete(String key) {}
     public String signGet(String key, long seconds) {
+      signedKey = key;
       expiresSeconds = seconds;
       return "https://signed.example/object";
+    }
+    @Override public String signGet(String key, long seconds, String filename) {
+      downloadFilename = filename;
+      return signGet(key, seconds);
     }
   }
 }

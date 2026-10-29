@@ -19,5 +19,10 @@ public interface PrivateObjectStorage {
 
   String signGet(String objectKey, long expiresSeconds);
 
+  /** Sign an attachment response with an explicit filename, including its extension. */
+  default String signGet(String objectKey, long expiresSeconds, String downloadFilename) {
+    throw new FileStorageException("signed attachment downloads are not supported");
+  }
+
   record StoredObject(String objectKey, String contentType, long contentLength, String etag) {}
 }

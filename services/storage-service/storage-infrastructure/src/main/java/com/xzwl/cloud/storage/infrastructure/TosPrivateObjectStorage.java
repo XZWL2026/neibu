@@ -103,11 +103,25 @@ public final class TosPrivateObjectStorage implements PrivateObjectStorage {
 
   @Override
   public String signGet(String objectKey, long expiresSeconds) {
+    return signGetWithQuery(objectKey, expiresSeconds, java.util.Map.of());
+  }
+
+  @Override
+  public String signGet(String objectKey, long expiresSeconds, String downloadFilename) {
+    if (downloadFilename == null || !downloadFilename.matches("[A-Za-z0-9][A-Za-z0-9._-]{0,199}")) {
+      throw new IllegalArgumentException("invalid download filename");
+    }
+    return signGetWithQuery(objectKey, expiresSeconds, java.util.Map.of(
+        "response-content-disposition", "attachment; filename=\"" + downloadFilename + "\""));
+  }
+
+  private String signGetWithQuery(String objectKey, long expiresSeconds, java.util.Map<String, String> query) {
     try {
       return client().preSignedURL(new PreSignedURLInput()
           .setHttpMethod(HttpMethod.GET)
           .setBucket(bucket)
           .setKey(objectKey)
+          .setQuery(query)
           .setExpires(expiresSeconds))
           .getSignedUrl();
     } catch (TosException failed) {

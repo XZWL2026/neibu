@@ -23,6 +23,24 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 
 class TosPrivateObjectStorageTest {
+  @Test void jpgFilenameIsIncludedInTheSignedAttachmentResponse() {
+    var sign = new AtomicReference<PreSignedURLInput>();
+    TOSV2 client = (TOSV2) Proxy.newProxyInstance(TOSV2.class.getClassLoader(), new Class<?>[] {TOSV2.class}, (proxy, method, args) -> {
+      assertEquals("preSignedURL", method.getName());
+      sign.set((PreSignedURLInput) args[0]);
+      return new PreSignedURLOutput("https://signed.example/jpeg", java.util.Map.of());
+    });
+    var storage = new TosPrivateObjectStorage(client, "private-bucket");
+    assertEquals("https://signed.example/jpeg", storage.signGet("objects/legacy", 3600, "file-1.jpg"));
+    assertEquals("attachment; filename=\"file-1.jpg\"", sign.get().getQuery().get("response-content-disposition"));
+    assertEquals("objects/legacy", sign.get().getKey());
+    assertEquals("private-bucket", sign.get().getBucket());
+    assertEquals(HttpMethod.GET, sign.get().getHttpMethod());
+    assertEquals(3600, sign.get().getExpires());
+    org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class,
+        () -> storage.signGet("objects/legacy", 3600, "file.jpg\"\r\nX-Injected: true"));
+  }
+
   @Test void onlyAnExplicitMissingObjectAllowsAnotherUpload() {
     for (String code : java.util.List.of("NotFound", "NoSuchKey", "NoSuchBucket", "AccessDenied", "InternalError")) {
       int status = code.equals("AccessDenied") ? 403 : code.equals("InternalError") ? 500 : 404;
@@ -111,6 +129,7 @@ class TosPrivateObjectStorageTest {
     assertEquals(3600, sign.get().getExpires());
     assertEquals("private-bucket", sign.get().getBucket());
     assertEquals("objects/file-1", sign.get().getKey());
+    assertTrue(sign.get().getQuery().isEmpty());
   }
 
   private static HeadObjectV2Output headOutput(String mimeType, long size, String etag)
