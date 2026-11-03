@@ -54,7 +54,6 @@ it.each([['IMAGE', 'IMAGE'], ['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', '
   fireEvent.change(screen.getByRole('textbox'), { target: { value: '首页独立草稿' } });
   const mime = kind === 'VIDEO' ? 'video/mp4' : kind === 'AUDIO' ? 'audio/wav' : 'image/png';
   fireEvent.change(screen.getByLabelText('上传素材'), { target: { files: [new File(['reference'], '我的素材', { type: mime })] } });
-  await waitFor(() => expect(review).toHaveBeenCalledOnce());
   await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
   view.unmount();
   const commerce = await mount(type, 'commerce');
@@ -69,7 +68,7 @@ it.each([['IMAGE', 'IMAGE'], ['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', '
   fireEvent.pointerEnter(screen.getByRole('button', { name: '添加素材' }), { pointerType: 'mouse' });
   await waitFor(() => expect(within(screen.getByRole('group', { name: '已添加素材（按提交顺序）' })).getByRole('button', { name: /^移除/ })).toBeEnabled());
   expect(api.storageCreateAccessUrlGetApiV1FilesFileIdAccessUrl).toHaveBeenCalledWith('file-one');
-  expect(review).toHaveBeenCalledOnce();
+  expect(review).toHaveBeenCalledTimes(type === 'IMAGE' ? 0 : 1);
   expect(api.storageUploadReferenceImagePostApiV1FilesReferenceImages).toHaveBeenCalledTimes(type === 'IMAGE' ? 1 : 0);
   expect(api.storageUploadReferenceMediaPostApiV1FilesReferenceMedia).toHaveBeenCalledTimes(type === 'IMAGE' ? 0 : 1);
   expect(api.mediaSubmitPostApiV1MediaTasks).not.toHaveBeenCalled();
@@ -135,7 +134,7 @@ it('retains the prompt and reference while the image quantity is temporarily bla
 it('restores material mention bindings and keeps removals removed after reopening', async () => {
   const view = await mount('IMAGE', 'home');
   fireEvent.change(screen.getByLabelText('上传素材'), { target: { files: [new File(['image'], 'mention.png', { type: 'image/png' })] } });
-  await waitFor(() => expect(review).toHaveBeenCalledOnce());
+  await screen.findByRole('button', { name: '移除参考图 1' });
   fireEvent.change(screen.getByRole('textbox'), { target: { value: '参考@', selectionStart: 3 } });
   await screen.findByRole('option');
   fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Enter' });

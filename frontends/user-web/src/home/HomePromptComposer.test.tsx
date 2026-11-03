@@ -210,26 +210,29 @@ it('ignores invalid handoff modes and saves an explicit homepage mode over the p
   expect(homePromptDraft('新描述', previous as never, 'IMAGE', null, 'text').mode).toBe('text');
 });
 
-it('uploads and reviews a homepage reference image, replaces it, and hands off its real identity', async () => {
-  vi.mocked(api.mediaOptionsGetApiV1MediaGenerationOptions).mockResolvedValue(reply({models:[referenceVideo,{...image,maxReferenceImages:2}]}));
+it('uploads and replaces a homepage image reference without a video model or review service', async () => {
+  vi.mocked(api.mediaOptionsGetApiV1MediaGenerationOptions).mockResolvedValue(reply({models:[{...image,maxReferenceImages:2}]}));
+  vi.mocked(api.mediaPortraitSubmitPostApiV1MediaPortraits).mockRejectedValue(new Error('review unavailable'));
   const {onSubmit}=mount('image'); fireEvent.focus(screen.getByRole('textbox'));
   await screen.findByRole('button',{name:/图片参数摘要：/});
   fireEvent.click(screen.getByRole('button',{name:'图片生成模式'}));
   fireEvent.click(screen.getByRole('menuitemradio',{name:'图片参考'}));
   const first = new File(['image'], '参考.png', {type:'image/png'});
   fireEvent.change(screen.getByLabelText('上传素材'),{target:{files:[first]}});
-  await waitFor(() => expect(api.mediaPortraitSubmitPostApiV1MediaPortraits).toHaveBeenCalledWith(expect.objectContaining({fileId:'uploaded-image'}),expect.anything()));
   await waitFor(() => expect(screen.getByRole('button',{name:'开始创作'})).toBeEnabled());
   await waitFor(() => expect(screen.getByRole('button',{name:'移除参考图 1'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'开始创作'}));
-  expect(onSubmit.mock.calls.at(-1)?.[3]).toEqual([expect.objectContaining({fileId:'uploaded-image',name:'参考.png',kind:'IMAGE',reviewStatus:'ACTIVE',reviewId:'review-uploaded-image'})]);
+  expect(onSubmit.mock.calls.at(-1)?.[3]).toEqual([expect.objectContaining({fileId:'uploaded-image',name:'参考.png',kind:'IMAGE'})]);
   expect(api.storageUploadReferenceImagePostApiV1FilesReferenceImages).toHaveBeenCalledWith({file:first});
   vi.mocked(api.storageUploadReferenceImagePostApiV1FilesReferenceImages).mockResolvedValueOnce(reply({fileId:'replacement-image'}));
   fireEvent.change(screen.getByLabelText('替换参考图 1'),{target:{files:[new File(['new'],'替换.jpg',{type:'image/jpeg'})]}});
-  await waitFor(() => expect(api.mediaPortraitSubmitPostApiV1MediaPortraits).toHaveBeenCalledWith(expect.objectContaining({fileId:'replacement-image'}),expect.anything()));
+  await waitFor(() => expect(api.storageCreateAccessUrlGetApiV1FilesFileIdAccessUrl).toHaveBeenCalledWith('replacement-image'));
   await waitFor(() => expect(screen.getByRole('button',{name:'移除参考图 1'})).toBeEnabled());
   fireEvent.click(screen.getByRole('button',{name:'开始创作'}));
-  expect(onSubmit.mock.calls.at(-1)?.[3]?.[0]).toMatchObject({fileId:'replacement-image',reviewStatus:'ACTIVE'});
+  expect(onSubmit.mock.calls.at(-1)?.[3]?.[0]).toMatchObject({fileId:'replacement-image'});
+  expect(api.mediaPortraitSubmitPostApiV1MediaPortraits).not.toHaveBeenCalled();
+  expect(api.mediaPortraitListGetApiV1MediaPortraits).not.toHaveBeenCalled();
+  expect(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole('button',{name:'移除参考图 1'}));
   const count=onSubmit.mock.calls.length;
   fireEvent.click(screen.getByRole('button',{name:'开始创作'}));
@@ -261,7 +264,7 @@ it('reopens after the file chooser loses focus and keeps upload feedback and ref
   expect(preview).toBeVisible();
   expect(screen.getByRole('button',{name:'添加素材'}).querySelector('.composer-stack-count')).toHaveTextContent('1');
   fireEvent.click(screen.getByRole('button',{name:'开始创作'}));
-  expect(onSubmit.mock.calls.at(-1)?.[3]?.[0]).toMatchObject({fileId:'chooser-image',reviewStatus:'ACTIVE'});
+  expect(onSubmit.mock.calls.at(-1)?.[3]?.[0]).toMatchObject({fileId:'chooser-image'});
 });
 
 it.each(['image','video'] as const)('keeps the %s homepage open while the native file chooser is open and after cancelling it', async kind => {
@@ -348,7 +351,6 @@ it('keeps optional smart-image references but sends no references in text mode',
   fireEvent.change(screen.getByLabelText('上传素材'),{target:{files:[new File(['image'],'可选.png',{type:'image/png'})]}});
   await waitFor(() => expect(screen.getByRole('button',{name:'移除参考图 1'})).toBeEnabled());
   await waitFor(() => expect(screen.getByRole('button',{name:'图片生成模式'})).toBeEnabled());
-  await waitFor(() => expect(screen.getByRole('group',{name:'已添加素材（按提交顺序）'}).querySelector('[data-approved="true"]')).not.toBeNull());
   fireEvent.click(screen.getByRole('button',{name:'图片生成模式'}));
   fireEvent.click(screen.getByRole('menuitemradio',{name:'文生图片'}));
   fireEvent.click(screen.getByRole('button',{name:'开始创作'}));

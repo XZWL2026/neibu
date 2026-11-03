@@ -179,10 +179,14 @@ it('keeps keyboard focus on a visible control after changing the focused slide',
   expect(within(banner).getByRole('button', { name: '第 2 张：让故事，在光影间发生' })).toHaveFocus();
 });
 
-it('dismisses the mention menu before collapsing the home composer', () => {
+it('dismisses the mention menu before collapsing the home composer', async () => {
   home();
   const toggle = screen.getByRole('button', { name: '展开创作区域' });
   fireEvent.click(toggle);
+  await waitFor(() => expect(screen.getByRole('button', { name: '添加素材' })).toBeEnabled());
+  fireEvent.change(within(screen.getByRole('region', { name: '图片生成' })).getByLabelText('上传素材'), { target: { files: [new File(['image'], 'mention.png', { type: 'image/png' })] } });
+  await waitFor(() => expect(screen.getByRole('button', { name: '移除参考图 1' })).toBeEnabled());
+  fireEvent.keyDown(screen.getByRole('button', { name: '添加素材' }), { key: 'Escape' });
   const prompt = screen.getByRole('textbox', { name: '图片提示词' });
   fireEvent.change(prompt, { target: { value: '@', selectionStart: 1 } });
   expect(screen.getByRole('listbox', { name: '引用已上传素材' })).toBeVisible();

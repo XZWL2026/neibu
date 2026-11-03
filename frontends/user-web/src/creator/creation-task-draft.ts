@@ -36,6 +36,11 @@ export async function creationTaskDraft(entry: VideoSubmission) {
     const saved = entry.draft?.materials.find(file => file?.fileId === fileId);
     const kind = ref.kind ?? 'IMAGE';
     const name = saved?.name ?? `${kind === 'VIDEO' ? '视频' : kind === 'AUDIO' ? '音频' : '图片'}${index + 1}`;
+    if (task.type === 'IMAGE') {
+      let preview = '';
+      try { preview = await resolvePreview(fileId); } catch { /* The original file remains usable without a preview. */ }
+      return { fileId, name, kind, preview, sizeBytes: saved?.sizeBytes };
+    }
     const reviewId = ref.portraitId || saved?.reviewId || saved?.portraitId;
     let reviewed: ComposerMaterial;
     if (reviewId) {
@@ -47,7 +52,7 @@ export async function creationTaskDraft(entry: VideoSubmission) {
       try { preview = await resolvePreview(fileId); } catch { /* The stored reference remains usable without a preview. */ }
       reviewed = { fileId, name, kind, preview, reviewId, reviewStatus: 'ACTIVE', reviewPending: false };
     } else {
-      // Image task history may omit the receipt ID; reuse the existing library lookup.
+      // Video history may omit the receipt ID; reuse the existing library lookup.
       const existing = await reviewedLibraryMedia({ id: fileId, canvasFileIds: [fileId], name,
         kind: kind === 'VIDEO' ? 'video' : kind === 'AUDIO' ? 'audio' : 'image', mimeType: '', size: saved?.sizeBytes ?? 0 });
       if (!existing) throw new Error('原素材审核记录不可用');

@@ -37,6 +37,7 @@ export function homeMaterialIssues(kind: 'image' | 'video', mode: HomeGeneration
     if (kind === 'image') {
       if (type !== 'IMAGE') return '图片生成仅支持图片参考';
       if (index >= (model?.maxReferenceImages ?? 0)) return `超出当前模型上限（${model?.maxReferenceImages ?? 0} 张）`;
+      return '';
     } else {
       if (file.portraitId && mode !== 'omni') return '已审核人像仅支持全能参考，请切换模式';
       if (mode === 'frames') {
@@ -81,7 +82,7 @@ export function HomeMaterialPicker({ owner, kind, mode, model, reviewModel, mate
   const capability = homeMaterialCapability(kind, mode, model);
   const issues = homeMaterialIssues(kind, mode, materials, model, reviewModel);
   const count = materials.filter(Boolean).length;
-  const reviewing = materials.some(file => file && materialReviewIssue(file, reviewModel) === '审核中');
+  const reviewing = kind === 'video' && materials.some(file => file && materialReviewIssue(file, reviewModel) === '审核中');
   const frames = kind === 'video' && mode === 'frames';
   const slots = frames ? Array.from({ length: Math.max(2, materials.length) }, (_, index) => ({
     file: materials[index] ?? null, label: index === 0 ? '首帧' : index === 1 ? '尾帧' : typedMaterialLabel(materials, index),
@@ -132,14 +133,14 @@ export function HomeMaterialPicker({ owner, kind, mode, model, reviewModel, mate
         try { preview = URL.createObjectURL(file); localPreviews.current.add(preview); } catch { /* Keep the file and its name when local previews are unavailable. */ }
       }
       const material: ComposerMaterial = { fileId: data.fileId, name: file.name, preview, kind: type, durationSeconds: data.durationSeconds,
-        sizeBytes: data.sizeBytes ?? file.size, reviewPending: true, reviewStatus: 'SUBMITTING' };
+        sizeBytes: data.sizeBytes ?? file.size, ...(kind === 'video' ? { reviewPending: true, reviewStatus: 'SUBMITTING' as const } : {}) };
       write(material, index); return material;
     } catch (cause) { if (isCurrent()) setError(uploadErrorMessage(cause, mode === 'omni')); return false; }
     finally { pending.current = false; if (alive.current) { setUploading(false); onBusyChange(false); } }
   };
   return <div className="ym-home-materials video-composer" data-enabled={enabled}>
-    <ComposerMaterials inline onFeedbackChange={onFeedbackChange} selectionKey={`${kind}:${mode}:${model?.model}`} onQueueBusyChange={onQueueBusyChange} onDialogOpenChange={onDialogOpenChange}
-      review={enabled ? { owner, model: reviewModel, onSelecting: setUploading,
+    <ComposerMaterials inline owner={owner} onSelecting={setUploading} onFeedbackChange={onFeedbackChange} selectionKey={`${kind}:${mode}:${model?.model}`} onQueueBusyChange={onQueueBusyChange} onDialogOpenChange={onDialogOpenChange}
+      review={enabled && kind === 'video' ? { model: reviewModel,
         onReview: (fileId, reviewId, reviewStatus) => onMaterials(current => current.map(file => file?.fileId === fileId ? { ...file, reviewId, reviewStatus, reviewPending: !reviewId } : file)) } : undefined}
       capability={capability} slots={slots} nextIndex={nextIndex} disabled={disabled || !enabled || !model} busy={uploading} error={error}
       hint={enabled && model && capability.maxItems === 0 ? '当前模型不支持素材' : kind === 'image' && mode === 'reference' && !materials.some(Boolean) ? '请添加参考图片' : undefined}

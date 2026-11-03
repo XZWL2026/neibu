@@ -27,7 +27,7 @@ import './video-settings.css';
 import { apiGenerationNotice, useOptionalUserSession } from '../userSession';
 import { generationBalance } from './generation-balance';
 import './image-settings.css';
-import { ComposerMaterials, materialReviewIssue, type ComposerMaterial } from './ComposerMaterials';
+import { ComposerMaterials, type ComposerMaterial } from './ComposerMaterials';
 import { MaterialPrompt, useMaterialMentions } from './MaterialPrompt';
 import { uploadErrorMessage } from './upload-error';
 import { ComposerDialog, ComposerIcon, ComposerModeMenu, sortedResolutions } from './ComposerControls';
@@ -65,7 +65,6 @@ export function ProductionImageComposer({ className = 'floating-composer', testI
   const composing = active && !historyOnly;
   const [models, setModels] = useState<ImageOption[]>([]);
   const [selection, setSelection] = useState<CanvasGenerationSettings | null>(null);
-  const [reviewModel, setReviewModel] = useState('');
   const [catalog, setCatalog] = useState<'loading' | 'ready' | 'failed'>('loading');
   const [catalogError, setCatalogError] = useState('');
   const [refresh, setRefresh] = useState(0);
@@ -116,7 +115,6 @@ export function ProductionImageComposer({ className = 'floating-composer', testI
     setCatalog('loading'); setCatalogError('');
     void mediaOptionsGetApiV1MediaGenerationOptions().then(response => {
       if (cancelled) return;
-      setReviewModel((response.data.models ?? []).find(option => option.type === 'VIDEO' && option.omniReference)?.model ?? '');
       const available = (response.data.models ?? []).filter(usable);
       setModels(available);
       setSelection(current => {
@@ -146,8 +144,8 @@ export function ProductionImageComposer({ className = 'floating-composer', testI
     return () => { cancelled = true; };
   }, [composing, refresh, locked]);
 
-  const fileIssues = files.map((file, index) => mode === 'text' ? '当前模式不使用素材，请切换模式或移除'
-    : model && index >= model.maxReferenceImages ? `超出当前模型上限（${model.maxReferenceImages} 张）` : materialReviewIssue(file, reviewModel));
+  const fileIssues = files.map((_, index) => mode === 'text' ? '当前模式不使用素材，请切换模式或移除'
+    : model && index >= model.maxReferenceImages ? `超出当前模型上限（${model.maxReferenceImages} 张）` : '');
   const mentions = useMaterialMentions(prompt, files, fileIssues, 'IMAGE');
   const inputValid = !mentions.error && !fileIssues.some(Boolean) && (mode !== 'reference' || files.length > 0);
   const references = files.map(file => mediaReference(file.fileId));
@@ -293,7 +291,7 @@ export function ProductionImageComposer({ className = 'floating-composer', testI
       if (!uploaded.fileId || !mediaReference(uploaded.fileId).fileId) throw new Error('上传未返回有效文件 ID');
       let preview = '';
       try { preview = await resolvePreview(uploaded.fileId); } catch { /* Keep the real file ID if preview signing is unavailable. */ }
-      const material: ComposerMaterial = { fileId: uploaded.fileId, name: file.name, preview, reviewPending: true, reviewStatus: 'SUBMITTING' };
+      const material: ComposerMaterial = { fileId: uploaded.fileId, name: file.name, preview, kind: 'IMAGE', sizeBytes: file.size };
       if (isCurrent()) setFiles(current => { const next = [...current]; next[index] = material; return next; });
       return isCurrent() ? material : false;
     } catch (cause) { if (isCurrent()) setUploadError(uploadErrorMessage(cause)); return false; }
@@ -432,7 +430,7 @@ export function ProductionImageComposer({ className = 'floating-composer', testI
     {!historyOnly && <ExpandableComposer resizable={!entryOnly && className === 'floating-composer'} className={`${className} video-composer image-composer`} data-testid={testId} aria-label={t("图片生成")}>
     <form onSubmit={event => void submit(event)}>
       <fieldset disabled={submitting || uncertain} className="video-inputs">
-        <ComposerMaterials key={owner} onQueueBusyChange={setQueueBusy} review={{ owner, model: reviewModel, onSelecting: setUploading, onReview: (fileId, reviewId, reviewStatus) => setFiles(current => current.map(file => file.fileId === fileId ? { ...file, reviewId, reviewStatus, reviewPending: !reviewId } : file)) }} slots={files.map((file, index) => ({ file, label: `参考图 ${index + 1}`, issue: fileIssues[index] }))}
+        <ComposerMaterials key={owner} owner={owner} onSelecting={setUploading} onQueueBusyChange={setQueueBusy} slots={files.map((file, index) => ({ file, label: `参考图 ${index + 1}`, issue: fileIssues[index] }))}
           selectionKey={`${model?.model}:${mode}`}
           capability={{ acceptedKinds: ['image'], acceptedMimeTypes: ['image/png', 'image/jpeg'], acceptedSources: ['upload', 'library'], maxFileBytes: 20 * 1024 * 1024, maxItems: model?.maxReferenceImages ?? 0, verified: Boolean(model) }}
           nextIndex={model && files.length < model.maxReferenceImages ? files.length : -1} disabled={uploadLocked || !model} busy={uploading}

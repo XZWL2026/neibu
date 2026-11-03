@@ -34,6 +34,8 @@ npm exec --workspace @xzwl/partner-web -- vite --host 127.0.0.1 --port 5174
 
 页面仍需配置可访问的 Gateway；启动前端不代表后端和外部服务已经启动。
 
+用户端图片生成（含首页图片入口）的参考素材上传后直接使用原文件，不提交人物素材审核，也不依赖视频审核模型。素材库复用、草稿恢复与历史重新编辑沿用原文件引用；仍校验 PNG/JPEG、单图 20MB 及模型数量上限。视频素材审核流程不变；图片生成供应商自身的内容安全校验仍可能拒绝生成请求。
+
 当前项目的本地正式配置副本（Docker MySQL / Nacos / Redis / Nginx、12 项 Java 服务和前端）见 [本地部署说明](deployment/local/README.md)。可用 `./scripts/local/runtime.ps1` 启动，`-Action Stop` 停止并保留数据。
 
 独立的全容器本地环境见 [neibu Docker 部署说明](deployment/docker/README.md)：运行 `./deployment/docker/run.ps1`，访问 `http://127.0.0.1:18390/`。入口容器名为 `neibu`，使用独立数据库与测试账号，不需要读取生产配置。

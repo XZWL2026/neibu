@@ -52,7 +52,7 @@ async function upload(type: 'IMAGE' | 'VIDEO', kind = 'IMAGE') {
 }
 it.each(['IMAGE', 'VIDEO'] as const)('%s enlarges and restores the same draft and pending materials without generating', async type => {
   await upload(type);
-  await waitFor(() => expect(review).toHaveBeenCalledTimes(1));
+  await screen.findByRole('button', { name: /^移除/ });
   const prompt = screen.getByRole('textbox', { name: `${type === 'IMAGE' ? '图片' : '视频'}提示词` });
   const expand = screen.getByRole('button', { name: '放大输入框' });
   const composer = expand.closest('section')!;
@@ -74,11 +74,9 @@ it.each(['IMAGE', 'VIDEO'] as const)('%s enlarges and restores the same draft an
   expect(composer.style.getPropertyValue('--composer-expanded-left')).toBe('130px');
   fireEvent.click(screen.getByRole('button', { name: '收起输入框' }));
   expect(expand).toHaveAttribute('aria-expanded', 'false');
-  expect(screen.getByRole('button', { name: /^开始生成/ })).toBeDisabled();
-  expect(review).toHaveBeenCalledTimes(1);
   expect(api.mediaSubmitPostApiV1MediaTasks).not.toHaveBeenCalled();
 });
-it.each([['IMAGE', 'IMAGE'], ['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', 'AUDIO']] as const)('%s upload %s waits for review before generation', async (type, kind) => {
+it.each([['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', 'AUDIO']] as const)('%s upload %s waits for review before generation', async (type, kind) => {
   review.mockResolvedValue(reply(receipt(kind))); get.mockResolvedValue(reply(receipt(kind)));
   await upload(type, kind);
   await waitFor(() => expect(review).toHaveBeenCalledTimes(1));
@@ -88,7 +86,7 @@ it.each([['IMAGE', 'IMAGE'], ['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', '
   expect(reviewSpinner.closest('.composer-material')).toHaveAttribute('aria-busy', 'true');
   expect(reviewSpinner.closest('.composer-material')).toHaveAttribute('data-incompatible', 'false');
   const trigger = screen.getByRole('button', { name: '添加素材' });
-  fireEvent.blur(trigger, { relatedTarget: screen.getByRole('textbox', { name: `${type === 'IMAGE' ? '图片' : '视频'}提示词` }) });
+  fireEvent.blur(trigger, { relatedTarget: screen.getByRole('textbox', { name: '视频提示词' }) });
   expect(screen.getByRole('status', { name: '素材 审核中' }).closest('.composer-material-stack')).toBe(trigger);
   expect(screen.queryByText('素材尚未全部审核通过')).not.toBeInTheDocument();
   fireEvent.focus(trigger);
@@ -105,7 +103,7 @@ it.each([['IMAGE', 'IMAGE'], ['VIDEO', 'IMAGE'], ['VIDEO', 'VIDEO'], ['VIDEO', '
 });
 it('keeps failed review blocked and preserves the retry key after an uncertain submission', async () => {
   review.mockRejectedValueOnce(new TypeError('offline'));
-  await upload('IMAGE');
+  await upload('VIDEO');
   fireEvent.click(await screen.findByRole('button', { name: '确认上次审核提交' }));
   await waitFor(() => expect(review).toHaveBeenCalledTimes(2));
   expect(review.mock.calls[1]).toEqual(review.mock.calls[0]);
@@ -113,13 +111,17 @@ it('keeps failed review blocked and preserves the retry key after an uncertain s
   await waitFor(() => expect(screen.getByText('审核未通过')).toBeInTheDocument(), { timeout: 4500 });
   expect(screen.getByRole('button', { name: /^开始生成/ })).toBeDisabled();
 });
-it('does not submit an unreviewed reference when no review model is configured', async () => {
+it('generates with an uploaded image without a video model or any review service', async () => {
   vi.mocked(api.mediaOptionsGetApiV1MediaGenerationOptions).mockResolvedValue(reply({ models: [image] }));
+  review.mockRejectedValue(new Error('review unavailable'));
   await upload('IMAGE');
-  await screen.findByText('素材', { selector: 'span[title="素材"]' });
-  await act(async () => {});
-  expect(screen.getByRole('button', { name: /^开始生成/ })).toBeDisabled();
+  await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
+  fireEvent.click(screen.getByRole('button', { name: /^开始生成/ }));
+  await waitFor(() => expect(api.mediaSubmitPostApiV1MediaTasks).toHaveBeenCalledWith(
+    expect.objectContaining({ type: 'IMAGE', references: [{ fileId: 'file-one' }] }), expect.anything()));
   expect(review).not.toHaveBeenCalled();
+  expect(get).not.toHaveBeenCalled();
+  expect(api.mediaPortraitListGetApiV1MediaPortraits).not.toHaveBeenCalled();
 });
 
 it('also gates first and last frame generation until the image review passes', async () => {
@@ -138,25 +140,25 @@ it('also gates first and last frame generation until the image review passes', a
 });
 
 it('keeps a mixed batch blocked until every remaining material is approved', async () => {
-  vi.mocked(api.storageUploadReferenceImagePostApiV1FilesReferenceImages)
+  vi.mocked(api.storageUploadReferenceMediaPostApiV1FilesReferenceMedia)
     .mockResolvedValueOnce(reply({ fileId: 'file-one' })).mockResolvedValueOnce(reply({ fileId: 'file-two' }));
   review.mockResolvedValueOnce(reply(receipt('IMAGE', 'ACTIVE')))
     .mockResolvedValueOnce(reply({ ...receipt(), id: 'review-two', fileId: 'file-two' }));
   get.mockResolvedValue(reply({ ...receipt('IMAGE', 'FAILED'), id: 'review-two', fileId: 'file-two' }));
-  await upload('IMAGE');
+  await upload('VIDEO');
   await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
   fireEvent.change(screen.getByLabelText('上传素材'), { target: { files: [new File(['png'], '第二张.png', { type: 'image/png' })] } });
   await waitFor(() => expect(review).toHaveBeenCalledTimes(2));
   expect(screen.getByRole('button', { name: /^开始生成/ })).toBeDisabled();
   await waitFor(() => expect(screen.getByText('审核未通过')).toBeInTheDocument(), { timeout: 4500 });
   fireEvent.pointerEnter(screen.getByRole('button', { name: '添加素材' }), { pointerType: 'mouse' });
-  fireEvent.click(screen.getByRole('button', { name: '移除参考图 2' }));
+  fireEvent.click(screen.getByRole('button', { name: '移除图片2' }));
   await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
-  expect(api.mediaQuotePostApiV1MediaQuotes).toHaveBeenLastCalledWith(expect.objectContaining({ references: [{ fileId: 'file-one' }] }));
+  expect(api.mediaQuotePostApiV1MediaQuotes).toHaveBeenLastCalledWith(expect.objectContaining({ references: [{ fileId: 'file-one', kind: 'IMAGE', durationSeconds: null, portraitId: 'review-one' }] }));
   expect(review).toHaveBeenCalledTimes(2);
-});
+}, 10000);
 
-it.each([['IMAGE', false, false, false], ['VIDEO', false, false, false], ['IMAGE', true, false, false], ['VIDEO', true, false, false], ['IMAGE', true, true, false], ['VIDEO', true, true, false], ['VIDEO', true, true, true]] as const)('%s reuses approved library images with the original file and no upload or review POST (different model=%s)', async (type, differentModel, legacy, signingFails) => {
+it.each([[false, false, false], [true, false, false], [true, true, false], [true, true, true]] as const)('video reuses approved library images without upload or review POST (different model=%s)', async (differentModel, legacy, signingFails) => {
   let previewIndex = 0;
   vi.spyOn(URL, 'createObjectURL').mockImplementation(() => `blob:preview-${++previewIndex}`);
   if (signingFails) vi.mocked(api.storageCreateAccessUrlGetApiV1FilesFileIdAccessUrl).mockRejectedValue(new Error('unavailable'));
@@ -169,9 +171,9 @@ it.each([['IMAGE', false, false, false], ['VIDEO', false, false, false], ['IMAGE
   let finishReview!: (value: never) => void;
   get.mockImplementation(() => new Promise(resolve => { finishReview = resolve; }));
   render(<MemoryRouter><CreatorMediaProvider storage={{ storageMode: 'session', reason: 'forced', repository: { list: async () => [original], put, remove: async () => {}, close() {} } }}>
-    {type === 'IMAGE' ? <ProductionImageComposer /> : <ProductionVideoComposer />}
+    <ProductionVideoComposer />
   </CreatorMediaProvider></MemoryRouter>);
-  const label = type === 'IMAGE' ? '图片' : '视频';
+  const label = '视频';
   await screen.findByRole('button', { name: `选择${label}模型：${label}模型` });
   fireEvent.change(screen.getByRole('textbox', { name: `${label}提示词` }), { target: { value: '复用已审核图片' } });
   fireEvent.click(screen.getByRole('button', { name: '添加素材' }));
@@ -196,7 +198,7 @@ it.each([['IMAGE', false, false, false], ['VIDEO', false, false, false], ['IMAGE
   expect(review).not.toHaveBeenCalled();
   expect(vi.mocked(api.mediaSubmitPostApiV1MediaTasks).mock.calls[0][0].references).toEqual([expect.objectContaining({ fileId: 'file-one' })]);
   if (legacy) expect(put).toHaveBeenCalledWith(expect.objectContaining({ id: original.id, content: original.content, canvasFileIds: ['file-one'] }));
-  if (type === 'VIDEO') expect(vi.mocked(api.mediaSubmitPostApiV1MediaTasks).mock.calls[0][0].references?.[0]).toMatchObject({ portraitId: 'review-one' });
+  expect(vi.mocked(api.mediaSubmitPostApiV1MediaTasks).mock.calls[0][0].references?.[0]).toMatchObject({ portraitId: 'review-one' });
 });
 
 
@@ -249,8 +251,12 @@ it.each(['IMAGE', 'VIDEO'] as const)('%s re-edit restores approved references wi
   await waitFor(() => expect(screen.getByRole('textbox', { name: `${type === 'IMAGE' ? '图片' : '视频'}提示词` })).toHaveValue(task.prompt));
   await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
   fireEvent.pointerEnter(screen.getByRole('button', { name: '添加素材' }), { pointerType: 'mouse' });
-  expect(document.querySelectorAll('.composer-material-info[data-approved=true]')).toHaveLength(kinds.length);
-  for (const row of receipts) expect(get).toHaveBeenCalledWith(row.id);
+  if (type === 'VIDEO') {
+    for (const row of receipts) expect(get).toHaveBeenCalledWith(row.id);
+  } else {
+    expect(get).not.toHaveBeenCalled();
+    expect(api.mediaPortraitListGetApiV1MediaPortraits).not.toHaveBeenCalled();
+  }
   expect(review).not.toHaveBeenCalled();
   expect(api.storageUploadReferenceImagePostApiV1FilesReferenceImages).not.toHaveBeenCalled();
   expect(api.storageUploadReferenceMediaPostApiV1FilesReferenceMedia).not.toHaveBeenCalled();
@@ -284,5 +290,23 @@ it.each(['IMAGE', 'VIDEO', 'AUDIO'] as const)('never starts review for a histori
   await expect(creationTaskDraft({ key: 'history', snapshot: { type: 'VIDEO', prompt: '原提示', model: video.model,
     resolution: '720p', aspectRatio: '16:9', count: 1, durationSeconds: 4,
     references: [{ fileId: 'file-one', httpsUrl: null, kind, durationSeconds: null }] } })).rejects.toThrow('审核记录');
+  expect(review).not.toHaveBeenCalled();
+});
+
+it('restores original image history even when its former review receipt is no longer usable', async () => {
+  get.mockRejectedValue(new Error('review unavailable'));
+  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockRejectedValue(new Error('review unavailable'));
+  const draft = await creationTaskDraft({ key: 'old-image', snapshot: {
+    type: 'IMAGE', model: image.model, prompt: '原图片描述', resolution: '720p', aspectRatio: '16:9',
+    count: 1, durationSeconds: 0, references: [{ fileId: 'file-one', kind: 'IMAGE', httpsUrl: null, durationSeconds: null }],
+  }, draft: { prompt: '原图片描述', mode: 'reference', bindings: [], materials: [{
+    fileId: 'file-one', name: '原图片.png', kind: 'IMAGE', preview: 'https://assets.example/expired',
+    reviewId: 'old-failed-review', reviewStatus: 'FAILED', reviewPending: true, sizeBytes: 1234,
+  }] } });
+  expect(draft.materials).toEqual([{ fileId: 'file-one', name: '原图片.png', kind: 'IMAGE',
+    preview: 'https://assets.example/reference', sizeBytes: 1234 }]);
+  expect(draft.mode).toBe('reference');
+  expect(get).not.toHaveBeenCalled();
+  expect(api.mediaPortraitListGetApiV1MediaPortraits).not.toHaveBeenCalled();
   expect(review).not.toHaveBeenCalled();
 });

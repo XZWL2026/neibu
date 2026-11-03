@@ -191,7 +191,7 @@ it.each(['model', 'capacity'] as const)('stops remaining uploads if the %s chang
   const upload = vi.fn().mockImplementation(() => new Promise<boolean>(resolve => { finish = resolve; }));
   const capability = { acceptedKinds: ['image'] as const, acceptedMimeTypes: ['image/png'], acceptedSources: ['library'] as const, maxFileBytes: 100, maxItems: 2, verified: true };
   const mount = (changed = false) => <CreatorMediaProvider publicMedia={media}><ComposerMaterials
-    review={{owner: 'user-1', model: 'video', onSelecting, onReview: vi.fn()}}
+    owner="user-1" onSelecting={onSelecting} review={{model: 'video', onReview: vi.fn()}}
     selectionKey={changed && change === 'model' ? 'next-model:frames' : 'original-model:omni'} capability={{ ...capability, maxItems: changed && change === 'capacity' ? 1 : 2 }}
     slots={[]} nextIndex={0} disabled={false} busy={false} onUpload={upload} onRemove={() => {}}>提示词</ComposerMaterials></CreatorMediaProvider>;
   const view = render(mount());

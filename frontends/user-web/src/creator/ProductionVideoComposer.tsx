@@ -614,7 +614,7 @@ export function ProductionVideoComposer({ className = 'floating-composer', testI
       <div className={commerce ? "commerce-video-generation" : undefined}>
       {commerce && <h2>{t(commerceTool === "video-replica" ? "参考视频与商品素材" : "商品素材与视频脚本")}</h2>}
       <fieldset disabled={submitting || uncertain || analyzing} className="video-inputs">
-        <ComposerMaterials key={owner} onQueueBusyChange={setQueueBusy} sourceVideos={commerceTool === 'video-replica'} review={{ owner, model: needsReplicaClip ? '' : reviewModel, onSelecting: setUploading, onReview: (fileId, reviewId, reviewStatus) => setFrames(current => current.map(file => file?.fileId === fileId ? { ...file, reviewId, reviewStatus, reviewPending: !reviewId } : file)) }}
+        <ComposerMaterials key={owner} owner={owner} onSelecting={setUploading} onQueueBusyChange={setQueueBusy} sourceVideos={commerceTool === 'video-replica'} review={{ model: needsReplicaClip ? '' : reviewModel, onReview: (fileId, reviewId, reviewStatus) => setFrames(current => current.map(file => file?.fileId === fileId ? { ...file, reviewId, reviewStatus, reviewPending: !reviewId } : file)) }}
           selectionKey={`${model?.model}:${mode}`}
           capability={mode === 'omni' ? { acceptedKinds: ['image', 'video', 'audio'], acceptedMimeTypes: ['image/png', 'image/jpeg', 'video/mp4', 'video/quicktime', 'audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/wave'], acceptedSources: ['upload', 'library'], maxFileBytes: 20 * 1024 * 1024, maxItems: omni?.maxTotal ?? 0,
             maxItemsByKind: { image: omni?.maxImages ?? 0, video: omni?.maxVideos ?? 0, audio: omni?.maxAudios ?? 0 }, maxFileBytesByKind: { video: omni?.maxVideoBytes ?? 0, audio: omni?.maxAudioBytes ?? 0 }, verified: Boolean(omni) }

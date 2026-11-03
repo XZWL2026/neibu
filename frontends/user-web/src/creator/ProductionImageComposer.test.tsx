@@ -1,3 +1,4 @@
+/// <reference lib="esnext.promise" />
 import { readPromptInput, editPromptInput } from './mention-test-helpers';
 import '@testing-library/jest-dom/vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -365,12 +366,13 @@ it.each(['wrong-type', 'too-large', 'base64-id'])('rejects %s uploads without su
 
 
 
-it('restores the material library and reuses approved original files through quote APIs without another upload', async () => {
+it('reuses original library images without depending on review receipts or another upload', async () => {
+  vi.spyOn(userSession, 'useOptionalUserSession').mockReturnValue({ userId: 'owner', authenticated: true, status: 'ready',
+    accountType: 'PERSONAL', currentKey: { enabled: true, kind: '媒体 Key', relationship: 'Owner' }, availablePoints4: '100.0000' } as never);
   const content = new File(['local-picture'], '素材库图片.png', { type: 'image/png' });
-  const records = [{ id: 'uploaded-file', name: content.name, kind: 'image' as const, mimeType: content.type, size: content.size, content }];
-  const reviewed = { id: 'existing-review', fileId: 'uploaded-file', model: 'review-model', kind: 'IMAGE', status: 'ACTIVE' };
-  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockResolvedValue(reply([reviewed]));
-  vi.mocked(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).mockResolvedValue(reply(reviewed));
+  const records = [{ id: 'local-library-id', ownerId: 'owner', canvasFileIds: ['uploaded-file'], name: content.name, kind: 'image' as const, mimeType: content.type, size: content.size, content }];
+  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockRejectedValue(new Error('review unavailable'));
+  vi.mocked(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).mockRejectedValue(new Error('review unavailable'));
   render(<MemoryRouter><CreatorMediaProvider storage={{ storageMode: 'session', reason: 'forced', repository: {
     list: async () => records, put: async () => {}, remove: async () => {}, close: () => {},
   } }} objectUrls={{ create: () => 'blob:library-preview', revoke: () => {} }}><ProductionImageComposer /></CreatorMediaProvider></MemoryRouter>);
@@ -385,6 +387,8 @@ it('restores the material library and reuses approved original files through quo
   await waitFor(() => expect(quote).toHaveBeenLastCalledWith(expect.objectContaining({ references: [{ fileId: 'uploaded-file' }] })));
   expect(api.storageUploadReferenceImagePostApiV1FilesReferenceImages).not.toHaveBeenCalled();
   expect(api.mediaPortraitSubmitPostApiV1MediaPortraits).not.toHaveBeenCalled();
+  expect(api.mediaPortraitListGetApiV1MediaPortraits).not.toHaveBeenCalled();
+  expect(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).not.toHaveBeenCalled();
   fireEvent.change(screen.getByRole('textbox', { name: '图片提示词' }), { target: { value: '使用素材库图片生成' } });
   await waitFor(() => expect(screen.getByRole('button', { name: /^开始生成/ })).toBeEnabled());
   fireEvent.click(screen.getByRole('button', { name: /^开始生成/ }));
@@ -694,15 +698,13 @@ it('unlocks an unsent home handoff after storage failure and handles a corrected
 it('uses the image model capacity for library multi-select and appends all selected references in order', async () => {
   options.mockResolvedValue(reply({ models: [{ ...image, maxReferenceImages: 3 }, reviewOption] }));
   const upload = vi.mocked(api.storageUploadReferenceImagePostApiV1FilesReferenceImages);
-  let finishFirst!: () => void;
-  upload.mockImplementation(async ({ file }) => reply({ fileId: (file as File).name.replace('.png', '') }));
-  const media = ['one', 'two', 'three'].map(id => ({ id, name: `${id}.png`, kind: 'image' as const, mimeType: 'image/png', size: 3, content: new Blob(['png']) }));
-  const receipts = media.map(item => ({ id: `review-${item.id}`, fileId: item.id, model: reviewOption.model, kind: 'IMAGE', status: 'ACTIVE' }));
-  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockResolvedValue(reply(receipts));
-  vi.mocked(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).mockImplementation(async id => {
-    if (id === 'review-two') await new Promise<void>(resolve => { finishFirst = resolve; });
-    return reply(receipts.find(row => row.id === id));
+  const firstUpload = Promise.withResolvers<void>();
+  let firstUploadPending = false;
+  upload.mockImplementation(async ({ file }) => {
+    if ((file as File).name === 'two.png') { firstUploadPending = true; await firstUpload.promise; }
+    return reply({ fileId: (file as File).name.replace('.png', '') });
   });
+  const media = ['one', 'two', 'three'].map(id => ({ id, name: `${id}.png`, kind: 'image' as const, mimeType: 'image/png', size: 3, content: new Blob(['png']) }));
   render(<MemoryRouter><CreatorMediaProvider publicMedia={media}><ProductionImageComposer /></CreatorMediaProvider></MemoryRouter>);
   await waitFor(() => expect(screen.getByRole('button', { name: '添加素材' })).toBeEnabled());
   fireEvent.change(screen.getByLabelText('上传素材'), { target: { files: [new File(['png'], 'existing.png', { type: 'image/png' })] } });
@@ -712,21 +714,20 @@ it('uses the image model capacity for library multi-select and appends all selec
   fireEvent.click(screen.getByRole('option', { name: 'two.png' })); fireEvent.click(screen.getByRole('option', { name: 'one.png' })); fireEvent.click(screen.getByRole('option', { name: 'three.png' }));
   expect(screen.getByText('已选：2')).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: '确定' }));
-  await waitFor(() => expect(finishFirst).toBeDefined());
+  await waitFor(() => expect(firstUploadPending).toBe(true));
   expect(screen.getByRole('button', { name: '图片生成模式' })).toBeDisabled();
   expect(screen.getByRole('button', { name: '选择图片模型：服务端图片模型' })).toBeDisabled();
   expect(screen.getByRole('button', { name: /^开始生成/ })).toBeDisabled();
-  finishFirst();
-  expect(upload).toHaveBeenCalledTimes(1);
+  firstUpload.resolve();
+  await waitFor(() => expect(upload).toHaveBeenCalledTimes(3));
   await waitFor(() => expect(quote).toHaveBeenLastCalledWith(expect.objectContaining({ references: [{ fileId: 'existing' }, { fileId: 'two' }, { fileId: 'one' }] })));
   expect(screen.queryByRole('dialog', { name: '素材库' })).not.toBeInTheDocument();
   expect(submit).not.toHaveBeenCalled();
 });
 
 it('refills an image history task and requotes without submitting until the user generates', async () => {
-  const receipt = { id: 'original-review', fileId: 'original-image', model: 'review-model', kind: 'IMAGE', status: 'ACTIVE' };
-  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockResolvedValue(reply([receipt]));
-  vi.mocked(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).mockResolvedValue(reply(receipt));
+  vi.mocked(api.mediaPortraitListGetApiV1MediaPortraits).mockRejectedValue(new Error('review unavailable'));
+  vi.mocked(api.mediaPortraitGetGetApiV1MediaPortraitsPortraitId).mockRejectedValue(new Error('review unavailable'));
   const saved = { id: 'edit-image', type: 'IMAGE', status: 'SUCCEEDED', prompt: '回填的原图片提示词', model: image.model, resolution: image.resolutions[0], aspectRatio: '1:1', count: 2, durationSeconds: 0, references: [{ fileId: 'original-image', kind: 'IMAGE' }], results: [{ index: 0, fileId: 'output' }] };
   vi.mocked(api.mediaListGetApiV1MediaTasks).mockResolvedValue(reply([saved])); task.mockResolvedValue(reply(saved));
   const router = createMemoryRouter(userRoutes, { initialEntries: ['/create/image?tab=history'] });

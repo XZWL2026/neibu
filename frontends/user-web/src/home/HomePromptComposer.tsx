@@ -94,7 +94,7 @@ export function HomePromptComposer({ inputRef, prompt, kind, modelName, error, c
     const draft = current.owner === owner ? current : { owner, image: [], video: [null, null] };
     return { ...draft, [kind]: typeof value === 'function' ? value(draft[kind]) : value };
   }), [owner, kind]);
-  const reviewModel = kind === 'video' && mode === 'omni' && model?.omniReference ? model.model : options.find(option => option.type === 'VIDEO' && option.omniReference)?.model ?? '';
+  const reviewModel = kind === 'image' ? '' : mode === 'omni' && model?.omniReference ? model.model : options.find(option => option.type === 'VIDEO' && option.omniReference)?.model ?? '';
   const materialIssues = homeMaterialIssues(kind, mode, materials, model, reviewModel);
   const materialIssue = materialIssues.find(Boolean) || (mode === 'reference' && !materials.some(Boolean) ? '请添加参考图片'
     : mode === 'frames' && !materials[0] ? '请先添加首帧' : mode === 'omni' && !materials.some(Boolean) ? '请添加参考素材' : '');

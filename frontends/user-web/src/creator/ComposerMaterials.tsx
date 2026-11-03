@@ -27,7 +27,9 @@ type Props = {
   inline?: boolean;
   onFeedbackChange?(hasFeedback: boolean): void;
   sourceVideos?: boolean;
-  review?: { owner: string | null; model: string; onSelecting?(busy: boolean): void; onReview(fileId: string, reviewId: string | undefined, status: ComposerMaterial['reviewStatus']): void };
+  owner?: string | null;
+  onSelecting?(busy: boolean): void;
+  review?: { model: string; onReview(fileId: string, reviewId: string | undefined, status: ComposerMaterial['reviewStatus']): void };
   selectionKey?: string;
   capability?: MediaInputCapability; slots: Slot[]; nextIndex: number; disabled: boolean; busy: boolean; hint?: string; error?: string;
   onQueueBusyChange?(busy: boolean): void;
@@ -46,7 +48,7 @@ export function ComposerMaterials(props: Props) {
   return media ? <MaterialPicker {...props} /> : <CreatorMediaProvider><MaterialPicker {...props} /></CreatorMediaProvider>;
 }
 
-function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos = false, selectionKey, capability = imageCapability, slots, nextIndex, disabled, busy: uploading, hint, error, onUpload, onReuse, onRemove, onQueueBusyChange, onDialogOpenChange, children }: Props) {
+function MaterialPicker({ owner, onSelecting, review, inline = false, onFeedbackChange, sourceVideos = false, selectionKey, capability = imageCapability, slots, nextIndex, disabled, busy: uploading, hint, error, onUpload, onReuse, onRemove, onQueueBusyChange, onDialogOpenChange, children }: Props) {
   useLanguage();
   const { personalMedia, publicMedia, importMedia } = useCreatorMedia();
   const input = useRef<HTMLInputElement>(null);
@@ -75,10 +77,10 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
     noticeTimer.current = setTimeout(() => setLimitNotice(''), 5000);
   };
   useEffect(() => () => clearTimeout(noticeTimer.current), []);
-  const selectionContext = JSON.stringify([review?.owner, selectionKey, capability]);
+  const selectionContext = JSON.stringify([owner, selectionKey, capability]);
   const latestContext = useRef(selectionContext); latestContext.current = selectionContext;
   const queueContext = useRef(selectionContext);
-  const queueIdentity = JSON.stringify([review?.owner, selectionKey]);
+  const queueIdentity = JSON.stringify([owner, selectionKey]);
   const previousQueueIdentity = useRef(queueIdentity);
   const panelId = useId();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -186,7 +188,7 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
       if (!alive.current || latestContext.current !== selectionContext) return false;
       if (accepted && !fromLibrary) {
         try {
-          await importMedia({ id: typeof accepted === 'object' ? accepted.fileId : randomUUID(), ...(typeof accepted === 'object' ? { canvasFileIds: [accepted.fileId], ownerId: review?.owner } : {}), kind: file.type.startsWith('video/') ? 'video' : file.type.startsWith('audio/') ? 'audio' : 'image', name: file.name,
+          await importMedia({ id: typeof accepted === 'object' ? accepted.fileId : randomUUID(), ...(typeof accepted === 'object' ? { canvasFileIds: [accepted.fileId], ownerId: owner } : {}), kind: file.type.startsWith('video/') ? 'video' : file.type.startsWith('audio/') ? 'audio' : 'image', name: file.name,
             mimeType: file.type, size: file.size, content: file });
         } catch { setLibraryError('素材已上传，但未保存到个人素材库'); }
       }
@@ -227,8 +229,8 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
   const chooseFromLibrary = async (ids: readonly string[]) => {
     if (!ids.length || libraryIndex === null || blocked || busy || batchPending.current) return;
     const selected = ids.map(id => [...personalMedia, ...publicMedia].find(item => item.id === id));
-    if (selected.some(media => !media || (media.ownerId !== undefined && media.ownerId !== review?.owner) || (!onReuse && !media.content))) { setLibraryError('此素材的本地文件不可用，请重新上传'); return; }
-    batchPending.current = true; setBatchBusy(true); setLibraryError(''); review?.onSelecting?.(true);
+    if (selected.some(media => !media || (media.ownerId !== undefined && media.ownerId !== owner) || (!onReuse && !media.content))) { setLibraryError('此素材的本地文件不可用，请重新上传'); return; }
+    batchPending.current = true; setBatchBusy(true); setLibraryError(''); onSelecting?.(true);
     let index = libraryIndex;
     try {
       for (const media of selected) {
@@ -242,12 +244,14 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
         const existing: ComposerMaterial | null = sourceFileId ? { fileId: sourceFileId, sourceFileId, name: media!.name,
           preview: media!.previewUrl ?? '', kind: 'VIDEO', sizeBytes: media!.size }
           : sourceVideos && media!.kind === 'video' && media!.content ? null
-          : review && onReuse ? await reviewedLibraryMedia(media!) : null;
+          : review && onReuse ? await reviewedLibraryMedia(media!)
+          : onReuse && media!.canvasFileIds?.[0] ? { fileId: media!.canvasFileIds[0], name: media!.name,
+            preview: media!.previewUrl ?? '', kind: media!.kind === 'video' ? 'VIDEO' : media!.kind === 'audio' ? 'AUDIO' : 'IMAGE', sizeBytes: media!.size } : null;
         if (!alive.current || latestContext.current !== selectionContext) break;
         if (!existing && !media!.content) throw new Error('此素材的本地文件不可用，请重新上传');
         if (existing && media!.origin !== 'public' && media!.id !== existing.fileId && !media!.canvasFileIds?.includes(existing.fileId)
           && alive.current && latestContext.current === selectionContext) {
-          const saved = await importMedia({ ...media!, ownerId: review!.owner, canvasFileIds: [...(media!.canvasFileIds ?? []), existing.fileId] });
+          const saved = await importMedia({ ...media!, ownerId: owner, canvasFileIds: [...(media!.canvasFileIds ?? []), existing.fileId] });
           if (saved && existing.preview === media!.previewUrl) existing.preview = saved.previewUrl ?? '';
         }
         if (!alive.current || latestContext.current !== selectionContext) break;
@@ -268,7 +272,7 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
       batchPending.current = false;
       if (alive.current) {
         setBatchBusy(false);
-        review?.onSelecting?.(false);
+        onSelecting?.(false);
       }
     }
   };
@@ -325,7 +329,7 @@ function MaterialPicker({ review, inline = false, onFeedbackChange, sourceVideos
       </div>
       {children}
     </div>
-    {review && files.length > 0 && review.model && <PortraitLibraryDialog key={`${review.owner}:${review.model}`} owner={review.owner} model={review.model} visible={false} disabled={disabled}
+    {review && files.length > 0 && review.model && <PortraitLibraryDialog key={`${owner}:${review.model}`} owner={owner ?? null} model={review.model} visible={false} disabled={disabled}
       initialMaterial={files.find(file => !file.reviewId && !file.portraitId && (!file.reviewStatus || file.reviewStatus === 'SUBMITTING'))}
       canvas={{ materials: files.map(file => ({ ...file, reviewId: file.reviewId ?? file.portraitId })), onUploaded: () => {}, onReview: review.onReview }} onClose={() => {}} onPick={() => {}} />}
     {slots.some(slot => slot.issue && slot.issue !== '审核中' && slot.file) && !expanded && <p className="composer-upload-error" role="alert">{t(review && files.some(file => file.reviewStatus !== 'ACTIVE') ? '素材尚未全部审核通过' : '素材与当前设置不兼容，请展开素材处理。')}</p>}
