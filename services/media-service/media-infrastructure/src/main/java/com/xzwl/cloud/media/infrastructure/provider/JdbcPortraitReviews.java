@@ -21,6 +21,7 @@ public final class JdbcPortraitReviews implements PortraitReviews {
   private final StoragePort storage;
   private final VolcanoAssetClient client;
   private final MaasMediaAdapter maas;
+  private final LetsLlmAssets letsLlm;
   private final Clock clock;
   private final Map<String,String> env;
   private final Map<String,String> projectNames;
@@ -45,6 +46,7 @@ public final class JdbcPortraitReviews implements PortraitReviews {
     } catch(Exception invalid) { throw new IllegalArgumentException("invalid media asset project bindings"); }
     this.projectNames=Map.copyOf(projects);
     this.maas=new MaasMediaAdapter(http);
+    this.letsLlm=new LetsLlmAssets(http);
     this.transactions=new org.springframework.transaction.support.TransactionTemplate(new org.springframework.jdbc.datasource.DataSourceTransactionManager(Objects.requireNonNull(jdbc.getDataSource())));
     // A competing unique insert must be visible when replaying its winner, including on MySQL's default RR.
     this.transactions.setIsolationLevel(org.springframework.transaction.TransactionDefinition.ISOLATION_READ_COMMITTED);
@@ -99,7 +101,9 @@ public final class JdbcPortraitReviews implements PortraitReviews {
     return project(row);
   }
   @Override public Portrait get(String owner,String id) {
-    Row row=owned(owner,id);
+    Row original=owned(owner,id);
+    Row row=visibleRow(original,currentModels());
+    if(row==null) return missingChannel(original);
     if(row.status.equals("PROCESSING") || row.status.equals("ACTIVE")) {
       try {
         Snapshot config=snapshot(row);
@@ -107,21 +111,49 @@ public final class JdbcPortraitReviews implements PortraitReviews {
         else terminal(row,"FAILED");
       } catch(DefinitiveRejectionException rejected) { terminal(row,"FAILED"); }
       catch(RuntimeException unavailable) {
-        return new Portrait(row.id,row.file,row.model,"PROCESSING","审核状态暂时不可用，请稍后重试",row.kind,row.durationSeconds);
+        return new Portrait(original.id,original.file,original.model,"PROCESSING","审核状态暂时不可用，请稍后重试",original.kind,original.durationSeconds);
       }
     }
-    return currentProjection(owned(owner,id));
+    return currentProjection(owned(owner,id),currentModels());
   }
   @Override public List<Portrait> list(String owner,int limit,String beforeId) {
     MediaReference.identifier(owner,"ownerId");
     if(limit<1 || limit>100) throw new IllegalArgumentException("limit must be 1..100");
+    var models=currentModels();
     if(beforeId==null) return jdbc.query("SELECT * FROM media_portrait WHERE owner_hash=? ORDER BY created_at DESC,id DESC LIMIT ?",
-        this::row,ownerHash(owner),limit).stream().map(this::currentProjection).toList();
+        this::row,ownerHash(owner),limit).stream().map(row->currentProjection(row,models)).toList();
     Row before=owned(owner,beforeId);
     return jdbc.query("SELECT * FROM media_portrait WHERE owner_hash=? AND (created_at<? OR (created_at=? AND id<?)) ORDER BY created_at DESC,id DESC LIMIT ?",
-        this::row,ownerHash(owner),before.created,before.created,before.id,limit).stream().map(this::currentProjection).toList();
+        this::row,ownerHash(owner),before.created,before.created,before.id,limit).stream().map(row->currentProjection(row,models)).toList();
   }
-  private Portrait currentProjection(Row row) {
+  private Map<String,RoutingPort.Model> currentModels() {
+    var result=new HashMap<String,RoutingPort.Model>();
+    for(var model:routing.models()) result.put(model.modelId(),model);
+    return result;
+  }
+  private Row visibleRow(Row row,Map<String,RoutingPort.Model> models) {
+    var model=models.get(row.model);
+    if(model==null || model.providerId()==null || model.providerId().isBlank()) return row;
+    var connection=connections.load(model.providerId());
+    if(!LetsLlmModels.matches(connection.baseUrl())) return row;
+    return channelRow(row,snapshot(connection,model.providerModel()));
+  }
+  private Row channelRow(Row row,Snapshot config) {
+    if(matches(row,config)) return row;
+    if(!LetsLlmModels.matches(config.endpoint)) return null;
+    return jdbc.query("SELECT * FROM media_portrait WHERE owner_hash=? AND file_id=? AND model=? AND provider_id=? AND generation_identity=? AND asset_identity=? AND project_name=? AND kind=? ORDER BY created_at DESC,id DESC LIMIT 1",
+        this::row,ownerHash(row.owner),row.file,row.model,config.provider,config.generationIdentity,config.assetIdentity,config.project,row.kind.name()).stream().findFirst().orElse(null);
+  }
+  private Portrait missingChannel(Row row) {
+    return new Portrait(row.id,row.file,row.model,"FAILED","素材尚未同步到当前渠道，请重新上传审核",row.kind,row.durationSeconds);
+  }
+  private Portrait currentProjection(Row original,Map<String,RoutingPort.Model> models) {
+    Row row=visibleRow(original,models);
+    if(row==null) return missingChannel(original);
+    var projected=projection(row);
+    return new Portrait(original.id,original.file,original.model,projected.status(),projected.errorMessage(),original.kind,original.durationSeconds);
+  }
+  private Portrait projection(Row row) {
     if(!row.status.equals("ACTIVE")) return project(row);
     try { if(matches(row,snapshot(row))) return project(row); }
     catch(RuntimeException unavailable) { /* Only the sanitized availability state crosses the public boundary. */ }
@@ -139,7 +171,10 @@ public final class JdbcPortraitReviews implements PortraitReviews {
       Row row;
       try { row=owned(owner,ref.portraitId()); }
       catch(TaskNotFoundException missing) { throw new DefinitiveRejectionException("PORTRAIT_NOT_AVAILABLE"); }
-      if(!row.file.equals(ref.fileId()) || row.kind!=ref.kind() || !row.status.equals("ACTIVE") || !matches(row,config))
+      if(!row.file.equals(ref.fileId()) || row.kind!=ref.kind())
+        throw new DefinitiveRejectionException("PORTRAIT_NOT_AVAILABLE");
+      row=channelRow(row,config);
+      if(row==null || !row.status.equals("ACTIVE") || !matches(row,config))
         throw new DefinitiveRejectionException("PORTRAIT_NOT_AVAILABLE");
       requireActive(row,config);
       assets.add(new Asset(i,row.id,row.file,row.assetId,row.provider,config.providerModel,row.generationIdentity,row.assetIdentity,row.project,row.kind));
@@ -289,6 +324,7 @@ public final class JdbcPortraitReviews implements PortraitReviews {
   }
   private Snapshot snapshot(Row row) { return snapshot(connections.load(row.provider),row.providerModel); }
   private com.fasterxml.jackson.databind.JsonNode assetCall(Snapshot config,String action,Map<String,String> payload) {
+    if(LetsLlmModels.matches(config.endpoint)) return letsLlm.call(config.endpoint,config.access,action,payload);
     return MaasMediaAdapter.matches(config.endpoint) ? maas.asset(config.endpoint,config.access,config.providerModel,action,payload)
         : client.call(config.endpoint,config.access,config.secret,action,payload);
   }
@@ -296,6 +332,15 @@ public final class JdbcPortraitReviews implements PortraitReviews {
     String provider=connection.providerId(), access=value("MEDIA_ASSET_ACCESS_KEY_ID"), secret=value("MEDIA_ASSET_SECRET_ACCESS_KEY"),
         project=projectNames.getOrDefault(provider,value("MEDIA_ASSET_PROJECT_NAME"));
     if(OmniReference.forModel(providerModel)==null) throw new DefinitiveRejectionException("PORTRAIT_MODEL_UNSUPPORTED");
+    if(LetsLlmModels.matches(connection.baseUrl())) {
+      if(connection.apiKey().isBlank()) throw ProviderSettings.unavailable();
+      project=projectNames.getOrDefault(provider,"default");
+      MediaReference.identifier(project,"projectName");
+      String endpoint=ProviderSettings.arkEndpoint(connection.baseUrl()).toString();
+      return new Snapshot(provider,providerModel,project,endpoint,connection.apiKey(),"",
+          VolcanoAssetClient.identity(provider,endpoint,connection.apiKey()),
+          VolcanoAssetClient.identity(endpoint,connection.apiKey(),project));
+    }
     if(MaasMediaAdapter.matches(connection.baseUrl())) {
       if(connection.apiKey().isBlank() || !MaasMediaAdapter.supports(providerModel)) throw ProviderSettings.unavailable();
       String endpoint=ProviderSettings.arkEndpoint(connection.baseUrl()).toString();

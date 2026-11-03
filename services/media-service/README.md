@@ -220,6 +220,20 @@ Routing token 可查询模型目录和执行任务路由，不能配置 Provider
 TOS region、endpoint、私有 bucket、Access Key ID/Secret 和结果下载域名白名单。
 缺少方舟配置时，任务不会进入扣费阶段；增强目标缺少 MPS 配置时也不会扣费。
 
+## LetsLLM 接入
+
+LetsLLM 使用 `https://api.letsllm.com/api/v3`。后台供应商连接中保存对应的 API Key，
+Routing 的模型供应商标识须与该连接一致；部署环境的 `MEDIA_PROVIDER_ALLOWED_HOSTS`
+需要包含 `api.letsllm.com`，以便后台保存和更新连接。
+
+路由与参考素材校验保留已适配的版本标识，例如 `doubao-seedance-2-5-260628`；
+仅发送到 LetsLLM 的生成请求会转换为供应商别名 `doubao-seedance-2-5`。
+模型目录和连接验证读取该供应商的 `/v1/models`，不会创建生成任务。
+
+已审核素材绑定供应商和凭据身份，切换供应商后须先导入、审核到新渠道。
+旧素材记录和历史任务绑定保留；新渠道的审核完成后，原素材 ID 可解析到相同文件、
+模型、所有者和类型对应的新渠道记录。更换 Key 后重新核验素材，不能复用另一凭据下的资产。
+
 ## 方舟与腾讯 MPS 生产 Adapter
 
 仅复用供应商协议；公开请求仍是本页的新系统 TaskRequest。支持 Seedream 同步单图/组图、

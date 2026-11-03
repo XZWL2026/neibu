@@ -46,7 +46,8 @@ public final class ArkMediaAdapter {
       var endpoint=ProviderSettings.arkEndpoint(plan.arkBase());
       boolean official=endpoint.getScheme().equals("https") && endpoint.getHost().equals("ark.cn-beijing.volces.com")
           && endpoint.getPort()==-1 && endpoint.getPath().equals("/api/v3") && OmniReference.forModel(plan.model())!=null;
-      if(!(official || maas && MaasMediaAdapter.supports(plan.model()))
+      if(!(official || maas && MaasMediaAdapter.supports(plan.model())
+          || LetsLlmModels.matches(plan.arkBase()) && OmniReference.forModel(plan.model())!=null)
           || request.referenceMode()!=ReferenceMode.OMNI || request.type()!=MediaType.VIDEO)
         throw new DefinitiveRejectionException("PORTRAIT_PROVIDER_UNSUPPORTED");
       for(var asset:assets.entrySet()) {
@@ -67,7 +68,7 @@ public final class ArkMediaAdapter {
     // Seedance 2.5 first/last-frame tasks require the source image's aspect ratio.
     String ratio=request.referenceMode()!=ReferenceMode.OMNI && "doubao-seedance-2-5-260628".equals(plan.model()) && !request.references().isEmpty()
         ? "adaptive" : request.aspectRatio();
-    var body=new LinkedHashMap<String,Object>(Map.of("model",plan.model(),"content",content,
+    var body=new LinkedHashMap<String,Object>(Map.of("model",LetsLlmModels.requestModel(plan.arkBase(),plan.model()),"content",content,
         "resolution",plan.sourceResolution(),"duration",request.durationSeconds(),"ratio",ratio));
     if(maas && !assets.isEmpty()) body.put("ProjectName",MediaReference.identifier(project,"projectName"));
     if(request.referenceMode()==ReferenceMode.OMNI && "doubao-seedance-2-5-260628".equals(plan.model()))

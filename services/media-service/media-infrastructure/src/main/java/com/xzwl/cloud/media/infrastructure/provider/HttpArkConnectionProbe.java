@@ -23,7 +23,7 @@ public final class HttpArkConnectionProbe implements ArkConnectionProbe {
     if(connection.apiKey()==null || connection.apiKey().isBlank() || connection.baseUrl()==null || connection.baseUrl().isBlank())
       return new Result(connection.version(),false,"请先保存完整的连接地址和 API Key。");
     try {
-      if(ProviderSettings.newApiDoubao(connection.baseUrl())) {
+      if(ProviderSettings.newApiDoubao(connection.baseUrl()) || LetsLlmModels.matches(connection.baseUrl())) {
         var catalog=new HttpArkModelCatalog(store,new ProviderHttp(client,new com.fasterxml.jackson.databind.ObjectMapper(),timeout)).list(connection);
         return new Result(connection.version(),catalog.success(),catalog.success()
             ? "连接与鉴权通过。模型权限、余额及生成能力以实际任务结果为准。" : catalog.message());

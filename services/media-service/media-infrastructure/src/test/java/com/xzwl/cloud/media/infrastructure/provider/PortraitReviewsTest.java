@@ -100,6 +100,55 @@ class PortraitReviewsTest {
     reviews=service();
   }
   @ParameterizedTest @EnumSource(MediaReference.Kind.class)
+  void letsLlmReuploadsMaterialsWhileOldReferencesAndFrozenTasksRemainUsable(MediaReference.Kind kind) throws Exception {
+    storedKind=kind;
+    var old=reviews.submit("owner","old-review","file-1","video",kind);
+    assetStatus="Active";reviews.tick();reviews.tick();
+    reviews.freeze("old-task","owner",request(old.id(),kind),route("old-task"));
+    var oldSettings=ProviderSettings.from(Map.of(),json).withConnection(connections.load("ark"));
+    when(routing.models()).thenReturn(List.of(new RoutingPort.Model("video",MODEL,Map.of(),"letsllm")));
+    var connection=new ArkConnectionStore.Connection(1,"letsllm","https://api.letsllm.com/api/v3","letsllm-key");
+    when(connections.load("letsllm")).thenReturn(connection);
+    http=mock(ProviderHttp.class);
+    when(http.encode(any())).thenAnswer(call->json.writeValueAsString(call.getArgument(0)));
+    var calls=new java.util.concurrent.atomic.AtomicInteger();
+    when(http.call(eq("POST"),startsWith("https://api.letsllm.com/?Action="),anyMap(),anyString())).thenAnswer(call->{
+      var endpoint=(String)call.getArgument(1);
+      assertEquals("Bearer letsllm-key",((Map<?,?>)call.getArgument(2)).get("Authorization"));
+      if(endpoint.contains("Action=CreateAssetGroup&")) {calls.incrementAndGet();return json.readTree("{\"Id\":\"letsllm-group\"}");}
+      if(endpoint.contains("Action=CreateAsset&")) {
+        calls.incrementAndGet();var payload=json.readTree((String)call.getArgument(3));
+        assertEquals("letsllm-group",payload.path("GroupId").asText());
+        assertTrue(payload.path("URL").asText().startsWith("https://cdn.example/"));
+        assertEquals(switch(kind){case IMAGE->"Image";case VIDEO->"Video";case AUDIO->"Audio";},payload.path("AssetType").asText());
+        return json.readTree("{\"Id\":\"letsllm-asset\"}");
+      }
+      return json.readTree("{\"Id\":\"letsllm-asset\",\"GroupId\":\"letsllm-group\",\"Status\":\"Active\",\"ProjectName\":\"default\"}");
+    });
+    when(http.call(eq("POST"),startsWith(env.get("MEDIA_ASSET_ENDPOINT")),anyMap(),anyString()))
+        .thenReturn(json.readTree("{\"Result\":{\"Id\":\"asset-1\",\"GroupId\":\"group-1\",\"Status\":\"Active\"}}"));
+    reviews=service();
+    assertEquals("FAILED",reviews.get("owner",old.id()).status());
+    assertThrows(DefinitiveRejectionException.class,()->reviews.validate("owner",request(old.id(),kind)));
+    var fresh=reviews.submit("owner","migrate-review","file-1","video",kind);
+    reviews.tick();reviews.tick();assertEquals("ACTIVE",reviews.get("owner",fresh.id()).status());
+    assertEquals(old.id(),reviews.get("owner",old.id()).id());assertEquals("ACTIVE",reviews.get("owner",old.id()).status());
+    assertEquals("ark",jdbc.queryForObject("SELECT provider_id FROM media_portrait WHERE id=?",String.class,old.id()));
+    assertEquals("asset-1",jdbc.queryForObject("SELECT asset_id FROM media_portrait WHERE id=?",String.class,old.id()));
+    reviews.validate("owner",request(old.id(),kind));
+    var target=new RouteSnapshot("letsllm-task","video","letsllm","LetsLLM",connection.baseUrl(),MODEL,"{}",route("unused").modelConfigurationJson(),clock.instant());
+    reviews.freeze(target.taskId(),"owner",request(old.id(),kind),target);
+    var resolved=request(old.id(),kind).withReferences(List.of(resolvedPortrait()));
+    assertEquals(Map.of(0,"letsllm-asset"),reviews.assets(target.taskId(),"owner",resolved,target,ProviderSettings.from(Map.of(),json).withConnection(connection)).ids());
+    assertEquals(Map.of(0,"asset-1"),reviews.assets("old-task","owner",resolved,route("old-task"),oldSettings).ids());
+    assertEquals(fresh.id(),reviews.submit("owner","migrate-again","file-1","video",kind).id());
+    assertEquals(2,calls.get());
+    assertThrows(DefinitiveRejectionException.class,()->reviews.validate("other",request(old.id(),kind)));
+    when(connections.load("letsllm")).thenReturn(new ArkConnectionStore.Connection(2,"letsllm",connection.baseUrl(),"rotated-key"));
+    assertEquals("FAILED",reviews.get("owner",old.id()).status());
+    assertThrows(DefinitiveRejectionException.class,()->reviews.validate("owner",request(old.id(),kind)));
+  }
+  @ParameterizedTest @EnumSource(MediaReference.Kind.class)
   void switchingModelProviderPreservesOldReviewsAndFrozenTasksButIsolatesNewAssets(MediaReference.Kind kind) {
     storedKind=kind;var old=reviews.submit("owner","old-review","file-1","video",kind);
     assetStatus="Active";reviews.tick();reviews.tick();

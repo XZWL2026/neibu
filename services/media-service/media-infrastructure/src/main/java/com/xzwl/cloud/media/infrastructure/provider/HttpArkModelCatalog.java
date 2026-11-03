@@ -21,18 +21,24 @@ public final class HttpArkModelCatalog implements ArkModelCatalog {
       return failed(connection,"请先保存完整的供应商连接与 API Key。");
     try {
       boolean newApi=ProviderSettings.newApiDoubao(connection.baseUrl());
+      boolean letsLlm=LetsLlmModels.matches(connection.baseUrl());
       var base=ProviderSettings.providerEndpoint(connection.baseUrl());
-      var response=http.call("GET",newApi ? base.resolve("/v1/models").toString() : base+"/models",
+      var response=http.call("GET",newApi || letsLlm ? base.resolve("/v1/models").toString() : base+"/models",
           Map.of("Authorization","Bearer "+connection.apiKey()),null);
       var data=response.path("data");
       if(response.hasNonNull("error") || response.has("success") && !response.path("success").asBoolean() || !data.isArray()) return failed(connection,"模型目录格式无效，请稍后重试。");
       var models=new ArrayList<Model>();
+      var seen=new HashSet<String>();
       for(var item:data) {
-        if(newApi) {
+        if(newApi || letsLlm) {
           String id=item.path("id").asText("");
           if(id.isBlank() || id.length()>128) return failed(connection,"模型目录格式无效，请稍后重试。");
+          // Routing and reference validation retain the reviewed version IDs; only this supplier uses aliases on the wire.
+          String name=item.path("name").asText(id);
+          if(letsLlm) id=LetsLlmModels.canonical(id);
+          if(!seen.add(id)) continue;
           var capability=ArkModelCapabilities.forModel(id,"VIDEO");
-          models.add(new Model(id,item.path("name").asText(id),capability==null ? "UNSUPPORTED" : "VIDEO",
+          models.add(new Model(id,name,capability==null ? "UNSUPPORTED" : "VIDEO",
               item.path("status").asText(""),capability));
           continue;
         }
