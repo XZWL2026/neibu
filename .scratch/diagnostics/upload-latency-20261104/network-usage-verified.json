@@ -1,0 +1,268 @@
+{
+  "started_cst": "2026-11-04T18:06:53.926749+08:00",
+  "elapsed_seconds": 30.02,
+  "method": "eth0 IPv4 header lengths including retransmissions; sockets mapped every 0.5 seconds; no payload retained",
+  "interface_mbps": {
+    "rx": 0.7585,
+    "tx": 1.5806
+  },
+  "captured_ipv4_mbps": {
+    "tx": 1.5627,
+    "rx": 0.7269
+  },
+  "services": [
+    {
+      "service": "xzwl-test-124-storage.service",
+      "scope": "public",
+      "tx_kib_s": 131.57,
+      "rx_kib_s": 78.17,
+      "peer_count": 3
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "scope": "public",
+      "tx_kib_s": 40.93,
+      "rx_kib_s": 1.5,
+      "peer_count": 1
+    },
+    {
+      "service": "mysql.service",
+      "scope": "private",
+      "tx_kib_s": 16.79,
+      "rx_kib_s": 7.72,
+      "peer_count": 2
+    },
+    {
+      "service": "nacos.service",
+      "scope": "private",
+      "tx_kib_s": 0.81,
+      "rx_kib_s": 0.91,
+      "peer_count": 2
+    },
+    {
+      "service": "redis-server.service",
+      "scope": "private",
+      "tx_kib_s": 0.19,
+      "rx_kib_s": 0.22,
+      "peer_count": 1
+    },
+    {
+      "service": "sshd",
+      "scope": "public",
+      "tx_kib_s": 0.23,
+      "rx_kib_s": 0.15,
+      "peer_count": 2
+    },
+    {
+      "service": "AliYunDun",
+      "scope": "private",
+      "tx_kib_s": 0.22,
+      "rx_kib_s": 0.01,
+      "peer_count": 1
+    },
+    {
+      "service": "unattributed",
+      "scope": "private",
+      "tx_kib_s": 0.02,
+      "rx_kib_s": 0.04,
+      "peer_count": 2
+    }
+  ],
+  "connections": [
+    {
+      "service": "xzwl-test-124-storage.service",
+      "pids": [
+        3780256
+      ],
+      "scope": "public",
+      "peer": "36.250.245.237",
+      "local_port": 45912,
+      "peer_port": 443,
+      "protocol": "tcp",
+      "tx_kib_s": 67.39,
+      "rx_kib_s": 1.32
+    },
+    {
+      "service": "xzwl-test-124-storage.service",
+      "pids": [
+        3780256
+      ],
+      "scope": "public",
+      "peer": "106.126.14.221",
+      "local_port": 43698,
+      "peer_port": 443,
+      "protocol": "tcp",
+      "tx_kib_s": 63.68,
+      "rx_kib_s": 1.25
+    },
+    {
+      "service": "xzwl-test-124-storage.service",
+      "pids": [
+        3780256
+      ],
+      "scope": "public",
+      "peer": "159.75.57.118",
+      "local_port": 44032,
+      "peer_port": 443,
+      "protocol": "tcp",
+      "tx_kib_s": 0.45,
+      "rx_kib_s": 57.25
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629076
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 23818,
+      "protocol": "tcp",
+      "tx_kib_s": 19.33,
+      "rx_kib_s": 0.56
+    },
+    {
+      "service": "xzwl-test-124-storage.service",
+      "pids": [
+        3780256
+      ],
+      "scope": "public",
+      "peer": "159.75.57.118",
+      "local_port": 58596,
+      "peer_port": 443,
+      "protocol": "tcp",
+      "tx_kib_s": 0.05,
+      "rx_kib_s": 18.36
+    },
+    {
+      "service": "mysql.service",
+      "pids": [
+        3628324
+      ],
+      "scope": "private",
+      "peer": "172.31.218.44",
+      "local_port": 3306,
+      "peer_port": 46990,
+      "protocol": "tcp",
+      "tx_kib_s": 8.95,
+      "rx_kib_s": 3.9
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629076
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 23816,
+      "protocol": "tcp",
+      "tx_kib_s": 8.2,
+      "rx_kib_s": 0.35
+    },
+    {
+      "service": "mysql.service",
+      "pids": [
+        3628324
+      ],
+      "scope": "private",
+      "peer": "172.31.218.43",
+      "local_port": 3306,
+      "peer_port": 49054,
+      "protocol": "tcp",
+      "tx_kib_s": 5.37,
+      "rx_kib_s": 3.0
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629077
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 23946,
+      "protocol": "tcp",
+      "tx_kib_s": 5.86,
+      "rx_kib_s": 0.29
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629076
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 25184,
+      "protocol": "tcp",
+      "tx_kib_s": 3.08,
+      "rx_kib_s": 0.1
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629076
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 25185,
+      "protocol": "tcp",
+      "tx_kib_s": 2.91,
+      "rx_kib_s": 0.12
+    },
+    {
+      "service": "xzwl-test-124-web.service",
+      "pids": [
+        3629076
+      ],
+      "scope": "public",
+      "peer": "113.80.30.80",
+      "local_port": 32124,
+      "peer_port": 25183,
+      "protocol": "tcp",
+      "tx_kib_s": 1.55,
+      "rx_kib_s": 0.07
+    },
+    {
+      "service": "mysql.service",
+      "pids": [
+        3628324
+      ],
+      "scope": "private",
+      "peer": "172.31.218.43",
+      "local_port": 3306,
+      "peer_port": 40822,
+      "protocol": "tcp",
+      "tx_kib_s": 0.78,
+      "rx_kib_s": 0.03
+    },
+    {
+      "service": "mysql.service",
+      "pids": [
+        3628324
+      ],
+      "scope": "private",
+      "peer": "172.31.218.44",
+      "local_port": 3306,
+      "peer_port": 34150,
+      "protocol": "tcp",
+      "tx_kib_s": 0.48,
+      "rx_kib_s": 0.28
+    },
+    {
+      "service": "mysql.service",
+      "pids": [
+        3628324
+      ],
+      "scope": "private",
+      "peer": "172.31.218.44",
+      "local_port": 3306,
+      "peer_port": 60634,
+      "protocol": "tcp",
+      "tx_kib_s": 0.45,
+      "rx_kib_s": 0.19
+    }
+  ]
+}

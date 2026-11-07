@@ -1,0 +1,126 @@
+{
+  "measured_at_cst": "2026-11-04T17:54:27.377866+08:00",
+  "since_cst": "2026-11-04T16:00:00+08:00",
+  "environment": "internal 115.29.222.124:32124",
+  "verdict": "RED",
+  "interpretation": "Log observation only; no recent uploads is not proof of recovery.",
+  "upload_http_status_counts": {
+    "201": 2,
+    "504": 5
+  },
+  "upload_http_events": [
+    {
+      "time_cst": "2026-11-04T16:46:05+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 201
+    },
+    {
+      "time_cst": "2026-11-04T16:46:20+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 201
+    },
+    {
+      "time_cst": "2026-11-04T17:15:34+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 504
+    },
+    {
+      "time_cst": "2026-11-04T17:19:42+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 504
+    },
+    {
+      "time_cst": "2026-11-04T17:43:14+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 504
+    },
+    {
+      "time_cst": "2026-11-04T17:44:58+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 504
+    },
+    {
+      "time_cst": "2026-11-04T17:46:02+08:00",
+      "path": "/api/v1/files/reference-media",
+      "status": 504
+    }
+  ],
+  "request_body_observed_at_cst": [
+    "2026-11-04T16:46:01+08:00",
+    "2026-11-04T16:46:15+08:00",
+    "2026-11-04T17:14:33+08:00",
+    "2026-11-04T17:18:41+08:00",
+    "2026-11-04T17:42:13+08:00",
+    "2026-11-04T17:43:57+08:00",
+    "2026-11-04T17:45:01+08:00"
+  ],
+  "tos_upload_events": [
+    {
+      "time_cst": "2026-11-04T16:46:05.066+08:00",
+      "kind": "upload",
+      "object_id": "f6ffad61-14af-4249-a850-2bc48d56ba04",
+      "request_ms": 3825,
+      "send_ms": 2933,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T16:46:20.528+08:00",
+      "kind": "upload",
+      "object_id": "545b2c46-9e7f-4340-82f5-d33fa77dd167",
+      "request_ms": 5395,
+      "send_ms": 3872,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T17:17:56.397+08:00",
+      "kind": "upload",
+      "object_id": "a9a89e3e-9abf-4a4a-9832-cec4d9772305",
+      "request_ms": 201904,
+      "send_ms": 199879,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T17:21:10.460+08:00",
+      "kind": "upload",
+      "object_id": "0dd71ded-93cd-4760-95c5-98bf8b951e55",
+      "request_ms": 148127,
+      "send_ms": 147187,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T17:44:34.967+08:00",
+      "kind": "upload",
+      "object_id": "0ec5e932-63c0-44d6-afe2-cdfb89142895",
+      "request_ms": 140062,
+      "send_ms": 138082,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T17:46:56.052+08:00",
+      "kind": "upload",
+      "object_id": "4af48766-2963-4421-8a20-936d991544e6",
+      "request_ms": 177709,
+      "send_ms": 175236,
+      "has_request_id": true
+    },
+    {
+      "time_cst": "2026-11-04T17:47:32.583+08:00",
+      "kind": "upload",
+      "object_id": "3c917665-8e77-42d6-a402-7c8229d66689",
+      "request_ms": 150181,
+      "send_ms": 149702,
+      "has_request_id": true
+    }
+  ],
+  "tos_archive_slow_request_count": 35,
+  "tos_exception_counts": {
+    "ProtocolException": 30,
+    "SocketTimeoutException": 1,
+    "SocketException": 1
+  },
+  "sources": [
+    "/opt/xzwl-test-124/logs/nginx-access.log",
+    "/opt/xzwl-test-124/logs/nginx-error.log",
+    "journalctl -u xzwl-test-124-storage.service"
+  ]
+}
